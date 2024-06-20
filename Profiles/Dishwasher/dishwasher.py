@@ -1,19 +1,27 @@
 import pandas as pd
 import numpy as np
 import random
+from Profiles.loadFactor import LoadFactor
+from Profiles.Dishwasher.washingConfig import WashingDishesConfig
+from Profiles.loadConfiguration import LoadConfig
 
 #properties of the dishwasher
-class Dishwasher:
-    def __init__(self,name,cycleLoad,cycleTime):
-        self.name=name
+class Dishwasher(LoadFactor):
+    def __init__(self,name:str,
+                 cycleLoad:float, 
+                 cycleTime:int, 
+                 washingConfig:WashingDishesConfig):
+        
+        super().__init__(name)
         self.cycleLoad=cycleLoad #consum del cicle de rentat en kwh
         self.cycleTime=cycleTime #temps que dura el cicle de rentat en minuts
+        self.washingConfig=washingConfig #config de rentat (dies setmana, franges horaries..)
 
-    def generate_load(self,washingConfig,iters,loadConfig):
+    def generate_load(self,loadConfig:LoadConfig,iters:int=100)->pd.Series:
         load=np.zeros(loadConfig.num_indices())
         for i in range(iters): #n iteracions per aproximar montecarlo
-            for j in range(washingConfig.times_weekly()): #per cada vegada que renta a la setmana
-                interval=washingConfig.get_random_interval() #agafo interval random d'entre els possibles
+            for j in range(self.washingConfig.times_weekly()): #per cada vegada que renta a la setmana
+                interval=self.washingConfig.get_random_interval() #agafo interval random d'entre els possibles
                 selectedStartWashingInMinutes=interval.random()
                 indicesPerMinute=loadConfig.num_indices()/1440 #quants indexs representen un minut
                 start_index = int(selectedStartWashingInMinutes * indicesPerMinute)
@@ -30,5 +38,7 @@ class Dishwasher:
         load /= iters
         return pd.Series(load)
 
+    def changeWashingConfig(self,washingConfig:WashingDishesConfig):
+        self.washingConfig=washingConfig
 
 
