@@ -24,6 +24,12 @@ class MinuteInterval:
                 return self.start + random_index
             else:
                 return random_index - length_first_range
+            
+    def start_minute(self):
+        return self.start
+    
+    def end_minute(self):
+        return self.end
 
 
 

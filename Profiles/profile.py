@@ -2,22 +2,28 @@ import pandas as pd
 import numpy as np
 from typing import List
 from Profiles.loadConfiguration import LoadConfig
-from Profiles.loadFactor import LoadFactor
+from Profiles.LoadFactors.loadFactor import LoadFactor
+from Profiles.LoadFactors.SolarPanel.solarIrradiation import SolarIrradiation
+from Profiles.LoadFactors.SolarPanel.solarPanel import SolarPanel
+from utils.enums import LoadType
 
 class Profile:
     def __init__(self, 
-                 loadConsumers: List[LoadFactor]=[],
-                 loadProducers: List[LoadFactor]=[]):
+                 solarIrradiation:SolarIrradiation,
+                 loadFactors: List[LoadFactor]=[]):
         
-        self.loadConsumers=loadConsumers
-        self.loadProducers=loadProducers
+        self.loadFactors=loadFactors
+        self.solarIrradiation=solarIrradiation
 
     def generate_loads(self,loadConfig: LoadConfig, iters:int=100):
         df=pd.DataFrame()
         timeSeries=loadConfig.get_time_series()
-        df["Time"] = timeSeries.index
-        for loadConsumer in self.loadConsumers:
-            name=loadConsumer.get_name()
-            df[name]=loadConsumer.generate_load(loadConfig=loadConfig,iters=iters)
+        df["TimeStamp"] = timeSeries.index
+        for factor in self.loadFactors:
+            name=factor.get_name()
+            if isinstance(factor,SolarPanel):
+                df[name]=factor.generate_load(loadConfig=loadConfig,solarIrradiation=self.solarIrradiation)
+            else:
+                df[name]=factor.generate_load(loadConfig=loadConfig,iters=iters)
         df.to_excel("DataOutputs/PROVA.xlsx")
 

@@ -1,18 +1,19 @@
 import pandas as pd
 import numpy as np
 import random
-from Profiles.loadFactor import LoadFactor
-from Profiles.Dishwasher.washingConfig import WashingDishesConfig
+from Profiles.LoadFactors.loadFactor import LoadFactor
+from Profiles.LoadFactors.useConfig import UseConfig
 from Profiles.loadConfiguration import LoadConfig
+from utils.enums import LoadType
 
 #properties of the dishwasher
 class Dishwasher(LoadFactor):
     def __init__(self,name:str,
                  cycleLoad:float, 
                  cycleTime:int, 
-                 washingConfig:WashingDishesConfig):
+                 washingConfig:UseConfig):
         
-        super().__init__(name)
+        super().__init__(name,LoadType.Consumer)
         self.cycleLoad=cycleLoad #consum del cicle de rentat en kwh
         self.cycleTime=cycleTime #temps que dura el cicle de rentat en minuts
         self.washingConfig=washingConfig #config de rentat (dies setmana, franges horaries..)
@@ -38,7 +39,7 @@ class Dishwasher(LoadFactor):
         load /= iters
         return pd.Series(load)
 
-    def changeWashingConfig(self,washingConfig:WashingDishesConfig):
+    def changeWashingConfig(self,washingConfig:UseConfig):
         self.washingConfig=washingConfig
 
 

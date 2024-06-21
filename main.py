@@ -1,25 +1,34 @@
 from Profiles.profile import Profile
 from Profiles.loadConfiguration import LoadConfig
 from utils.enums import Granularity
-from Profiles.Dishwasher.dishwasher import Dishwasher
-from Profiles.Dishwasher.washingConfig import WashingDishesConfig
+from Profiles.LoadFactors.Dishwasher.dishwasher import Dishwasher
+from Profiles.LoadFactors.useConfig import UseConfig
 from utils.minuteInterval import MinuteInterval
+from Profiles.LoadFactors.SolarPanel.solarPanel import SolarPanel
+from Profiles.LoadFactors.SolarPanel.solarIrradiation import SolarIrradiation
 
 
+solarIrradiation=SolarIrradiation(MinuteInterval(7,22,True),1)
 
-washDishesConf=WashingDishesConfig(timesWeekly=7,
+washDishesConf=UseConfig(timesWeekly=7,
                                    intervals=[MinuteInterval(14,15,True),
                                               MinuteInterval(9,11,True)])
 
-dishwasher=Dishwasher(name="rentaplats",
+dishwasherEco=Dishwasher(name="rentaplats Cicle Eco",
                       cycleLoad=0.9,
                       cycleTime=3.5*60,
                       washingConfig=washDishesConf)
 
-dishwasher2=Dishwasher(name="rentaplats2",
+solarPanel=SolarPanel(name="pv",
+                      productionCapacity=0.3,
+                      efficiency=0.18)
+
+dishwasherStd=Dishwasher(name="rentaplats Cicle Standard",
                       cycleLoad=1.655,
                       cycleTime=2*60,
                       washingConfig=washDishesConf)
 
-perfil=Profile(loadConsumers=[dishwasher,dishwasher2])
-perfil.generate_loads(LoadConfig(Granularity.Minute),iters=500)
+perfil=Profile(solarIrradiation=solarIrradiation,
+               loadFactors=[dishwasherEco,dishwasherStd,solarPanel])
+
+perfil.generate_loads(LoadConfig(Granularity.Hour),iters=500)
