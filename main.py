@@ -8,6 +8,9 @@ from Profiles.LoadFactors.SolarPanel.solarPanel import SolarPanel
 from Profiles.LoadFactors.SolarPanel.solarIrradiation import SolarIrradiation
 
 
+madridLatitude=1212323412#nidea, acabar de probar el proxim dia si la irradiacio solar funciona.
+
+
 solarIrradiation=SolarIrradiation(MinuteInterval(7,22,True),1)
 
 washDishesConf=UseConfig(timesWeekly=7,
@@ -19,16 +22,12 @@ dishwasherEco=Dishwasher(name="rentaplats Cicle Eco",
                       cycleTime=3.5*60,
                       washingConfig=washDishesConf)
 
-solarPanel=SolarPanel(name="pv",
-                      productionCapacity=0.3,
-                      efficiency=0.18)
-
 dishwasherStd=Dishwasher(name="rentaplats Cicle Standard",
                       cycleLoad=1.655,
                       cycleTime=2*60,
                       washingConfig=washDishesConf)
 
 perfil=Profile(solarIrradiation=solarIrradiation,
-               loadFactors=[dishwasherEco,dishwasherStd,solarPanel])
+               loadFactors=[dishwasherEco,dishwasherStd])
 
-perfil.generate_loads(LoadConfig(Granularity.Hour),iters=500)
+perfil.generate_loads(LoadConfig(Granularity.Minute),iters=500)
