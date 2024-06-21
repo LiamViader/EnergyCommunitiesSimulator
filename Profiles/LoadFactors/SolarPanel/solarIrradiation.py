@@ -33,6 +33,7 @@ class SolarIrradiation:
         self.simulatedIrradiation=self.simulatedIrradiation/365
         serie=pd.Series(self.simulatedIrradiation)
         serie.to_excel("AAAAAAA.xlsx")
+        #recordar provar de ahorrarme el bucle j si hi ha alguna manera de fer l'operacio sobre tots els indexs j del array de manera mes eficient
                  
     
     def solar_hour(self,localHour, eot)->float:
