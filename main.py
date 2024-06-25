@@ -12,11 +12,12 @@ from datetime import datetime, date
 
 madrid=Geolocation("Madrid, Spain")
 
-profilesConfig=ProfileConfig(granularity=Granularity.Hour)
-
 current_date=date(2024, 6, 25)
 
-madridIrradiation=SolarIrradiation(madrid,current_date,profileConfig=profilesConfig)
+profilesConfig=ProfileConfig(granularity=Granularity.Minute,currentDate=current_date)
+
+
+madridIrradiation=SolarIrradiation(madrid,profileConfig=profilesConfig)
 
 
 washDishesConf=UseConfig(timesWeekly=7,

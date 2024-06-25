@@ -8,16 +8,16 @@ import pandas as pd
 
 class SolarIrradiation:
     #simulated solar irradiation in a geolocalitzation and year averaged over the year
-    def __init__(self, geolocation:Geolocation,current_date:date,profileConfig:ProfileConfig):
+    def __init__(self, geolocation:Geolocation,profileConfig:ProfileConfig):
         self.geolocation=geolocation
-        self.current_date=current_date
         self.profileConfig=profileConfig
         self.simulatedIrradiation=None #en kw/m2
         self.simulate_irradiation()
     
     def simulate_irradiation(self):
         self.simulatedIrradiation=np.zeros(self.profileConfig.num_indices())
-        julianDay=self.current_date.timetuple().tm_yday-1
+        current_date=self.profileConfig.get_current_date()
+        julianDay=current_date.timetuple().tm_yday-1
         B=(360/365)*(julianDay-81)
         solarDeclination=23.45*math.sin(math.radians(B))
         extraterrester_solar_irrad=1361*(1+0.033*math.cos(math.radians((360-julianDay)/365)))
@@ -38,4 +38,5 @@ class SolarIrradiation:
         minutes = int((hour_decimal - hours) * 60)
         seconds = int(((hour_decimal - hours) * 60 - minutes) * 60)
         microseconds = int((((hour_decimal - hours) * 60 - minutes) * 60 - seconds) * 1e6)
-        return datetime(self.current_date.year,self.current_date.month,self.current_date.day,hours, minutes, seconds, microseconds)             
+        current_date=self.profileConfig.get_current_date()
+        return datetime(current_date.year,current_date.month,current_date.day,hours, minutes, seconds, microseconds)             

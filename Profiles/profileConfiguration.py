@@ -1,10 +1,12 @@
 import numpy as np
 import pandas as pd
 from utils.enums import Granularity
+from datetime import date
 
 #config of the load
 class ProfileConfig:
-    def __init__(self,granularity:Granularity=Granularity.Hour):
+    def __init__(self,granularity:Granularity=Granularity.Hour,currentDate:date=date(2024,1,1)):
+        self.currentDate=currentDate
         self.granularity=granularity
         if granularity==Granularity.Hour:
             self.indices=24
@@ -21,3 +23,6 @@ class ProfileConfig:
             index = pd.date_range('00:00', periods=self.indices, freq='min').time
 
         return pd.Series( data=range(self.indices), index=index)
+    
+    def get_current_date(self)->date:
+        return self.currentDate
