@@ -3,7 +3,7 @@ import pandas as pd
 from utils.enums import Granularity
 
 #config of the load
-class LoadConfig:
+class ProfileConfig:
     def __init__(self,granularity:Granularity=Granularity.Hour):
         self.granularity=granularity
         if granularity==Granularity.Hour:

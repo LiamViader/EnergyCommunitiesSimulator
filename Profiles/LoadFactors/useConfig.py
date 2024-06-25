@@ -15,6 +15,9 @@ class UseConfig:
     
     def get_random_interval(self)->MinuteInterval:
         return self.intervals[random.randint(0,len(self.intervals)-1)]
+    
+    def get_intervals(self)->np.array:
+        return self.intervals
 
 
 

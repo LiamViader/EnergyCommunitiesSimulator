@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from Profiles.loadConfiguration import LoadConfig
+from Profiles.profileConfiguration import ProfileConfig
 from utils.enums import LoadType
 
 class LoadFactor(ABC):
@@ -8,7 +8,7 @@ class LoadFactor(ABC):
         self.loadType=loadType
     
     @abstractmethod
-    def generate_load(self,loadConfig:LoadConfig,iters:int=None):
+    def generate_load(self,profileConfig:ProfileConfig):
         pass  
 
     def get_name(self)->str:

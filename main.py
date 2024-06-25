@@ -1,21 +1,27 @@
 from Profiles.profile import Profile
-from Profiles.loadConfiguration import LoadConfig
+from Profiles.profileConfiguration import ProfileConfig
 from utils.enums import Granularity
 from Profiles.LoadFactors.Dishwasher.dishwasher import Dishwasher
 from Profiles.LoadFactors.useConfig import UseConfig
 from utils.minuteInterval import MinuteInterval
 from Profiles.LoadFactors.SolarPanel.solarPanel import SolarPanel
 from Profiles.LoadFactors.SolarPanel.solarIrradiation import SolarIrradiation
+from Profiles.LoadFactors.SolarPanel.solarPV import SolarPV
+from utils.geolocation import Geolocation
+from datetime import datetime, date
 
+madrid=Geolocation("Madrid, Spain")
 
-madridLatitude=1212323412#nidea, acabar de probar el proxim dia si la irradiacio solar funciona.
+profilesConfig=ProfileConfig(granularity=Granularity.Hour)
 
+current_date=date(2024, 6, 25)
 
-solarIrradiation=SolarIrradiation(MinuteInterval(7,22,True),1)
+madridIrradiation=SolarIrradiation(madrid,current_date,profileConfig=profilesConfig)
+
 
 washDishesConf=UseConfig(timesWeekly=7,
-                                   intervals=[MinuteInterval(14,15,True),
-                                              MinuteInterval(9,11,True)])
+                        intervals=[MinuteInterval(14,15,True),
+                                    MinuteInterval(9,11,True)])
 
 dishwasherEco=Dishwasher(name="rentaplats Cicle Eco",
                       cycleLoad=0.9,
@@ -27,7 +33,13 @@ dishwasherStd=Dishwasher(name="rentaplats Cicle Standard",
                       cycleTime=2*60,
                       washingConfig=washDishesConf)
 
-perfil=Profile(solarIrradiation=solarIrradiation,
-               loadFactors=[dishwasherEco,dishwasherStd])
+standardSolarPanel=SolarPanel(name="solarPanel",
+                              productionCapacity=0.3,
+                              efficiency=0.18)
 
-perfil.generate_loads(LoadConfig(Granularity.Minute),iters=500)
+pv=SolarPV("pv",[standardSolarPanel for i in range(7)])
+
+perfil=Profile(solarIrradiation=madridIrradiation,
+               loadFactors=[dishwasherEco,dishwasherStd,pv])
+
+perfil.generate_loads(profileConfig=profilesConfig)
