@@ -1,27 +1,26 @@
 import pandas as pd
 import numpy as np
 import random
-from Profiles.LoadFactors.loadFactor import LoadFactor
-from Profiles.LoadFactors.useConfig import UseConfig
+from Profiles.Factors.baseFactor import BaseFactor
+from Profiles.Factors.useConfig import UseConfig
 from Profiles.profileConfiguration import ProfileConfig
-from Profiles.LoadFactors.Cyclic.cyclicModel import CyclicModel
-from utils.enums import LoadType
+from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
+from utils.enums import FactorType
 
 #properties of the dishwasher
-class CyclicFactor(LoadFactor):
+class CyclicFactor(BaseFactor):
     def __init__(self,
                  cyclicModel:CyclicModel, 
                  washingConfig:UseConfig):
         
-        super().__init__(cyclicModel.get_name(),LoadType.Consumer)
+        super().__init__(cyclicModel.get_name(),FactorType.Consumer)
         self.cyclicModel=cyclicModel
         self.washingConfig=washingConfig #config de rentat (dies setmana, franges horaries..)
 
-    def generate_load(self,profileConfig:ProfileConfig)->pd.Series:
-        load=np.zeros(profileConfig.num_indices())
-        hoursPerIndex=24/profileConfig.num_indices()
-        for i in range(profileConfig.num_indices()):#afegeixo primer el standbyload
-            load[i]+=self.cyclicModel.get_stand_by_load(hoursPerIndex)
+    def simulate(self,profileConfig:ProfileConfig)->pd.Series:
+        power=np.zeros(profileConfig.num_indices())
+        for i in range(profileConfig.num_indices()):#afegeixo primer el standbypower
+            power[i]+=self.cyclicModel.get_stand_by_power()
         
         indicesPerMinute=profileConfig.num_indices()/1440
         daylyAverage=self.washingConfig.times_weekly()/7
@@ -37,7 +36,7 @@ class CyclicFactor(LoadFactor):
             selectedStartWashingInMinutes=selectedInterval.random()
             start_index = int(selectedStartWashingInMinutes * indicesPerMinute)
             end_index = int((selectedStartWashingInMinutes + self.cyclicModel.get_cycle_time()) * indicesPerMinute)
-            load+=self.__distribute_cycle_load(start_index,end_index,profileConfig)
+            power=self.__distribute_cycle_power(power,start_index,end_index,profileConfig)
             daylyAverage-=1
         rand_float=random.random()
         if(rand_float<daylyAverage):
@@ -49,22 +48,20 @@ class CyclicFactor(LoadFactor):
                 selectedInterval=self.washingConfig.get_random_interval()
             selectedStartWashingInMinutes=selectedInterval.random()
             start_index = int(selectedStartWashingInMinutes * indicesPerMinute)
-            end_index = int((selectedStartWashingInMinutes + self.cycleTime) * indicesPerMinute)
-            load+=self.__distribute_cycle_load(start_index,end_index,profileConfig)
-        return pd.Series(load)
+            end_index = int((selectedStartWashingInMinutes + self.cyclicModel.get_cycle_time()) * indicesPerMinute)
+            power=self.__distribute_cycle_power(power,start_index,end_index,profileConfig)
+        return pd.Series(power)
         
-    def __distribute_cycle_load(self,startIndex:int,endIndex:int,profileConfig:ProfileConfig)->np.array:
-        load=np.zeros(profileConfig.num_indices())
-        nToDistribute=abs(endIndex-startIndex)+1
+    def __distribute_cycle_power(self,power:np.array,startIndex:int,endIndex:int,profileConfig:ProfileConfig)->np.array:
         if endIndex>=profileConfig.num_indices():
             endIndex=endIndex-profileConfig.num_indices()
-        distributedLoad=self.cyclicModel.get_cycle_load()/nToDistribute
+        instantPower=self.cyclicModel.get_cycle_power()
         if startIndex <= endIndex:
-            load[startIndex:endIndex + 1] += distributedLoad
+            power[startIndex:endIndex + 1] += instantPower
         else:
-            load[startIndex:] += distributedLoad
-            load[:endIndex + 1] += distributedLoad
-        return load
+            power[startIndex:] += instantPower
+            power[:endIndex + 1] += instantPower
+        return power
                 
     def changeWashingConfig(self,washingConfig:UseConfig):
         self.washingConfig=washingConfig

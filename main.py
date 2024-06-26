@@ -1,12 +1,12 @@
 from Profiles.profile import Profile
 from Profiles.profileConfiguration import ProfileConfig
 from utils.enums import Granularity
-from Profiles.LoadFactors.Cyclic.cyclicFactor import CyclicFactor
-from Profiles.LoadFactors.useConfig import UseConfig
+from Profiles.Factors.Cyclic.cyclicFactor import CyclicFactor
+from Profiles.Factors.useConfig import UseConfig
 from utils.minuteInterval import MinuteInterval
-from Profiles.LoadFactors.SolarPanel.solarPanel import SolarPanel
-from Profiles.LoadFactors.SolarPanel.solarIrradiation import SolarIrradiation
-from Profiles.LoadFactors.SolarPanel.solarPV import SolarPV
+from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
+from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
+from Profiles.Factors.SolarPanel.solarPV import SolarPV
 from utils.geolocation import Geolocation
 from datetime import datetime, date
 from models import MODELS
@@ -42,6 +42,6 @@ standardSolarPanel=SolarPanel(name="solarPanel",
 pv=SolarPV(name="pv",solarPanels=[standardSolarPanel for i in range(7)])
 
 perfil=Profile(solarIrradiation=madridIrradiation,
-               loadFactors=[dishwasherEco,dishwasherStd,pv])
+               powerFactors=[dishwasherEco,dishwasherStd,pv])
 
-perfil.generate_loads(profileConfig=profilesConfig)
+perfil.simulate(profileConfig=profilesConfig)
