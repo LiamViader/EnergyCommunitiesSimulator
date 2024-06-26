@@ -4,22 +4,25 @@ import random
 from Profiles.LoadFactors.loadFactor import LoadFactor
 from Profiles.LoadFactors.useConfig import UseConfig
 from Profiles.profileConfiguration import ProfileConfig
+from Profiles.LoadFactors.Cyclic.cyclicModel import CyclicModel
 from utils.enums import LoadType
 
 #properties of the dishwasher
-class Dishwasher(LoadFactor):
-    def __init__(self,name:str,
-                 cycleLoad:float, 
-                 cycleTime:int, 
+class CyclicFactor(LoadFactor):
+    def __init__(self,
+                 cyclicModel:CyclicModel, 
                  washingConfig:UseConfig):
         
-        super().__init__(name,LoadType.Consumer)
-        self.cycleLoad=cycleLoad #consum del cicle de rentat en kwh
-        self.cycleTime=cycleTime #temps que dura el cicle de rentat en minuts
+        super().__init__(cyclicModel.get_name(),LoadType.Consumer)
+        self.cyclicModel=cyclicModel
         self.washingConfig=washingConfig #config de rentat (dies setmana, franges horaries..)
 
     def generate_load(self,profileConfig:ProfileConfig)->pd.Series:
         load=np.zeros(profileConfig.num_indices())
+        hoursPerIndex=24/profileConfig.num_indices()
+        for i in range(profileConfig.num_indices()):#afegeixo primer el standbyload
+            load[i]+=self.cyclicModel.get_stand_by_load(hoursPerIndex)
+        
         indicesPerMinute=profileConfig.num_indices()/1440
         daylyAverage=self.washingConfig.times_weekly()/7
         #es podria utilitzar distribucio poisson, pero penso que és més adequat que si la mitja és major que 1 la posi una vegada com a minim, ja que en el cas de posar el rentaplats si algu el posa 7/7 dies és més probable que el posi cada dia, que que el posi un dia 2 cops, un altre 1, un altre 0...
@@ -33,7 +36,7 @@ class Dishwasher(LoadFactor):
                 selectedInterval=self.washingConfig.get_random_interval()
             selectedStartWashingInMinutes=selectedInterval.random()
             start_index = int(selectedStartWashingInMinutes * indicesPerMinute)
-            end_index = int((selectedStartWashingInMinutes + self.cycleTime) * indicesPerMinute)
+            end_index = int((selectedStartWashingInMinutes + self.cyclicModel.get_cycle_time()) * indicesPerMinute)
             load+=self.__distribute_cycle_load(start_index,end_index,profileConfig)
             daylyAverage-=1
         rand_float=random.random()
@@ -55,7 +58,7 @@ class Dishwasher(LoadFactor):
         nToDistribute=abs(endIndex-startIndex)+1
         if endIndex>=profileConfig.num_indices():
             endIndex=endIndex-profileConfig.num_indices()
-        distributedLoad=self.cycleLoad/nToDistribute
+        distributedLoad=self.cyclicModel.get_cycle_load()/nToDistribute
         if startIndex <= endIndex:
             load[startIndex:endIndex + 1] += distributedLoad
         else:
