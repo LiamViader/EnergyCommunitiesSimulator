@@ -3,11 +3,11 @@ import random
 
 #saves a minute interval, includes start, excludes end
 class MinuteInterval:
-    def __init__(self,start:int,end:int,inHours:bool=False):
+    def __init__(self,start:float,end:float,inHours:bool=False):
         #start end in minutes if inHours=False
         if inHours:
-            start=start*60
-            end=end*60
+            start=int(start*60)
+            end=int(end*60)
         if start>1440 or end>1440: raise ValueError("Sart and end have to be between 00:00 and 24:00")
         self.start=start
         self.end=end

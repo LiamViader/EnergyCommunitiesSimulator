@@ -5,6 +5,7 @@ from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 import numpy as np
 import pandas as pd
 import math
+from typing import Tuple
 
 class SolarPanel(BaseFactor):
     def __init__(self, name: str, productionCapacity: float, efficiency: float):
@@ -13,7 +14,8 @@ class SolarPanel(BaseFactor):
         self.efficiency = efficiency
 
 
-    def simulate(self, profileConfig: ProfileConfig, solarIrradiation:SolarIrradiation) -> pd.Series:
-        power=solarIrradiation.get_irradiation()*self.productionCapacity*self.efficiency #en kw
-        return pd.Series(power)
+    def simulate(self, profileConfig: ProfileConfig, solarIrradiation:SolarIrradiation) -> Tuple[pd.Series,pd.Series]:
+        hoursPerIndex=24/profileConfig.num_indices()
+        load=solarIrradiation.get_irradiation()*self.productionCapacity*self.efficiency*hoursPerIndex #en kwh
+        return pd.Series(load), None
 

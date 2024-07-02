@@ -7,6 +7,7 @@ from typing import List
 import numpy as np
 import pandas as pd
 import math
+from typing import Tuple
 
 
 class SolarPV(BaseFactor):
@@ -14,9 +15,9 @@ class SolarPV(BaseFactor):
         super().__init__(name, FactorType.Producer)
         self.solarPanels=solarPanels
     
-    def simulate(self, profileConfig: ProfileConfig, solarIrradiation:SolarIrradiation) -> pd.Series:
-        totalPower = pd.Series(np.zeros(profileConfig.num_indices()))
+    def simulate(self, profileConfig: ProfileConfig, solarIrradiation:SolarIrradiation) -> Tuple[pd.Series,pd.Series]:
+        totalLoad = pd.Series(np.zeros(profileConfig.num_indices()))
         for solarPanel in self.solarPanels:
-            panelPower=solarPanel.simulate(profileConfig=profileConfig,solarIrradiation=solarIrradiation)
-            totalPower+=panelPower
-        return totalPower
+            panelLoad,_=solarPanel.simulate(profileConfig=profileConfig,solarIrradiation=solarIrradiation)
+            totalLoad+=panelLoad
+        return totalLoad, None

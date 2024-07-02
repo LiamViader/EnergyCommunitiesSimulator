@@ -18,11 +18,14 @@ class ProfileConfig:
     
     def get_time_series(self) -> pd.Series:
         if self.granularity == Granularity.Hour:
-            index = pd.date_range('00:00', periods=self.indices, freq='h').time
+            index_start = pd.date_range('00:00', periods=self.indices, freq='h')
+            index_end = index_start + pd.DateOffset(hours=1)
         elif self.granularity == Granularity.Minute:
-            index = pd.date_range('00:00', periods=self.indices, freq='min').time
+            index_start = pd.date_range('00:00', periods=self.indices, freq='min')
+            index_end = index_start + pd.DateOffset(minutes=1)
 
-        return pd.Series( data=range(self.indices), index=index)
+        index_str = index_start.strftime('%H:%M') + '-' + index_end.strftime('%H:%M')
+        return pd.Series( data=range(self.indices), index=index_str)
     
     def get_current_date(self)->date:
         return self.currentDate

@@ -10,20 +10,25 @@ from utils.enums import FactorType
 class Profile:
     def __init__(self, 
                  solarIrradiation:SolarIrradiation,
-                 powerFactors: List[BaseFactor]=[]):
+                 loadFactors: List[BaseFactor]=[]):
         
-        self.powerFactors=powerFactors
+        self.loadFactors=loadFactors
         self.solarIrradiation=solarIrradiation
+        self.overflow= pd.Series([])#guarda l'overflow de les darreres simulacions (carregues que passaven al seguents dies del que s'estava simulant)
 
-    def simulate(self,profileConfig: ProfileConfig, iters:int=100): #simula la potencia consumida/produida al llarg del temps
+    def simulate(self,profileConfig: ProfileConfig): #simula la energia consumida al llarg del temps en intervals de la granularitat seleccionada. en kwh
         df=pd.DataFrame()
         timeSeries=profileConfig.get_time_series()
         df["TimeStamp"] = timeSeries.index
-        for factor in self.powerFactors:
+        for factor in self.loadFactors:
             name=factor.get_name()
             if isinstance(factor,SolarPV):
-                df[name]=factor.simulate(profileConfig=profileConfig,solarIrradiation=self.solarIrradiation)
+                load, overflow=factor.simulate(profileConfig=profileConfig,solarIrradiation=self.solarIrradiation)
             else:
-                df[name]=factor.simulate(profileConfig=profileConfig)
+                load, overflow=factor.simulate(profileConfig=profileConfig)
+            df[name]=load
+            if overflow is not None:
+                self.overflow=self.overflow.add(overflow,fill_value=0)
         df.to_excel("DataOutputs/PROVA.xlsx")
+        self.overflow.to_excel("DataOutputs/PROVA2.xlsx")
 
