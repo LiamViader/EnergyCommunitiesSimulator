@@ -1,4 +1,5 @@
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
+from Profiles.Battery.battery import Battery
 
 MODELS ={
     'DISHWASHERS': {
@@ -14,5 +15,13 @@ MODELS ={
                             standByPower=0.0007,
                             standByTime=24
                             )
-    }
+    },
+    'BATTERIES':{
+        'STANDARD': Battery(capacity=13.5,
+                            chargeRate=5.0,
+                            dischargeRate=5.0,
+                            chargingEfficiency=0.95,
+                            dischargingEfficiency=0.95
+                            ),
+    },
 }

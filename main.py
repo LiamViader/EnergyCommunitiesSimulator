@@ -7,6 +7,7 @@ from utils.minuteInterval import MinuteInterval
 from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 from Profiles.Factors.SolarPanel.solarPV import SolarPV
+from Profiles.Battery.batteriesManager import BatteriesManager
 from utils.geolocation import Geolocation
 from datetime import datetime, date
 from models import MODELS
@@ -27,7 +28,7 @@ washDishesConf=UseConfig(timesWeekly=7,
 
 washDishesConf2=UseConfig(timesWeekly=9,
                         intervals=[MinuteInterval(0,3,True),
-                                    MinuteInterval(17,19,True)])
+                                    MinuteInterval(23,23.5,True)])
 
 dishwasherEco=CyclicFactor(cyclicModel=MODELS['DISHWASHERS']['ECO'],
                       washingConfig=washDishesConf)
@@ -41,7 +42,10 @@ standardSolarPanel=SolarPanel(name="solarPanel",
 
 pv=SolarPV(name="pv",solarPanels=[standardSolarPanel for i in range(7)])
 
+batteriesExample=BatteriesManager([MODELS['BATTERIES']['STANDARD']])
+
 perfil=Profile(solarIrradiation=madridIrradiation,
-               loadFactors=[dishwasherEco,dishwasherStd,pv])
+               loadFactors=[dishwasherEco,dishwasherStd,pv],
+               batteries=batteriesExample)
 
 perfil.simulate(profileConfig=profilesConfig)

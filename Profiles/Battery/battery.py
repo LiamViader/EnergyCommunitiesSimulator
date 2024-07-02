@@ -18,7 +18,7 @@ class Battery:
         timeElapsedHours=timeElapsed/60
         averagePower=energy/timeElapsedHours
         rate=min(averagePower,self.chargeRate)
-        energyToCharge=rate*timeElapsed*self.chargingEfficiency
+        energyToCharge=rate*timeElapsedHours*self.chargingEfficiency
         if energyToCharge+self.chargeLevel<self.capacity:
             energyUsed=energyToCharge/self.chargingEfficiency
             self.chargeLevel+=energyToCharge
@@ -28,16 +28,16 @@ class Battery:
 
         return energyUsed
         
-    def discharge(self,energy:float,timeElapsed:float)->float:#parametres son l'energia a descarregar en kwh i el temps durant el que es descarrega en minuts. Retorna energia descarregada 
+    def discharge(self,energy:float,timeElapsed:float)->float:#parametres son l'energia a descarregar en kwh i el temps durant el que es descarrega en minuts. Retorna energia produida 
         timeElapsedHours=timeElapsed/60
         realEnergy=energy/self.dischargingEfficiency
         averagePower=realEnergy/timeElapsedHours
         rate=min(averagePower,self.dischargeRate)
-        energyToDischarge=rate*timeElapsed
+        energyToDischarge=rate*timeElapsedHours
         if self.chargeLevel-energyToDischarge>0:
-            energyDischarged=energyToDischarge*self.dischargingEfficiency
+            producedEnergy=energyToDischarge*self.dischargingEfficiency
             self.chargeLevel-=energyToDischarge
         else:
-            energyDischarged=self.capacity*self.dischargingEfficiency
+            producedEnergy=self.chargeLevel*self.dischargingEfficiency
             self.chargeLevel=0
-        return energyDischarged
+        return producedEnergy
