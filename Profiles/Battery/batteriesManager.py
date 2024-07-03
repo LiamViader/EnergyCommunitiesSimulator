@@ -7,7 +7,7 @@ class BatteriesManager:
     def __init__(self,batteries:List[Battery]):
         self.batteries=batteries
 
-    def use(self,load:pd.Series,config:ProfileConfig)->pd.Series: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
+    def use_on(self,load:pd.Series,config:ProfileConfig)->pd.Series: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
         minutersPerIndex=1440/config.num_indices()
 
         def batteriesLoad(value):

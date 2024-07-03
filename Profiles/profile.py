@@ -10,8 +10,8 @@ from utils.enums import FactorType
 
 class Profile:
     def __init__(self, 
-                 loadFactors: List[BaseFactor]=[],
-                 batteries: BatteriesManager=None):
+                loadFactors: List[BaseFactor]=[],
+                batteries: BatteriesManager=None):
 
         self.loadFactors=loadFactors
         self.batteries=batteries
@@ -26,12 +26,12 @@ class Profile:
 
         if useOverflow:
             #afegir el overflow del dia anterior 
-            overflowToUse=self.overflow.head(24)
+            overflowToUse=self.overflow.head(profileConfig.num_indices())
             df_detailed["overflow"]=overflowToUse
             df_detailed["overflow"] = df_detailed['overflow'].fillna(0)
             combinedLoad.add(overflowToUse,fill_value=0)
             #treure overflow usat
-            self.overflow = self.overflow[24:]
+            self.overflow = self.overflow[profileConfig.num_indices():]
 
 
         for factor in self.loadFactors:
@@ -52,7 +52,7 @@ class Profile:
 
         
         if self.batteries is not None:
-            batteriesLoad=self.batteries.use(combinedLoad,profileConfig)
+            batteriesLoad=self.batteries.use_on(combinedLoad,profileConfig)
             combinedLoad=combinedLoad.add(batteriesLoad,fill_value=0)
             df_detailed["Batteries"]=batteriesLoad
 
