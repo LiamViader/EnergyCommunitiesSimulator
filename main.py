@@ -16,10 +16,8 @@ madrid=Geolocation("Madrid, Spain")
 
 current_date=date(2024, 6, 25)
 
-profilesConfig=ProfileConfig(granularity=Granularity.Hour,currentDate=current_date)
+profilesConfig=ProfileConfig(granularity=Granularity.Hour,currentDate=current_date,geolocation=madrid)
 
-
-madridIrradiation=SolarIrradiation(madrid,profileConfig=profilesConfig)
 
 
 washDishesConf=UseConfig(timesWeekly=7,
@@ -44,8 +42,11 @@ pv=SolarPV(name="pv",solarPanels=[standardSolarPanel for i in range(7)])
 
 batteriesExample=BatteriesManager([MODELS['BATTERIES']['STANDARD']])
 
-perfil=Profile(solarIrradiation=madridIrradiation,
-               loadFactors=[dishwasherEco,dishwasherStd,pv],
+perfil=Profile(loadFactors=[dishwasherEco,dishwasherStd,pv],
                batteries=batteriesExample)
 
-perfil.simulate(profileConfig=profilesConfig)
+perfil.simulate(profileConfig=profilesConfig, outputRoute="DataOutputs/day1")
+
+profilesConfig.step_one_day()
+
+perfil.simulate(profileConfig=profilesConfig, outputRoute="DataOutputs/day2")

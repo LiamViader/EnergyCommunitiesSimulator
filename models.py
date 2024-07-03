@@ -14,7 +14,7 @@ MODELS ={
                             cycleTime=3.5,
                             standByPower=0.0007,
                             standByTime=24
-                            )
+                            ),
     },
     'BATTERIES':{
         'STANDARD': Battery(capacity=13.5,

@@ -15,9 +15,9 @@ class SolarPV(BaseFactor):
         super().__init__(name, FactorType.Producer)
         self.solarPanels=solarPanels
     
-    def simulate(self, profileConfig: ProfileConfig, solarIrradiation:SolarIrradiation) -> Tuple[pd.Series,pd.Series]:
+    def simulate(self, profileConfig: ProfileConfig) -> Tuple[pd.Series,pd.Series]:
         totalLoad = pd.Series(np.zeros(profileConfig.num_indices()))
         for solarPanel in self.solarPanels:
-            panelLoad,_=solarPanel.simulate(profileConfig=profileConfig,solarIrradiation=solarIrradiation)
+            panelLoad,_=solarPanel.simulate(profileConfig=profileConfig)
             totalLoad+=panelLoad
         return totalLoad, None
