@@ -24,4 +24,8 @@ MODELS ={
                             dischargingEfficiency=0.95
                             ),
     },
+    'REFRIGERATORS':{
+        'FIXED_COMPRESSOR_STANDARD'
+
+    },
 }
