@@ -1,35 +1,28 @@
 import random
 import numpy as np
+from utils.RandomNumbers.baseNumberDistribution import BaseNumberDistribution
 
 class ContinuosCyclicModel():
-    def __init__(self, name: str, idlePower: float, activePower: float, maxTimeBetweenCycles: float, minTimeBetweenCycles: float, timeBetweenCyclesStd:float, maxCycleDuration: float, minCycleDuration: float, cycleDurationStd:float):
+    def __init__(self, name: str, idlePower: BaseNumberDistribution, activePower: BaseNumberDistribution, timeBetweenCycles:BaseNumberDistribution, cycleDuration:BaseNumberDistribution):
         self.name=name
         self.idlePower = idlePower #potencia quan no està en el cicle actiu en kw
         self.activePower = activePower
-        self.maxTimeBetweenCycles = maxTimeBetweenCycles
-        self.minTimeBetweenCycles = minTimeBetweenCycles
-        self.maxCycleDuration = maxCycleDuration
-        self.minCycleDuration = minCycleDuration
-        self.timeBetweenCyclesStd = timeBetweenCyclesStd
-        self. cycleDurationStd = cycleDurationStd
+        self.timeBetweenCycles = timeBetweenCycles
+        self.cycleDuration = cycleDuration
 
 
 
     def get_active_power(self)->float:
-        return self.activePower
+        return self.activePower.generate_random()
 
     def get_idle_power(self)->float:
-        return self.idlePower
+        return self.idlePower.generate_random()
 
     def get_name(self)->str:
         return self.name
     
     def get_time_between_next_cycle(self)->float:
-        mu=(self.maxTimeBetweenCycles+self.minTimeBetweenCycles)/2
-        random_number = np.random.normal(mu, self.timeBetweenCyclesStd)
-        return max(min(random_number, self.minTimeBetweenCycles), self.maxTimeBetweenCycles)
+        return self.timeBetweenCycles.generate_random()
     
     def get_cycle_duration(self)->float:
-        mu=(self.maxCycleDuration+self.minCycleDuration)/2
-        random_number = np.random.normal(mu, self.cycleDurationStd)
-        return max(min(random_number, self.minCycleDuration), self.maxCycleDuration)
+        return self.cycleDuration.generate_random()

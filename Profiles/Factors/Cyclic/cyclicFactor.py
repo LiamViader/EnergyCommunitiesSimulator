@@ -17,11 +17,14 @@ class CyclicFactor(BaseFactor):
         super().__init__(cyclicModel.get_name(),FactorType.Consumer)
         self.cyclicModel=cyclicModel
         self.washingConfig=washingConfig #config de rentat (dies setmana, franges horaries..)
+        self.overflow=None
 
-
-    def simulate(self,profileConfig:ProfileConfig)->Tuple[pd.Series,pd.Series]:
+    def simulate(self,profileConfig:ProfileConfig)->np.ndarray:
         load=np.zeros(profileConfig.num_indices())
-        overflow=np.array([])
+        if self.overflow is not None:
+            overflowPadded = np.pad(self.overflow, (0, len(load) - len(self.overflow)), 'constant')
+            load+=overflowPadded
+        self.overflow=np.array([])
         hoursElapsedPerIndex=24.0/profileConfig.num_indices()
         for i in range(profileConfig.num_indices()):#afegeixo primer el standbypower
             load[i]+=self.cyclicModel.get_stand_by_power()*hoursElapsedPerIndex
@@ -37,7 +40,7 @@ class CyclicFactor(BaseFactor):
             else:
                 selectedInterval=self.washingConfig.get_random_interval()
             selectedStartWashingInMinutes=selectedInterval.random()
-            load,overflow=self.__distribute_cycle_load(load,overflow,selectedStartWashingInMinutes,profileConfig)
+            self.__distribute_cycle_load(load,selectedStartWashingInMinutes,profileConfig)
             daylyAverage-=1
         rand_float=random.random()
         if(rand_float<daylyAverage):
@@ -48,12 +51,12 @@ class CyclicFactor(BaseFactor):
             else:
                 selectedInterval=self.washingConfig.get_random_interval()
             selectedStartWashingInMinutes=selectedInterval.random()
-            load,overflow=self.__distribute_cycle_load(load,overflow,selectedStartWashingInMinutes,profileConfig)
-        return pd.Series(load), pd.Series(overflow)
+            self.__distribute_cycle_load(load,selectedStartWashingInMinutes,profileConfig)
+        return load
 
 
 
-    def __distribute_cycle_load(self,load:np.ndarray,overflow:np.ndarray,selectedStartWashingInMinutes:float,profileConfig:ProfileConfig)->Tuple[np.ndarray, np.ndarray]:
+    def __distribute_cycle_load(self,load:np.ndarray,selectedStartWashingInMinutes:float,profileConfig:ProfileConfig):
         timeRemaining=self.cyclicModel.get_cycle_time()
         while(timeRemaining>0):
             timeElapsed=self.cyclicModel.get_cycle_time()-timeRemaining
@@ -68,15 +71,14 @@ class CyclicFactor(BaseFactor):
                 load[currentIndex]+=indexLoad
             else:#sino al overflow
                 transformedCurrentIndex=currentIndex-profileConfig.num_indices()
-                if transformedCurrentIndex<len(overflow):
-                    overflow[transformedCurrentIndex]+=indexLoad
+                if transformedCurrentIndex<len(self.overflow):
+                    self.overflow[transformedCurrentIndex]+=indexLoad
                 else:
-                    new_overflow=np.zeros(transformedCurrentIndex + 1, dtype=overflow.dtype)
-                    new_overflow[:len(overflow)] = overflow
-                    overflow=new_overflow
-                    overflow[transformedCurrentIndex]+=indexLoad
+                    new_overflow=np.zeros(transformedCurrentIndex + 1, dtype=self.overflow.dtype)
+                    new_overflow[:len(self.overflow)] = self.overflow
+                    self.overflow=new_overflow
+                    self.overflow[transformedCurrentIndex]+=indexLoad
             timeRemaining=timeRemaining-hoursElapsedThisIteration*60
-        return load, overflow
 
 
 

@@ -14,8 +14,8 @@ class SolarPanel(BaseFactor):
         self.efficiency = efficiency
 
 
-    def simulate(self, profileConfig: ProfileConfig) -> Tuple[pd.Series,pd.Series]:
+    def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
         hoursPerIndex=24/profileConfig.num_indices()
         load=profileConfig.get_irradiation()*self.productionCapacity*self.efficiency*hoursPerIndex #en kwh
-        return pd.Series(load), None
+        return load
 

@@ -8,6 +8,7 @@ from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 from Profiles.Factors.SolarPanel.solarPV import SolarPV
 from Profiles.Battery.batteriesManager import BatteriesManager
+from Profiles.Factors.Continuos.continuosCyclicFactor import ContinuosCyclicFactor
 from utils.geolocation import Geolocation
 from datetime import datetime, date
 from models import MODELS
@@ -17,7 +18,7 @@ madrid=Geolocation("Madrid, Spain")
 
 current_date=date(2024, 6, 25)
 
-profilesConfig=ProfileConfig(granularity=Granularity.Hour,currentDate=current_date,geolocation=madrid)
+profilesConfig=ProfileConfig(granularity=Granularity.Minute,currentDate=current_date,geolocation=madrid)
 
 
 
@@ -30,9 +31,8 @@ washDishesConf=UseConfig(
 )
 
 washDishesConf2=UseConfig(
-    timesWeekly=9,
+    timesWeekly=7,
     intervals=[
-        MinuteInterval(0,3,True),
         MinuteInterval(23,23.5,True)
     ]
 )
@@ -46,6 +46,11 @@ dishwasherStd=CyclicFactor(
     MODELS['DISHWASHERS']['STANDARD'],
     washingConfig=washDishesConf2
 )
+
+refrigeratorFixed=ContinuosCyclicFactor(MODELS['REFRIGERATORS']['FIXED_COMPRESSOR_EXAMPLE'])
+
+refrigeratorVariable=ContinuosCyclicFactor(MODELS['REFRIGERATORS']['VARIABLE_COMPRESSOR_EXAMPLE'])
+
 
 standardSolarPanel=SolarPanel(
     name="solarPanel",
@@ -61,17 +66,25 @@ perfil=Profile(
     loadFactors=[
         dishwasherEco,
         dishwasherStd,
+        refrigeratorFixed,
+        refrigeratorVariable,
         pv
     ],
     batteries=batteriesExample
 )
 
-perfil.simulate(profileConfig=profilesConfig, outputRoute="DataOutputs/day1")
+perfil.simulate(profileConfig=profilesConfig)
+df=perfil.get_detailed_load_df()
+df.to_excel("DataOutputs/day1_detailed.xlsx")
 
 profilesConfig.step_one_day()
 
-perfil.simulate(profileConfig=profilesConfig, outputRoute="DataOutputs/day2")
+perfil.simulate(profileConfig=profilesConfig)
+df=perfil.get_detailed_load_df()
+df.to_excel("DataOutputs/day2_detailed.xlsx")
 
 profilesConfig.step_one_day()
 
-perfil.simulate(profileConfig=profilesConfig, outputRoute="DataOutputs/day3")
+perfil.simulate(profileConfig=profilesConfig)
+df=perfil.get_detailed_load_df()
+df.to_excel("DataOutputs/day3_detailed.xlsx")

@@ -2,12 +2,13 @@ from typing import List
 from Profiles.Battery.battery import Battery
 import pandas as pd
 from Profiles.profileConfiguration import ProfileConfig
+import numpy as np
 
 class BatteriesManager:
     def __init__(self,batteries:List[Battery]):
         self.batteries=batteries
 
-    def use_on(self,load:pd.Series,config:ProfileConfig)->pd.Series: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
+    def use_on(self,load:np.ndarray,config:ProfileConfig)->np.ndarray: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
         minutersPerIndex=1440/config.num_indices()
 
         def batteriesLoad(value):
@@ -31,7 +32,7 @@ class BatteriesManager:
                         batteriesLoad-=producedEnergy
             return batteriesLoad
         
-        return load.apply(batteriesLoad)
+        return np.vectorize(batteriesLoad)(load)
         
 
 

@@ -13,32 +13,42 @@ class ContinuosCyclicFactor(BaseFactor):
     def __init__(self, model:ContinuosCyclicModel):
         super().__init__(model.get_name(), FactorType.Consumer)
         self.model=model
+        self.overflowTime=0
+        self.overflowPower=0
+        self.idle=True
 
-    def simulate(self, profileConfig: ProfileConfig) -> Tuple[pd.Series,pd.Series]:
+    def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
         load=np.zeros(profileConfig.num_indices())
-        overflow=np.zeros(profileConfig.num_indices())
-        idle=True
-        timeElapsed=0
-        indicesPerHour=profileConfig.num_indices()/24
+        self.distribute_cycle_load(self.overflowPower,0,self.overflowTime,profileConfig,load)
+        timeElapsed=self.overflowTime
         while timeElapsed<24.0:
-            if idle:
+            if self.idle:
                 cycleDurationTime=self.model.get_time_between_next_cycle()
                 power=self.model.get_idle_power()
             else:
                 cycleDurationTime=self.model.get_cycle_duration()
                 power=self.model.get_active_power()+self.model.get_idle_power()
             nextCycleTimestamp=cycleDurationTime+timeElapsed
-            while timeElapsed<nextCycleTimestamp:
-                currentIndex=int(timeElapsed*indicesPerHour)
-                nextIndex=currentIndex+1
-                timestampNextIndex=nextIndex/indicesPerHour
-                nextTimestamp=min(nextCycleTimestamp,timestampNextIndex)
-                energy=(nextTimestamp-timeElapsed)*power
-                if currentIndex<profileConfig.num_indices():
-                    load[currentIndex]=energy
-                elif not idle:
-                    overflow[currentIndex-profileConfig.num_indices()]=energy
-                timeElapsed=nextTimestamp
-            idle=not idle
-        return pd.Series(load), pd.Series(overflow)
+            self.distribute_cycle_load(power,timeElapsed,nextCycleTimestamp,profileConfig,load)
+            timeElapsed=nextCycleTimestamp
+            self.idle=not self.idle
+        return load
 
+    def distribute_cycle_load(self,power:float,start:float,end:float,profileConfig:ProfileConfig,load:np.ndarray): #distributes this cycle load on the load array
+        indicesPerHour=profileConfig.num_indices()/24
+        startIndex=int(start*indicesPerHour)
+        endIndex=int(end*indicesPerHour)
+        timestamp=start
+        i=startIndex
+        while i<=endIndex and i<profileConfig.num_indices():
+            nextIndex=i+1
+            nextIndexTimestamp=nextIndex/indicesPerHour
+            if i!=endIndex:
+                load[i]+=power*(nextIndexTimestamp-timestamp)
+            else:
+                load[i]+=power*(end-timestamp)
+            timestamp=nextIndexTimestamp
+            i=nextIndex
+        if endIndex>=profileConfig.num_indices():
+            self.overflowTime=end-timestamp
+            self.overflowPower=power
