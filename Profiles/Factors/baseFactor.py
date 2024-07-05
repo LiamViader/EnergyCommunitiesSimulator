@@ -13,7 +13,7 @@ class BaseFactor(ABC):
     @abstractmethod
     def simulate(self,profileConfig:ProfileConfig)->np.ndarray: #retorna array que representa la energia consumida/produida al llarg del temps durant un dia. en kwh. la segona serie es overflow (energia que s'ha simulat pel següent dia)
         pass
-
+    
     def get_name(self)->str:
         return self.name
 

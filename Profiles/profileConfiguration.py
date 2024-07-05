@@ -49,3 +49,6 @@ class ProfileConfig:
     def step_one_day(self):
         self.currentDate=self.currentDate + timedelta(days=1)
         self.solarIrradiation.change_date(self.currentDate)
+
+    def get_day_of_week(self):
+        return self.currentDate.weekday()

@@ -2,7 +2,7 @@ from Profiles.profile import Profile
 from Profiles.profileConfiguration import ProfileConfig
 from utils.enums import Granularity
 from Profiles.Factors.Cyclic.cyclicFactor import CyclicFactor
-from Profiles.Factors.useConfig import UseConfig
+from Profiles.Factors.Cyclic.cyclicUseConfig import CyclicUseConfig
 from utils.minuteInterval import MinuteInterval
 from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
@@ -18,11 +18,11 @@ madrid=Geolocation("Madrid, Spain")
 
 current_date=date(2024, 6, 25)
 
-profilesConfig=ProfileConfig(granularity=Granularity.Minute,currentDate=current_date,geolocation=madrid)
+profilesConfig=ProfileConfig(granularity=Granularity.Hour,currentDate=current_date,geolocation=madrid)
 
 
 
-washDishesConf=UseConfig(
+washDishesConf=CyclicUseConfig(
     timesWeekly=7,
     intervals=[
         MinuteInterval(14,15,True),
@@ -30,7 +30,7 @@ washDishesConf=UseConfig(
     ]
 )
 
-washDishesConf2=UseConfig(
+washDishesConf2=CyclicUseConfig(
     timesWeekly=7,
     intervals=[
         MinuteInterval(23,23.5,True)

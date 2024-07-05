@@ -3,7 +3,7 @@ import numpy as np
 import random
 from typing import Tuple
 from Profiles.Factors.baseFactor import BaseFactor
-from Profiles.Factors.useConfig import UseConfig
+from Profiles.Factors.Cyclic.cyclicUseConfig import CyclicUseConfig
 from Profiles.profileConfiguration import ProfileConfig
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
 from utils.enums import FactorType
@@ -12,7 +12,7 @@ from utils.enums import FactorType
 class CyclicFactor(BaseFactor):
     def __init__(self,
                  cyclicModel:CyclicModel, 
-                 washingConfig:UseConfig):
+                 washingConfig:CyclicUseConfig):
         
         super().__init__(cyclicModel.get_name(),FactorType.Consumer)
         self.cyclicModel=cyclicModel
@@ -82,6 +82,6 @@ class CyclicFactor(BaseFactor):
 
 
 
-    def changeWashingConfig(self,washingConfig:UseConfig):
+    def changeWashingConfig(self,washingConfig:CyclicUseConfig):
         self.washingConfig=washingConfig
 

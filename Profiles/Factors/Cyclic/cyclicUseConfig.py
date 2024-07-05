@@ -4,7 +4,7 @@ from typing import List
 from utils.minuteInterval import MinuteInterval
 
 #properties of how they use the dishwasher
-class UseConfig:
+class CyclicUseConfig:
     def __init__(self,timesWeekly:int,intervals:List[MinuteInterval]):
         #intervals is an array of intervals
         self.timesWeekly=timesWeekly #cops que posa rentaplats a la setmana

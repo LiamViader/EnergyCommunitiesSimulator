@@ -3,7 +3,7 @@ import numpy as np
 import random
 from typing import Tuple
 from Profiles.Factors.baseFactor import BaseFactor
-from Profiles.Factors.useConfig import UseConfig
+from Profiles.Factors.Cyclic.cyclicUseConfig import UseConfig
 from Profiles.profileConfiguration import ProfileConfig
 from Profiles.Factors.Continuos.continuosCyclicModel import ContinuosCyclicModel
 from utils.enums import FactorType
