@@ -48,9 +48,9 @@ class Profile:
             batteriesLoad=self.batteries.use_on(self.get_combined_load(),profileConfig)
             name="Batteries"
             if name in self.detailedLoad:
-                self.detailedLoad[name].append((batteriesLoad, FactorType.Prosumer))
+                self.detailedLoad[name].append((batteriesLoad, FactorType.Battery))
             else:
-                self.detailedLoad[name] = [(batteriesLoad, FactorType.Prosumer)]
+                self.detailedLoad[name] = [(batteriesLoad, FactorType.Battery)]
 
 
     def get_detailed_load(self):
@@ -64,6 +64,8 @@ class Profile:
             for index, (load, factor_type) in enumerate(loads):
                 serie = pd.Series(load)
                 df_detailed[f"{name}_{index}"] = serie
+
+
         return df_detailed
 
     def get_combined_load(self)->np.ndarray:
@@ -71,7 +73,7 @@ class Profile:
             combinedLoad=np.zeros(self.configLastSimulation.num_indices())
             for name, loads in self.detailedLoad.items():
                 for load, factor_type in loads:
-                    if factor_type==FactorType.Consumer or factor_type==FactorType.Prosumer:
+                    if factor_type==FactorType.Consumer or factor_type==FactorType.Prosumer or factor_type==FactorType.Battery:
                         combinedLoad+=load
                     elif factor_type==FactorType.Producer:
                         combinedLoad-=load
@@ -83,13 +85,26 @@ class Profile:
 
     def get_load_pv(self)->Tuple[np.ndarray,np.ndarray]:
         if self.configLastSimulation is not None:
-            load=np.zeros(self.configLastSimulation.num_indices())
-            pv=np.zeros(self.configLastSimulation.num_indices())
+            finalLoad=np.zeros(self.configLastSimulation.num_indices())
+            finalPv=np.zeros(self.configLastSimulation.num_indices())
             for name, loads in self.detailedLoad.items():
                 for load, factor_type in loads:
-                    if factor_type==FactorType.Consumer or factor_type==FactorType.Prosumer:
-                        load+=load
+                    if factor_type==FactorType.Consumer:
+                        finalLoad+=load
                     elif factor_type==FactorType.Producer:
-                        pv+=load
-            return load,pv
+                        finalPv+=load
+                    elif factor_type==FactorType.Prosumer:
+                        for i in range(self.configLastSimulation.num_indices()):
+                            if load[i]>0:
+                                finalLoad[i]+=load[i]
+                            else:
+                                finalPv[i]+=abs(load[i])
+                    elif factor_type==FactorType.Battery:
+                        for i in range(self.configLastSimulation.num_indices()):
+                            if load[i]<0:
+                                finalLoad[i]+=load[i]
+                            else:
+                                finalPv[i]-=load[i]
+
+            return finalLoad,finalPv
         else: raise ValueError("theres no simulated load")

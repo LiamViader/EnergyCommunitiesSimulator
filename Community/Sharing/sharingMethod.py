@@ -1,6 +1,5 @@
 from Profiles.profile import Profile
 from Community.communityConfiguration import CommunityConfig
-from Profiles.profileConfiguration import ProfileConfig
 from typing import List, Dict
 from abc import ABC, abstractmethod
 import numpy as np

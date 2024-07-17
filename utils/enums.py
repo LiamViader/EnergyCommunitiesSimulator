@@ -9,3 +9,4 @@ class FactorType(Enum):
     Consumer=1
     Producer=2
     Prosumer=3
+    Battery=4

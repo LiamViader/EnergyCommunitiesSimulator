@@ -35,3 +35,6 @@ class ProfileConfig:
     def set_properties(self,exteriorContactArea:float,insideVolume:float):
         self.exteriorContactArea=exteriorContactArea
         self.insideVolume=insideVolume
+
+    def get_wind(self)->np.ndarray:
+        return self.communityConfig.get_wind()

@@ -47,3 +47,6 @@ class Geolocation:
     
     def get_season_offset(self)->int:
         return temperatures[self.name]['SEASON_OFFSET']
+    
+    def get_wind(self,season:str)->Tuple[float,float]:
+        return wind[self.name][season]['MEAN'] , wind[self.name][season]['STD']

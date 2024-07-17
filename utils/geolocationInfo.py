@@ -15,3 +15,5 @@ temperatures = {
         'SEASON_OFFSET':212
     }
 }
+
+

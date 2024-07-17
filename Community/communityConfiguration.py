@@ -4,23 +4,19 @@ from utils.geolocation import Geolocation
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 from Profiles.Factors.Climatitzation.temperature import Temperature
 from typing import List, Dict
-from Profiles.profile import Profile
 from utils.enums import Granularity
 from datetime import date, timedelta
-from Community.Sharing.sharingMethod import SharingMethod
-from Community.Sharing.virtualNetBilling import VirtualNetBilling
+from Profiles.Factors.WindTurbine.wind import Wind
 
 #config of the load
 class CommunityConfig:
     def __init__(self,granularity:Granularity=Granularity.Hour,
                  currentDate:date=date(2024,1,1),
-                 geolocation:Geolocation=Geolocation("Madrid, Spain"),
-                 sharingMethod:SharingMethod=VirtualNetBilling()):
+                 geolocation:Geolocation=Geolocation("Madrid, Spain")):
         
         self.currentDate=currentDate
         self.granularity=granularity
         self.geolocation=geolocation
-        self.sharingMethod=sharingMethod
 
         if granularity==Granularity.Hour:
             self.indices=24
@@ -31,6 +27,7 @@ class CommunityConfig:
         
         self.solarIrradiation=SolarIrradiation(geolocation=self.geolocation,numIndices=self.indices, currentDate=self.currentDate)
         self.temperature=Temperature(self.geolocation,self.indices,self.currentDate)
+        self.wind=Wind(self.indices,self.currentDate)
 
     def num_indices(self) -> int: 
         return self.indices
@@ -59,6 +56,7 @@ class CommunityConfig:
         self.currentDate=self.currentDate + timedelta(days=1)
         self.solarIrradiation.change_date(self.currentDate)
         self.temperature.change_date(self.currentDate)
+        self.wind.change_date(self.currentDate)
 
     def get_day_of_week(self):
         return self.currentDate.weekday()
@@ -66,8 +64,8 @@ class CommunityConfig:
     def outside_termic_response(self,currentInsideTemp:float,timestamp:float,timeElapsed:float,superficialArea:float,insideVolume:float)->float:
         return self.temperature.termic_response(currentInsideTemp,timestamp,timeElapsed,superficialArea,insideVolume)
     
-    def share(self,profiles:List[Profile])->Dict[Profile,Dict[str,np.ndarray]]:
-        return self.sharingMethod.share(profiles,self)
-    
-    def get_str_date(self):
+    def get_str_date(self)->str:
         return self.currentDate.strftime('%Y_%m_%d')
+    
+    def get_wind(self)->np.ndarray:
+        return self.wind.get_wind()

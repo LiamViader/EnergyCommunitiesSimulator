@@ -19,18 +19,17 @@ from utils.RandomNumbers.normalDistribution import NormalDistribution
 from Profiles.Factors.Climatitzation.climatitzationFactor import ClimatitzationFactor
 from Profiles.Factors.Climatitzation.heating import Heating
 from Profiles.Factors.Climatitzation.thermostat import Thermostat
+from Profiles.Factors.WindTurbine.windTurbineFactor import WindTurbineFactor
 from datetime import datetime, date
 from models import MODELS
 import pandas as pd
 import numpy as np
 
 
-from Profiles.Factors.Climatitzation.temperature import Temperature
-
 
 madrid=Geolocation("Madrid, Spain")
 
-current_date=date(2024, 1, 25)
+current_date=date(2024, 4, 25)
 
 communityConfig=CommunityConfig(granularity=Granularity.FifteenMinutes,currentDate=current_date,geolocation=madrid)
 
@@ -75,7 +74,7 @@ standardSolarPanel=SolarPanel(
     efficiency=0.18
 )
 
-pv=SolarPV(name="pv",solarPanels=[standardSolarPanel for i in range(15)])
+pv=SolarPV(name="SolarPanels",solarPanels=[standardSolarPanel for i in range(15)])
 
 batteriesExample=BatteriesManager([MODELS['BATTERIES']['STANDARD']])
 
@@ -139,6 +138,8 @@ onlyHeatingClimatitzation=ClimatitzationFactor(
     )
 )
 
+windTurbine=WindTurbineFactor(MODELS['WIND_TURBINES']['TUGE10KW'])
+
 
 perfil=Profile(
     name="Manel",
@@ -151,7 +152,8 @@ perfil=Profile(
         freezerVariable,
         pv,
         tesla,
-        onlyHeatingClimatitzation
+        onlyHeatingClimatitzation,
+        windTurbine
     ],
     batteries=batteriesExample
 )

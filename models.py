@@ -5,6 +5,7 @@ from utils.RandomNumbers.piecewiseUniformDistribution import PiecewiseUniformDis
 from Profiles.Factors.Continuos.continuosCyclicModel import ContinuosCyclicModel
 from Profiles.Battery.battery import Battery
 from Profiles.Factors.ElectricCar.electricCarModel import ElectricCarModel
+from Profiles.Factors.WindTurbine.windTurbineModel import WindTurbineModel
 
 MODELS ={
     'DISHWASHERS': {
@@ -126,5 +127,13 @@ MODELS ={
             batteryCapacity=75,
             chargeEfficiency=0.95
         ),
+    },
+    'WIND_TURBINES':{
+        'TUGE10KW':WindTurbineModel(
+            name="WindTurbine-TUGE10KW",
+            minWindVel=4,
+            optimalWindVel=10.7,
+            nominalPower=9
+        )
     },
 }

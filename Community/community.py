@@ -1,12 +1,15 @@
 from Profiles.profile import Profile
 from Community.communityConfiguration import CommunityConfig
+from Community.Sharing.sharingMethod import SharingMethod
+from Community.Sharing.virtualNetBilling import VirtualNetBilling
 from Profiles.profileConfiguration import ProfileConfig
 from typing import List
 import pandas as pd
 
 class Community():
-    def __init__(self,profiles:List[Profile]) -> None:
+    def __init__(self,profiles:List[Profile],sharingMethod:SharingMethod=VirtualNetBilling()) -> None:
         self.profiles=profiles
+        self.sharingMethod=sharingMethod
         self.simulatedCommunity={}
         self.configLastSimulation=None
 
@@ -17,6 +20,9 @@ class Community():
             profile.simulate(profileConfig=config)
         self.simulatedCommunity=communityConfig.share(self.profiles)
         self.configLastSimulation=communityConfig
+
+    def share(self,communityConfig:CommunityConfig)->None:
+        self.simulatedCommunity=self.sharingMethod.share(profiles=self.profiles,communityConfig=communityConfig)
 
     def export_sharings_to_excel(self):
         if self.configLastSimulation is not None:
