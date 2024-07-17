@@ -27,7 +27,6 @@ class Wind:
             # Interpolar entre windHour[i] i windHour[i + 1]
             next_wind = windHour[(i + 1) % 24] 
             self.wind[start_index:end_index] = np.linspace(windHour[i], next_wind, end_index - start_index)
-        print(self.wind)
             
             
 
