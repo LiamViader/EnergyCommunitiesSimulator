@@ -11,14 +11,18 @@ class ElectricCarFactor(BaseFactor):
         super().__init__(model.get_name(), FactorType.Consumer)
         self.model = model
         self.useConfig = useConfig
-        if startChargeLevel is not None:
+        if startChargeLevel is None:
             self.currentBatteryLevel = model.get_battery_capacity()  #comenca amb la bateria carregada
+        else:
+            self.currentBatteryLevel=startChargeLevel
         self.overflow=None
 
     def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
         load=np.zeros(profileConfig.num_indices())
+        lastOverflowCharge=0
         if self.overflow is not None:
-            self.currentBatteryLevel=max(self.model.get_battery_capacity(),np.sum(self.overflow)+self.currentBatteryLevel)
+            lastOverflowCharge=np.sum(self.overflow)*self.model.get_charge_efficiency()
+            self.currentBatteryLevel=min(self.model.get_battery_capacity(),(lastOverflowCharge)+self.currentBatteryLevel)
             overflowPadded = np.pad(self.overflow, (0, len(load) - len(self.overflow)), 'constant')
             load+=overflowPadded
         self.overflow=np.zeros(profileConfig.num_indices())
@@ -29,7 +33,7 @@ class ElectricCarFactor(BaseFactor):
         self.currentBatteryLevel=max(0,self.currentBatteryLevel-energyUsed)
         start,duration=self.useConfig.get_charge_usage(self.currentBatteryLevel,weekDay,self.model)
         self.__distribute_cycle_load(load,start,duration,profileConfig)
-        self.currentBatteryLevel=max(self.model.get_battery_capacity(),np.sum(load)+self.currentBatteryLevel)
+        self.currentBatteryLevel=min(self.model.get_battery_capacity(),(np.sum(load)*self.model.get_charge_efficiency()-lastOverflowCharge)+self.currentBatteryLevel)
         return load
 
 
@@ -50,7 +54,7 @@ class ElectricCarFactor(BaseFactor):
             nextIndex=currentIndex+1
             nextIndexTimestampMinutes=nextIndex/indicesPerMinute
             hoursElapsedThisIteration=min(((nextIndexTimestampMinutes-currentTimestampMinutes)/60),timeRemaining/60)
-            indexLoad=self.model.chargePower()*hoursElapsedThisIteration
+            indexLoad=self.model.get_charge_power()*hoursElapsedThisIteration
             if(currentIndex<profileConfig.num_indices()):#si hi cap al dia actual
                 load[currentIndex]+=indexLoad
             else:#sino al overflow

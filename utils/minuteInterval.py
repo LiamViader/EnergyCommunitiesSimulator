@@ -30,6 +30,14 @@ class MinuteInterval:
     
     def end_minute(self):
         return self.end
+    
+    def contains(self,minute):
+        if self.start<=self.end:
+            if minute>=self.start and minute<self.end: return True
+            else: return False
+        else:
+            if minute>self.end and minute<self.start: return False
+            else: return True
 
 
 

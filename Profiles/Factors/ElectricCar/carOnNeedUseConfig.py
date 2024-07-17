@@ -18,7 +18,7 @@ class CarOnNeedUseConfig(CarBaseUseConfig):
             if self.chargeIntervals[weekDay] is None:
                 return 0,0
             else:
-                start=self.chargeIntervals[weekDay].random()
-                energyToCharge=(model.get_battery_capacity()-chargeLevel)/model.chargeEfficiency()
-                duration=energyToCharge/model.chargePower
+                start=self.chargeIntervals[weekDay].random()/60
+                energyToCharge=(model.get_battery_capacity()-chargeLevel)/model.get_charge_efficiency()
+                duration=energyToCharge/model.get_charge_power()
                 return start, duration

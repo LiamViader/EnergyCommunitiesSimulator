@@ -8,7 +8,6 @@ from Profiles.profileConfiguration import ProfileConfig
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
 from utils.enums import FactorType
 
-#properties of the dishwasher
 class CyclicFactor(BaseFactor):
     def __init__(self,
                  cyclicModel:CyclicModel, 

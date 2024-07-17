@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from typing import List
+from typing import List, Tuple
 from Profiles.profileConfiguration import ProfileConfig
 from Profiles.Factors.baseFactor import BaseFactor
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
@@ -11,9 +11,15 @@ from utils.enums import FactorType
 
 class Profile:
     def __init__(self, 
+                name:str,
+                exteriorContactArea:float=50,
+                insideVolume:float=150,
                 loadFactors: List[BaseFactor]=[],
                 batteries: BatteriesManager=None):
 
+        self.name=name
+        self.exteriorContactArea=exteriorContactArea
+        self.insideVolume=insideVolume
         self.loadFactors=loadFactors
         self.batteries=batteries
         self.detailedLoad={}
@@ -23,6 +29,10 @@ class Profile:
         self.detailedLoad={}
         self.configLastSimulation=profileConfig
 
+        profileConfig.set_properties(
+            exteriorContactArea=self.exteriorContactArea,
+            insideVolume=self.insideVolume
+        )
 
         for factor in self.loadFactors:
             name=factor.get_name()
@@ -63,7 +73,23 @@ class Profile:
                 for load, factor_type in loads:
                     if factor_type==FactorType.Consumer or factor_type==FactorType.Prosumer:
                         combinedLoad+=load
-                    else:
+                    elif factor_type==FactorType.Producer:
                         combinedLoad-=load
             return combinedLoad
+        else: raise ValueError("theres no simulated load")
+
+    def get_name(self)->str:
+        return self.name
+
+    def get_load_pv(self)->Tuple[np.ndarray,np.ndarray]:
+        if self.configLastSimulation is not None:
+            load=np.zeros(self.configLastSimulation.num_indices())
+            pv=np.zeros(self.configLastSimulation.num_indices())
+            for name, loads in self.detailedLoad.items():
+                for load, factor_type in loads:
+                    if factor_type==FactorType.Consumer or factor_type==FactorType.Prosumer:
+                        load+=load
+                    elif factor_type==FactorType.Producer:
+                        pv+=load
+            return load,pv
         else: raise ValueError("theres no simulated load")

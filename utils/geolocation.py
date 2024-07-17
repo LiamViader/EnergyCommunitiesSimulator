@@ -1,6 +1,6 @@
 import math
 from typing import Tuple
-from utils.geolocationCoordinates import coordinates
+from utils.geolocationInfo import coordinates, temperatures
 from timezonefinder import TimezoneFinder
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -39,3 +39,11 @@ class Geolocation:
     def solar_angle(self,localDateTime:datetime)->float:
         return 15*(self.solar_hour(localDateTime)-12)
 
+    def get_base_temp(self)->float:
+        return temperatures[self.name]['BASE']
+    
+    def get_amplitude_temp(self)->float:
+        return temperatures[self.name]['AMPLITUDE']
+    
+    def get_season_offset(self)->int:
+        return temperatures[self.name]['SEASON_OFFSET']

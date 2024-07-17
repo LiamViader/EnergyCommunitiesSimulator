@@ -14,5 +14,5 @@ class TruncatedNormalDistribution(BaseNumberDistribution):
 
     def generate_random(self) -> float:
         random_number = self.normalDistribution.generate_random()
-        return max(min(random_number, self.min), self.max)
+        return max(min(random_number, self.max), self.min)
 
