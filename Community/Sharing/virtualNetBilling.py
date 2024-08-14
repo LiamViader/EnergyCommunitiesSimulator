@@ -2,14 +2,14 @@ from Profiles.profile import Profile
 from Community.communityConfiguration import CommunityConfig
 from Profiles.profileConfiguration import ProfileConfig
 from Community.Sharing.sharingMethod import SharingMethod
-from typing import List, Dict
+from typing import List, Dict, Tuple
 import numpy as np
 
 class VirtualNetBilling(SharingMethod):
     def __init__(self) -> None:
         pass
 
-    def share(self,profiles:List[Profile],communityConfig:CommunityConfig)->Dict[Profile,Dict[str,np.ndarray]]:
+    def share(self,profiles:List[Tuple[Profile,float]],communityConfig:CommunityConfig,communityPv:np.ndarray)->Dict[Profile,Dict[str,np.ndarray]]:
         totalPvExcedent=np.zeros(communityConfig.num_indices())
         totalLoadExcedent=np.zeros(communityConfig.num_indices())
         communityExcedents={}

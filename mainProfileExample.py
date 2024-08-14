@@ -1,35 +1,38 @@
 from Profiles.profile import Profile
 from Profiles.profileConfiguration import ProfileConfig
 from Community.communityConfiguration import CommunityConfig
-from utils.enums import Granularity, FactorType
+from utils.enums import Granularity, FactorType, LightType
 from Profiles.Factors.Cyclic.cyclicFactor import CyclicFactor
-from Profiles.Factors.Cyclic.cyclicUseConfig import CyclicUseConfig
+from Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig import CyclicWeeklyUseConfig
 from utils.minuteInterval import MinuteInterval
 from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 from Profiles.Factors.SolarPanel.solarPV import SolarPV
 from Profiles.Battery.batteriesManager import BatteriesManager
 from Profiles.Factors.Continuos.continuosCyclicFactor import ContinuosCyclicFactor
-from Profiles.Factors.ElectricCar.carOnNeedUseConfig import CarOnNeedUseConfig
+from Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig import CarOnNeedUseConfig
 from Profiles.Factors.ElectricCar.electricCarFactor import ElectricCarFactor
 from Profiles.Factors.Continuos.continuosFactor import ContinuosFactor
 from utils.geolocation import Geolocation
 from utils.RandomNumbers.truncatedNormalDistribution import TruncatedNormalDistribution
 from utils.RandomNumbers.normalDistribution import NormalDistribution
 from Profiles.Factors.Climatitzation.climatitzationFactor import ClimatitzationFactor
-from Profiles.Factors.Climatitzation.heating import Heating
+from Profiles.Factors.Climatitzation.Components.heating import Heating
 from Profiles.Factors.Climatitzation.thermostat import Thermostat
 from Profiles.Factors.WindTurbine.windTurbineFactor import WindTurbineFactor
+from Profiles.Factors.Lightning.lightningFactor import LightningFactor
+from Profiles.Factors.Lightning.lightningModel import LightningModel
 from datetime import datetime, date
 from models import MODELS
 import pandas as pd
 import numpy as np
+from Profiles.examples import small_apartment_5
 
 
 
 madrid=Geolocation("Madrid, Spain")
 
-current_date=date(2024, 4, 25)
+current_date=date(2024, 7, 25)
 
 communityConfig=CommunityConfig(granularity=Granularity.FifteenMinutes,currentDate=current_date,geolocation=madrid)
 
@@ -37,7 +40,7 @@ profilesConfig=ProfileConfig(communityConfig=communityConfig)
 
 
 
-washDishesConf=CyclicUseConfig(
+washDishesConf=CyclicWeeklyUseConfig(
     timesWeekly=6,
     intervals=[
         MinuteInterval(14,15,True),
@@ -45,22 +48,22 @@ washDishesConf=CyclicUseConfig(
     ]
 )
 
-washDishesConf2=CyclicUseConfig(
-    timesWeekly=5,
+washDishesConf2=CyclicWeeklyUseConfig(
+    timesWeekly=12,
     intervals=[
         MinuteInterval(10,11.5,True),
-        MinuteInterval(14,16,True)
+        MinuteInterval(23,24,True)
     ]
 )
 
 dishwasherEco=CyclicFactor(
     cyclicModel=MODELS['DISHWASHERS']['ECO'],
-    washingConfig=washDishesConf
+    useConfig=washDishesConf
 )
 
 dishwasherStd=CyclicFactor(
     MODELS['DISHWASHERS']['STANDARD'],
-    washingConfig=washDishesConf2
+    useConfig=washDishesConf2
 )
 
 refrigeratorFixed=ContinuosCyclicFactor(MODELS['REFRIGERATORS']['FIXED_COMPRESSOR_EXAMPLE'])
@@ -79,7 +82,7 @@ pv=SolarPV(name="SolarPanels",solarPanels=[standardSolarPanel for i in range(15)
 batteriesExample=BatteriesManager([MODELS['BATTERIES']['STANDARD']])
 
 carConfig=CarOnNeedUseConfig(
-    dailyUsage=[
+    dailyUsage=(
         TruncatedNormalDistribution(15,60,100,70),
         TruncatedNormalDistribution(15,60,100,70),
         TruncatedNormalDistribution(15,60,100,70),
@@ -87,8 +90,8 @@ carConfig=CarOnNeedUseConfig(
         TruncatedNormalDistribution(20,60,120,77),
         TruncatedNormalDistribution(40,0,200,20),
         TruncatedNormalDistribution(20,0,200,30)
-    ],
-    chargeIntervals=[
+    ),
+    chargeIntervals=(
         MinuteInterval(23,1,True),
         MinuteInterval(23,1,True),
         MinuteInterval(23,1,True),
@@ -96,7 +99,7 @@ carConfig=CarOnNeedUseConfig(
         MinuteInterval(23,1,True),
         MinuteInterval(23,1,True),
         MinuteInterval(23,1,True)
-    ],
+    ),
     batteryThreshold=0.99
 )
 
@@ -105,7 +108,7 @@ tesla=ElectricCarFactor(
     useConfig=carConfig,
 )
 
-washMachineConf=CyclicUseConfig(
+washMachineConf=CyclicWeeklyUseConfig(
     timesWeekly=3,
     intervals=[
         MinuteInterval(9,11,True)
@@ -114,7 +117,7 @@ washMachineConf=CyclicUseConfig(
 
 washingMachineStandard=CyclicFactor(
     cyclicModel=MODELS['WASHING_MACHINES']['STANDARD'],
-    washingConfig=washMachineConf
+    useConfig=washMachineConf
 )
 
 freezerVariable=ContinuosCyclicFactor(model=MODELS['FREEZERS']['VARIABLE_COMPRESSOR'])
@@ -141,22 +144,7 @@ onlyHeatingClimatitzation=ClimatitzationFactor(
 windTurbine=WindTurbineFactor(MODELS['WIND_TURBINES']['TUGE10KW'])
 
 
-perfil=Profile(
-    name="Manel",
-    exteriorContactArea=50,
-    insideVolume=150,
-    loadFactors=[
-        dishwasherStd,
-        washingMachineStandard,
-        refrigeratorVariable,
-        freezerVariable,
-        pv,
-        tesla,
-        onlyHeatingClimatitzation,
-        windTurbine
-    ],
-    batteries=batteriesExample
-)
+perfil=small_apartment_5
 
 perfil.simulate(profileConfig=profilesConfig)
 df=perfil.get_detailed_load_df()

@@ -3,7 +3,7 @@ from Profiles.Factors.baseFactor import BaseFactor
 from Profiles.profileConfiguration import ProfileConfig
 from utils.enums import FactorType
 from typing import List
-from Profiles.Factors.Climatitzation.climatitzationComponent import ClimatitzationComponent
+from Profiles.Factors.Climatitzation.Components.climatitzationComponent import ClimatitzationComponent
 from Profiles.Factors.Climatitzation.thermostat import Thermostat
 import numpy as np
 

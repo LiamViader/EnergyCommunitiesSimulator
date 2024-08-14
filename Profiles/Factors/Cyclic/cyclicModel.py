@@ -1,10 +1,11 @@
 import random
+from utils.RandomNumbers.baseNumberDistribution import BaseNumberDistribution
 
 class CyclicModel():
     def __init__(self,name:str,
-                 cyclePower:float, 
-                 cycleTime:int, 
-                 standByPower:float,
+                 cyclePower:BaseNumberDistribution, 
+                 cycleTime:BaseNumberDistribution, 
+                 standByPower:BaseNumberDistribution,
                  standByTime:float
                  ):
         self.name=name
@@ -14,16 +15,16 @@ class CyclicModel():
         self.standByTime=standByTime #temps que sol esta en standby al dia, en hores
 
     def get_cycle_power(self):
-        return self.cyclePower
+        return self.cyclePower.generate_random()
 
-    def get_cycle_time(self): #retorna el temps de rentat en minuts
-        return self.cycleTime*60
+    def get_cycle_minutes(self): #retorna el temps de rentat en minuts
+        return self.cycleTime.generate_random()*60
 
-    def get_stand_by_power(self):#returns load in kwh of standby power during hours
+    def get_stand_by_power(self):
         probability=self.standByTime/24
         number=random.random()
         if number<probability:
-            return self.standByPower
+            return self.standByPower.generate_random()
         else:
             return 0
     

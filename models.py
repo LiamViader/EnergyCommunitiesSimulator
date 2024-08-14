@@ -11,46 +11,46 @@ MODELS ={
     'DISHWASHERS': {
         'STANDARD': CyclicModel(
             name='dishwasher standard',
-            cyclePower=0.825,
-            cycleTime=2,
-            standByPower=0.0007,
+            cyclePower=FixedValueDistribution(0.825),
+            cycleTime=FixedValueDistribution(2),
+            standByPower=FixedValueDistribution(0.0007),
             standByTime=24
         ),
         'ECO': CyclicModel(
             name='dishwasher eco',
-            cyclePower=0.26,
-            cycleTime=3.5,
-            standByPower=0.0007,
+            cyclePower=FixedValueDistribution(0.26),
+            cycleTime=FixedValueDistribution(3.5),
+            standByPower=FixedValueDistribution(0.0007),
             standByTime=24
         ),
     },
     'WASHING_MACHINES':{
         'STANDARD': CyclicModel(
             name='washing machine standard',
-            cyclePower=1.0,
-            cycleTime=1.5,
-            standByPower=0.0005,
+            cyclePower=FixedValueDistribution(1.0),
+            cycleTime=FixedValueDistribution(1.5),
+            standByPower=FixedValueDistribution(0.0005),
             standByTime=22.5   
         ),
         'HIGH_EFFICIENCY': CyclicModel(
             name='washing machine high efficiency',
-            cyclePower=0.75,
-            cycleTime=1.25,
-            standByPower=0.0003,
+            cyclePower=FixedValueDistribution(0.75),
+            cycleTime=FixedValueDistribution(1.25),
+            standByPower=FixedValueDistribution(0.0003),
             standByTime=22.75
         ),
         'FRONT_LOAD': CyclicModel(
             name='washing machine front load',
-            cyclePower=0.9,
-            cycleTime=1.75,
-            standByPower=0.0004,
+            cyclePower=FixedValueDistribution(0.9),
+            cycleTime=FixedValueDistribution(1.75),
+            standByPower=FixedValueDistribution(0.0004),
             standByTime=22.25
         ),
         'COMPACT': CyclicModel(
             name='washing machine compact',
-            cyclePower=0.5,
-            cycleTime=1.0,
-            standByPower=0.0002,
+            cyclePower=FixedValueDistribution(0.5),
+            cycleTime=FixedValueDistribution(1.0),
+            standByPower=FixedValueDistribution(0.0002),
             standByTime=23.0
         ),
     },
@@ -134,6 +134,55 @@ MODELS ={
             minWindVel=4,
             optimalWindVel=10.7,
             nominalPower=9
+        ),
+        'BASIC5KW': WindTurbineModel(
+            name="WindTurbine-BASIC5KW",
+            minWindVel=3.5,      # Velocidad mínima del viento en m/s
+            optimalWindVel=12,   # Velocidad óptima del viento en m/s
+            nominalPower=5       # Potencia nominal en kW
+        ),
+        'SMALL2KW': WindTurbineModel(
+            name="WindTurbine-SMALL2KW",
+            minWindVel=2.5,     
+            optimalWindVel=10,   
+            nominalPower=2       
+        ),
+    },
+    'OTHER_DEVICES':{
+        'TELEVISION1': CyclicModel(
+            name='Television',
+            cyclePower=FixedValueDistribution(0.1),
+            cycleTime=TruncatedNormalDistribution(std=1, min=0, max=5, mu=3),
+            standByPower=FixedValueDistribution(0.01),
+            standByTime=19 
+        ),
+        'LAPTOP1': CyclicModel(
+            name='Laptop',
+            cyclePower=FixedValueDistribution(0.05),
+            cycleTime=TruncatedNormalDistribution(std=2, min=0, max=8, mu=4),
+            standByPower=FixedValueDistribution(0.01), 
+            standByTime=16 
+        ),
+        'MICROWAVE1': CyclicModel(
+            name='Microwave',
+            cyclePower=FixedValueDistribution(1),
+            cycleTime=TruncatedNormalDistribution(std=0.1, min=0.05, max=0.2, mu=0.1),
+            standByPower=FixedValueDistribution(0),
+            standByTime=24
+        ),
+        'TOASTER1': CyclicModel(
+            name='Toaster',
+            cyclePower=FixedValueDistribution(1.2), 
+            cycleTime=TruncatedNormalDistribution(std=0.1, min=0.05, max=0.2, mu=0.1),
+            standByPower=FixedValueDistribution(0),
+            standByTime=24 
+        ),
+        'HAIRDRYER1': CyclicModel(
+            name='HairDryer',
+            cyclePower=FixedValueDistribution(1.5), 
+            cycleTime=TruncatedNormalDistribution(std=0.1, min=0.1, max=0.3, mu=0.2),
+            standByPower=FixedValueDistribution(0),
+            standByTime=24 
         )
     },
 }

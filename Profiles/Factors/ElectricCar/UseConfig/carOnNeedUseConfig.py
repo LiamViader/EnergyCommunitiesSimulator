@@ -1,11 +1,11 @@
 from typing import List, Tuple
 from utils.minuteInterval import MinuteInterval
 from utils.RandomNumbers.baseNumberDistribution import BaseNumberDistribution
-from Profiles.Factors.ElectricCar.carBaseUseConfig import CarBaseUseConfig
+from Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig import CarBaseUseConfig
 from Profiles.Factors.ElectricCar.electricCarModel import ElectricCarModel
 
 class CarOnNeedUseConfig(CarBaseUseConfig):
-    def __init__(self, dailyUsage: List[BaseNumberDistribution], chargeIntervals: List[MinuteInterval], batteryThreshold: float):
+    def __init__(self, dailyUsage: Tuple[BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution], chargeIntervals: Tuple[MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval], batteryThreshold: float):
         super().__init__(dailyUsage)
         self.chargeIntervals = chargeIntervals  #per cada dia de la setmana, intervals al que sol comencar a carregar aquell dia
         self.batteryThreshold = batteryThreshold  #Nivell de bateria passat el qual carrega (0-1) p.e 0.8

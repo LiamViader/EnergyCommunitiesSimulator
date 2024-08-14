@@ -2,7 +2,7 @@ from typing import List, Tuple
 from utils.minuteInterval import MinuteInterval
 
 class Thermostat:
-    def __init__(self,idealTemperatures:List[Tuple[MinuteInterval,float]],startingTemperature:float=None) -> None:
+    def __init__(self,idealTemperatures:List[Tuple[MinuteInterval,float]],startingTemperature:float=21) -> None:
         self.currentTemperature=startingTemperature
         self.idealTemperatures=idealTemperatures
 

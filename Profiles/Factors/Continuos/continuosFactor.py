@@ -15,5 +15,8 @@ class ContinuosFactor(BaseFactor):
         self.constant_power=constantPower
     
     def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
-        shape= (profileConfig.num_indices(),)
-        return np.full(shape,self.constant_power.generate_random())
+        load=np.zeros(profileConfig.num_indices())
+        hoursPerIndex=24/profileConfig.num_indices()
+        for i in range(profileConfig.num_indices()):
+            load[i]+=self.constant_power.generate_random()*hoursPerIndex
+        return load

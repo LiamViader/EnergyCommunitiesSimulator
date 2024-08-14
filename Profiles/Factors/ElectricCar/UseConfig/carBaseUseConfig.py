@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 class CarBaseUseConfig(ABC):
-    def __init__(self,dailyUsage: List[BaseNumberDistribution]):
+    def __init__(self,dailyUsage: Tuple[BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution]):
         self.dailyUsage = dailyUsage  #llista de km migs que fa per cada dia de la setmana
     
     @abstractmethod

@@ -1,36 +1,84 @@
-from Profiles.profile import Profile
-from Profiles.profileConfiguration import ProfileConfig
 from Community.communityConfiguration import CommunityConfig
-from utils.enums import Granularity, FactorType
-from Profiles.Factors.Cyclic.cyclicFactor import CyclicFactor
-from Profiles.Factors.Cyclic.cyclicUseConfig import CyclicUseConfig
-from utils.minuteInterval import MinuteInterval
-from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
-from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
-from Profiles.Factors.SolarPanel.solarPV import SolarPV
-from Profiles.Battery.batteriesManager import BatteriesManager
-from Profiles.Factors.Continuos.continuosCyclicFactor import ContinuosCyclicFactor
-from Profiles.Factors.ElectricCar.carOnNeedUseConfig import CarOnNeedUseConfig
-from Profiles.Factors.ElectricCar.electricCarFactor import ElectricCarFactor
-from Profiles.Factors.Continuos.continuosFactor import ContinuosFactor
+from utils.enums import Granularity, FactorType, MarketCountry
 from utils.geolocation import Geolocation
-from utils.RandomNumbers.truncatedNormalDistribution import TruncatedNormalDistribution
-from utils.RandomNumbers.normalDistribution import NormalDistribution
-from Profiles.Factors.Climatitzation.climatitzationFactor import ClimatitzationFactor
-from Profiles.Factors.Climatitzation.heating import Heating
-from Profiles.Factors.Climatitzation.thermostat import Thermostat
+from Community.community import Community
 from datetime import datetime, date
 from models import MODELS
 import pandas as pd
 import numpy as np
 
+from Profiles.examples import small_apartment_1, small_apartment_2, small_apartment_3, small_apartment_4, small_apartment_5, small_apartment_6
+from Community.Sharing.virtualNetBilling import VirtualNetBilling
+from Community.Sharing.sequentialSharing import SequentialSharing
 
-from Profiles.Factors.Climatitzation.temperature import Temperature
+from Community.EnergyPrice.wholesaleMarket import WholesaleMarket
 
+
+
+market=WholesaleMarket(country=MarketCountry.Spain,start=date(2023,1,1),end=date(2023,1,1))
+prices=market.prices_at_date(date(2023,4,1))
+print(prices)
 
 madrid=Geolocation("Madrid, Spain")
 
-start_date=date(2024, 1, 25)
+start_date=date(2024, 1, 1)
 
-communityConfig=CommunityConfig(granularity=Granularity.FifteenMinutes,currentDate=start_date,geolocation=madrid)
+
+
+communityConfig=CommunityConfig(
+    granularity=Granularity.FifteenMinutes,
+    currentDate=start_date,
+    geolocation=madrid,
+    sharePersonalPvs=True,
+    showPersonalPvEarnings=True
+
+)
+
+community=Community(
+    profiles=[
+        (small_apartment_1,0.25),
+        (small_apartment_2,0.5),
+        (small_apartment_3,0.25)
+    ],
+    communityAssets=[],
+    sharingMethod=SequentialSharing()
+)
+
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+community.simulate(communityConfig=communityConfig)
+community.export_sharings_to_excel()
+communityConfig.step_one_day()
+
 
