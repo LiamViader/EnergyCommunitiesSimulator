@@ -3,7 +3,7 @@ import random
 from typing import List,Tuple
 from utils.minuteInterval import MinuteInterval
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from abc import ABC, abstractmethod
 
 
@@ -12,7 +12,7 @@ class CyclicBaseUseConfig(ABC):
         pass
     
     @abstractmethod
-    def use(self,cyclicModel:CyclicModel,profileConfig:ProfileConfig)->Tuple[np.ndarray,np.ndarray]:
+    def use(self,cyclicModel:CyclicModel,simulationConfig:SimulationConfig)->Tuple[np.ndarray,np.ndarray]:
         pass
 
 

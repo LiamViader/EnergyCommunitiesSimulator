@@ -3,7 +3,7 @@ import random
 from typing import List,Tuple
 from utils.minuteInterval import MinuteInterval
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig import CyclicBaseUseConfig
 
 
@@ -16,8 +16,8 @@ class CyclicWeeklyUseConfig(CyclicBaseUseConfig):
     def get_random_interval(self)->MinuteInterval:
         return self.intervals[random.randint(0,len(self.intervals)-1)]
     
-    def use(self,cyclicModel:CyclicModel,profileConfig:ProfileConfig)->Tuple[np.ndarray,np.ndarray]:
-        load=np.zeros(profileConfig.num_indices())
+    def use(self,cyclicModel:CyclicModel,simulationConfig:SimulationConfig)->Tuple[np.ndarray,np.ndarray]:
+        load=np.zeros(simulationConfig.num_indices())
         overflow=np.array([])
         daylyAverage=self.timesWeekly/7
         #es podria utilitzar distribucio poisson, pero penso que és més adequat que si la mitja és major que 1 la posi una vegada com a minim, ja que en el cas de posar el rentaplats si algu el posa 7/7 dies és més probable que el posi cada dia, que que el posi un dia 2 cops, un altre 1, un altre 0...
@@ -30,7 +30,7 @@ class CyclicWeeklyUseConfig(CyclicBaseUseConfig):
             else:
                 selectedInterval=self.get_random_interval()
             selectedStartWashingInMinutes=selectedInterval.random()
-            overflow=self.__distribute_cycle_load(load,overflow,selectedStartWashingInMinutes,profileConfig,cyclicModel)
+            overflow=self.__distribute_cycle_load(load,overflow,selectedStartWashingInMinutes,simulationConfig,cyclicModel)
             daylyAverage-=1
         rand_float=random.random()
         if(rand_float<daylyAverage):
@@ -41,25 +41,25 @@ class CyclicWeeklyUseConfig(CyclicBaseUseConfig):
             else:
                 selectedInterval=self.get_random_interval()
             selectedStartWashingInMinutes=selectedInterval.random()
-            overflow=self.__distribute_cycle_load(load,overflow,selectedStartWashingInMinutes,profileConfig,cyclicModel)
+            overflow=self.__distribute_cycle_load(load,overflow,selectedStartWashingInMinutes,simulationConfig,cyclicModel)
         return load, overflow
 
 
-    def __distribute_cycle_load(self,load:np.ndarray,overflow:np.ndarray,selectedStartWashingInMinutes:float,profileConfig:ProfileConfig,cyclicModel:CyclicModel):
+    def __distribute_cycle_load(self,load:np.ndarray,overflow:np.ndarray,selectedStartWashingInMinutes:float,simulationConfig:SimulationConfig,cyclicModel:CyclicModel):
         timeRemaining=cyclicModel.get_cycle_minutes()
         while(timeRemaining>0):
             timeElapsed=cyclicModel.get_cycle_minutes()-timeRemaining
             currentTimestampMinutes=selectedStartWashingInMinutes+timeElapsed
-            indicesPerMinute=profileConfig.num_indices()/1440
+            indicesPerMinute=simulationConfig.num_indices()/1440
             currentIndex=int(currentTimestampMinutes*indicesPerMinute)
             nextIndex=currentIndex+1
             nextIndexTimestampMinutes=nextIndex/indicesPerMinute
             hoursElapsedThisIteration=min(((nextIndexTimestampMinutes-currentTimestampMinutes)/60),timeRemaining/60)
             indexLoad=cyclicModel.get_cycle_power()*hoursElapsedThisIteration
-            if(currentIndex<profileConfig.num_indices()):#si hi cap al dia actual
+            if(currentIndex<simulationConfig.num_indices()):#si hi cap al dia actual
                 load[currentIndex]+=indexLoad
             else:#sino al overflow
-                transformedCurrentIndex=currentIndex-profileConfig.num_indices()
+                transformedCurrentIndex=currentIndex-simulationConfig.num_indices()
                 if transformedCurrentIndex<len(overflow):
                     overflow[transformedCurrentIndex]+=indexLoad
                 else:

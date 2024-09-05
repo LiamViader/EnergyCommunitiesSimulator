@@ -1,18 +1,13 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
-
+from typing import Optional
 
 class BaseEnergyPlan(ABC):
-    def __init__(self) -> None:
-        pass
-
-    @abstractmethod
-    def sell_energy(self,energy:float,instant:datetime)->float: #energy in kwh, returns earnings
-        pass
-
-    @abstractmethod
-    def buy_energy(self,energy:float,instant:datetime)->float: #energy in kwh, returns cost
-        pass
+    def __init__(self,name:str) -> None:
+        self.name=name
+    
+    def get_name(self)->str:
+        return self.name
 
     @abstractmethod
     def selling_price(self,instant:datetime)->float: #returns €/kwh
@@ -20,4 +15,8 @@ class BaseEnergyPlan(ABC):
 
     @abstractmethod
     def buying_price(self,instant:datetime)->float: #returns €/kwh
+        pass
+    
+    @abstractmethod
+    def flat_price_month(self,instant:Optional[datetime])->float: #returns €
         pass

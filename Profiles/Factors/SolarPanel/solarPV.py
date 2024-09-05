@@ -1,5 +1,5 @@
 from Profiles.Factors.baseFactor import BaseFactor
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from utils.enums import FactorType
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 from Profiles.Factors.SolarPanel.solarPanel import SolarPanel
@@ -15,9 +15,9 @@ class SolarPV(BaseFactor):
         super().__init__(name, FactorType.Producer)
         self.solarPanels=solarPanels
     
-    def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
-        totalLoad = pd.Series(np.zeros(profileConfig.num_indices()))
+    def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray:
+        totalLoad = pd.Series(np.zeros(simulationConfig.num_indices()))
         for solarPanel in self.solarPanels:
-            panelLoad=solarPanel.simulate(profileConfig=profileConfig)
+            panelLoad=solarPanel.simulate(simulationConfig=simulationConfig)
             totalLoad+=panelLoad
         return totalLoad

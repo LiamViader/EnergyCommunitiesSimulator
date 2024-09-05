@@ -4,7 +4,7 @@ import random
 from typing import Tuple
 from Profiles.Factors.baseFactor import BaseFactor
 from Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig import CyclicBaseUseConfig
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
 from utils.enums import FactorType
 
@@ -20,16 +20,16 @@ class CyclicFactor(BaseFactor):
 
 
 
-    def simulate(self,profileConfig:ProfileConfig)->np.ndarray:
-        load=np.zeros(profileConfig.num_indices())
+    def simulate(self,simulationConfig:SimulationConfig)->np.ndarray:
+        load=np.zeros(simulationConfig.num_indices())
         if self.overflow is not None:
             overflowPadded = np.pad(self.overflow, (0, len(load) - len(self.overflow)), 'constant')
             load+=overflowPadded
-        hoursElapsedPerIndex=24.0/profileConfig.num_indices()
-        for i in range(profileConfig.num_indices()):#afegeixo primer el standbypower
+        hoursElapsedPerIndex=24.0/simulationConfig.num_indices()
+        for i in range(simulationConfig.num_indices()):#afegeixo primer el standbypower
             load[i]+=self.cyclicModel.get_stand_by_power()*hoursElapsedPerIndex
 
-        useLoad,overflow=self.useConfig.use(self.cyclicModel,profileConfig)
+        useLoad,overflow=self.useConfig.use(self.cyclicModel,simulationConfig)
         load+=useLoad
         self.overflow=overflow
         return load

@@ -1,57 +1,75 @@
 from Profiles.profile import Profile
-from Community.communityConfiguration import CommunityConfig
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from Community.Sharing.sharingMethod import SharingMethod
+from Profiles.utils.profileEnergyDataAux import ProfileEnergyDataAux
+from Profiles.utils.profileSharingsDataAux import ProfileSharingsDataAux
 from typing import List, Dict, Tuple
 import numpy as np
 
 class VirtualNetBilling(SharingMethod):
     def __init__(self) -> None:
-        pass
+        super().__init__("Virtual Net Billing")
 
-    def share(self,profiles:List[Tuple[Profile,float]],communityConfig:CommunityConfig,communityPv:np.ndarray)->Dict[Profile,Dict[str,np.ndarray]]:
-        totalPvExcedent=np.zeros(communityConfig.num_indices())
-        totalLoadExcedent=np.zeros(communityConfig.num_indices())
-        communityExcedents={}
-        communitySharings={}
-        for profile in profiles:
-            load, pv=profile.get_load_pv()
-            communitySharings[profile]={
-                'load':load,
-                'pv':pv,
-            }
-            excedents=load-pv
-            for index, value in enumerate(excedents):
-                if value>0:
-                    totalLoadExcedent[index]+=value
+    def share(self,profiles:List[ProfileEnergyDataAux],sharePersonalPvs:bool,communityPv:float)->List[ProfileSharingsDataAux]:
+        totalToImport=0
+        totalToExport=0
+        for profileEnergy in profiles:
+            if sharePersonalPvs:
+                pv=profileEnergy.production+communityPv*profileEnergy.share
+                load=profileEnergy.load
+            else:
+                pv=profileEnergy.share *communityPv
+                load=profileEnergy.load-profileEnergy.production
+                if load<0:
+                    load=0
+            residual=load-pv
+            if residual>0:
+                totalToImport+=residual
+            else:
+                totalToExport+=abs(residual)
+        sharingsList=[]
+        for profileEnergy in profiles:
+            profileSharings=ProfileSharingsDataAux(profile_id=profileEnergy.id)
+            profileSharings.communityShares=profileEnergy.share
+            if sharePersonalPvs:
+                    pv=profileEnergy.production+communityPv*profileEnergy.share
+                    load=profileEnergy.load
+                    profileSharings.totalPvAbleToShare=pv
+            else:
+                pv=profileEnergy.share *communityPv
+                load=profileEnergy.load-profileEnergy.production
+                if load<0:
+                    profileSharings.personalPvExcedent=abs(load)
+                    load=0
+                profileSharings.totalPvAbleToShare=pv
+            residual=load-pv
+            if totalToImport>totalToExport:
+                if residual>0:
+                    if totalToImport!=0: weight=residual/totalToImport #to avoid dividing by 0
+                    else: weight=0
+                    profileSharings.microgridImport=weight*totalToExport
+                    profileSharings.gridImport=residual-profileSharings.microgridImport
+                    profileSharings.gridExport=0
+                    profileSharings.microgridExport=0
                 else:
-                    totalPvExcedent[index]+=abs(value)
-            communityExcedents[profile]=excedents
-        for profile in profiles:
-            gridExports=np.zeros(communityConfig.num_indices())
-            gridImports=np.zeros(communityConfig.num_indices())
-            microgridExports=np.zeros(communityConfig.num_indices())
-            microgridImports=np.zeros(communityConfig.num_indices())
-            for i in range(communityConfig.num_indices()):
-                if communityExcedents[profile][i]>0:
-                    if totalLoadExcedent[i]!=0:
-                        microImportProportion=communityExcedents[profile][i]/totalLoadExcedent[i]
-                    else:
-                        microImportProportion=0
-                    microgridImports[i]=min(microImportProportion*totalPvExcedent[i],communityExcedents[profile][i])
-                    gridImports[i]=communityExcedents[profile][i]-microgridImports[i]
+                    profileSharings.microgridImport=0
+                    profileSharings.gridImport=0
+                    profileSharings.microgridExport=abs(residual)
+                    profileSharings.gridExport=0
+            else:
+                if residual<0:
+                    if totalToExport!=0: weight=abs(residual)/totalToExport #to avoid dividing by 0
+                    else: weight=0
+                    profileSharings.microgridExport=weight*totalToImport
+                    profileSharings.gridExport=abs(residual)-profileSharings.microgridExport
+                    profileSharings.gridImport=0
+                    profileSharings.microgridImport=0
                 else:
-                    if totalPvExcedent[i]!=0:
-                        microExportProportion=abs(communityExcedents[profile][i])/totalPvExcedent[i]
-                    else:
-                        microExportProportion=0
-                    microgridExports[i]=min(microExportProportion*totalLoadExcedent[i],abs(communityExcedents[profile][i]))
-                    gridExports[i]=abs(communityExcedents[profile][i])-microgridExports[i]
-            communitySharings[profile].update({
-                'grid-Export':gridExports,
-                'grid-Import':gridImports,
-                'microgrid-Export':microgridExports,
-                'microgrid-Import':microgridImports
-            })
-        return communitySharings
+                    profileSharings.microgridImport=residual
+                    profileSharings.gridImport=0
+                    profileSharings.microgridExport=0
+                    profileSharings.gridExport=0
+            sharingsList.append(profileSharings)
+        return sharingsList
+                
 

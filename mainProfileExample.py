@@ -1,6 +1,5 @@
 from Profiles.profile import Profile
-from Profiles.profileConfiguration import ProfileConfig
-from Community.communityConfiguration import CommunityConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from utils.enums import Granularity, FactorType, LightType
 from Profiles.Factors.Cyclic.cyclicFactor import CyclicFactor
 from Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig import CyclicWeeklyUseConfig
@@ -34,9 +33,7 @@ madrid=Geolocation("Madrid, Spain")
 
 current_date=date(2024, 7, 25)
 
-communityConfig=CommunityConfig(granularity=Granularity.FifteenMinutes,currentDate=current_date,geolocation=madrid)
-
-profilesConfig=ProfileConfig(communityConfig=communityConfig)
+simulationConfig=SimulationConfig(granularity=Granularity.FifteenMinutes,currentDate=current_date,geolocation=madrid)
 
 
 
@@ -146,59 +143,27 @@ windTurbine=WindTurbineFactor(MODELS['WIND_TURBINES']['TUGE10KW'])
 
 perfil=small_apartment_5
 
-perfil.simulate(profileConfig=profilesConfig)
+perfil.simulate(simulationConfig=simulationConfig)
 df=perfil.get_detailed_load_df()
 df.to_excel("DataOutputs/day1_detailed.xlsx")
 
 combined=perfil.get_combined_load()
 series=pd.Series(combined)
 df_combined=pd.DataFrame()
-timeSeries=profilesConfig.get_time_series()
+timeSeries=simulationConfig.get_time_series()
 df_combined["TimeStamp"] = timeSeries.index
 df_combined['Load']=series
 df_combined.to_excel("DataOutputs/day1_combined.xlsx")
 
-detailed_acumulator=perfil.get_detailed_load()
 
-for i in range(360):
-    profilesConfig.step_one_day()
-    perfil.simulate(profileConfig=profilesConfig)
-    detailed=perfil.get_detailed_load()
-    for name, loads in detailed.items():
-        for index, (load, factor_type) in enumerate(loads):
-            acumulated=detailed_acumulator[name][index][0]+load
-            detailed_acumulator[name][index]=(acumulated,factor_type)
+simulationConfig.step_one_day()
 
-df_detailed=pd.DataFrame()
-timeSeries=profilesConfig.get_time_series()
-df_detailed["TimeStamp"] = timeSeries.index
-for name, loads in detailed_acumulator.items():
-    for index, (load, factor_type) in enumerate(loads):
-        serie = pd.Series(load/361)
-        df_detailed[f"{name}_{index}"] = serie
-
-df_detailed.to_excel("DataOutputs/anual_detailed.xlsx")
-
-df_combinedAnual=pd.DataFrame()
-df_combinedAnual["TimeStamp"] = timeSeries.index
-combinedLoad=np.zeros(profilesConfig.num_indices())
-for name, loads in detailed_acumulator.items():
-    for index, (load, factor_type) in enumerate(loads):
-        if factor_type==FactorType.Consumer or factor_type==FactorType.Prosumer:
-            combinedLoad+=load/361
-        else:
-            combinedLoad-=load/361
-df_combinedAnual['Load']=combinedLoad
-df_combinedAnual.to_excel("DataOutputs/anual_combined.xlsx")
-
-profilesConfig.step_one_day()
-
-perfil.simulate(profileConfig=profilesConfig)
+perfil.simulate(simulationConfig=simulationConfig)
 df=perfil.get_detailed_load_df()
 df.to_excel("DataOutputs/day2_detailed.xlsx")
 
-profilesConfig.step_one_day()
+simulationConfig.step_one_day()
 
-perfil.simulate(profileConfig=profilesConfig)
+perfil.simulate(simulationConfig=simulationConfig)
 df=perfil.get_detailed_load_df()
 df.to_excel("DataOutputs/day3_detailed.xlsx")

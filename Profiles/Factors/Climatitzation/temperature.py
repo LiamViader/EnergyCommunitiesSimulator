@@ -41,6 +41,9 @@ class Temperature:
         index=int(indexPerMinute*timestamp)
         exteriorTemp=self.temperature[index]
         return (exteriorTemp-insideTemp)*(1-math.pow(math.e,-1*((termicTransferenceCoef*superficialArea)/termicCapacityOfInteriorAir)*timeElapsed*60))
+    
+    def get_temperature(self)->np.ndarray:
+        return self.temperature
 
 
 

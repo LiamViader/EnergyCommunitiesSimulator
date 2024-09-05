@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from Profiles.profileConfiguration import ProfileConfig
 from utils.RandomNumbers.baseNumberDistribution import BaseNumberDistribution
 from typing import Tuple, List
 import numpy as np

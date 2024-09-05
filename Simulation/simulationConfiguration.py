@@ -9,15 +9,11 @@ from datetime import date, timedelta
 from Profiles.Factors.WindTurbine.wind import Wind
 
 #config of the load
-class CommunityConfig:
+class SimulationConfig:
     def __init__(self,granularity:Granularity=Granularity.Hour,
                  currentDate:date=date(2024,1,1),
-                 geolocation:Geolocation=Geolocation("Madrid, Spain"),
-                 sharePersonalPvs:bool=False,
-                 showPersonalPvEarnings:bool=True):
+                 geolocation:Geolocation=Geolocation("Madrid, Spain")):
         
-        self.showPersonalPvEarnings=showPersonalPvEarnings
-        self.sharePersonalPvs=sharePersonalPvs
         self.currentDate=currentDate
         self.granularity=granularity
         self.geolocation=geolocation
@@ -74,8 +70,6 @@ class CommunityConfig:
     def get_wind(self)->np.ndarray:
         return self.wind.get_wind()
     
-    def share_personal_pvs(self)->bool:
-        return self.sharePersonalPvs
     
-    def show_personal_pv_earnings(self)->bool:
-        return self.show_personal_pv_earnings
+    def get_temperature(self)->np.ndarray:
+        return self.temperature.get_temperature()

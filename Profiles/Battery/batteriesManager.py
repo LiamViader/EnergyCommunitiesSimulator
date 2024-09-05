@@ -1,14 +1,17 @@
 from typing import List
 from Profiles.Battery.battery import Battery
 import pandas as pd
-from Profiles.profileConfiguration import ProfileConfig
+from Profiles.Factors.baseFactor import BaseFactor
+from utils.enums import FactorType
+from Simulation.simulationConfiguration import SimulationConfig
 import numpy as np
 
-class BatteriesManager:
+class BatteriesManager(BaseFactor):
     def __init__(self,batteries:List[Battery]):
+        super().__init__("batteries", FactorType.Battery)
         self.batteries=batteries
 
-    def use_on(self,load:np.ndarray,config:ProfileConfig)->np.ndarray: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
+    def use_on(self,load:np.ndarray,config:SimulationConfig)->np.ndarray: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
         minutersPerIndex=1440/config.num_indices()
 
         def batteriesLoad(value):
@@ -33,6 +36,9 @@ class BatteriesManager:
             return batteriesLoad
         
         return np.vectorize(batteriesLoad)(load)
+    
+    def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray: #simplement perque la classe no sigui abstracta
+        return None
         
 
 

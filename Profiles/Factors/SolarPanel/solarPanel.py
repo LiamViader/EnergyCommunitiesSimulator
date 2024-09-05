@@ -1,5 +1,5 @@
 from Profiles.Factors.baseFactor import BaseFactor
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from utils.enums import FactorType
 from Profiles.Factors.SolarPanel.solarIrradiation import SolarIrradiation
 import numpy as np
@@ -14,8 +14,8 @@ class SolarPanel(BaseFactor):
         self.efficiency = efficiency
 
 
-    def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
-        hoursPerIndex=24/profileConfig.num_indices()
-        load=profileConfig.get_irradiation()*self.productionCapacity*self.efficiency*hoursPerIndex #en kwh
+    def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray:
+        hoursPerIndex=24/simulationConfig.num_indices()
+        load=simulationConfig.get_irradiation()*self.productionCapacity*self.efficiency*hoursPerIndex #en kwh
         return load
 

@@ -1,5 +1,5 @@
 from Profiles.Factors.baseFactor import BaseFactor
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from Profiles.Factors.Lightning.lightningModel import LightningModel
 from utils.enums import FactorType
 from typing import List, Tuple
@@ -14,11 +14,11 @@ class LightningFactor(BaseFactor):
         self.activityIntervals=activityIntervals
 
 
-    def simulate(self, profileConfig: ProfileConfig) -> np.ndarray:
-        load=np.zeros(profileConfig.num_indices())
-        hoursPerIndex=24/profileConfig.num_indices()
-        irradiation=profileConfig.get_irradiation()
-        for i in range(profileConfig.num_indices()):
+    def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray:
+        load=np.zeros(simulationConfig.num_indices())
+        hoursPerIndex=24/simulationConfig.num_indices()
+        irradiation=simulationConfig.get_irradiation()
+        for i in range(simulationConfig.num_indices()):
             load[i]+=hoursPerIndex*self.get_power_at(hoursPerIndex*i,irradiation[i])
         return load
     

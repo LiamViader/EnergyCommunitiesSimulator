@@ -3,7 +3,7 @@ import random
 from typing import List,Tuple
 from utils.minuteInterval import MinuteInterval
 from Profiles.Factors.Cyclic.cyclicModel import CyclicModel
-from Profiles.profileConfiguration import ProfileConfig
+from Simulation.simulationConfiguration import SimulationConfig
 from Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig import CyclicBaseUseConfig
 
 
@@ -12,33 +12,33 @@ class CyclicDaylyUseConfig(CyclicBaseUseConfig):
         self.weekUsage=weekUsage
         
     
-    def use(self,cyclicModel:CyclicModel,profileConfig:ProfileConfig)->Tuple[np.ndarray,np.ndarray]:
-        load=np.zeros(profileConfig.num_indices())
+    def use(self,cyclicModel:CyclicModel,simulationConfig:SimulationConfig)->Tuple[np.ndarray,np.ndarray]:
+        load=np.zeros(simulationConfig.num_indices())
         overflow=np.array([])
-        weekDay=profileConfig.get_day_of_week()
+        weekDay=simulationConfig.get_day_of_week()
         for interval in self.weekUsage[weekDay]:
             startInMinutes=interval.random()
-            overflow=self.__distribute_cycle_load(load,overflow,startInMinutes,profileConfig,cyclicModel)
+            overflow=self.__distribute_cycle_load(load,overflow,startInMinutes,simulationConfig,cyclicModel)
         return load,overflow
 
 
-    def __distribute_cycle_load(self,load:np.ndarray,overflow:np.ndarray,selectedStartWashingInMinutes:float,profileConfig:ProfileConfig,cyclicModel:CyclicModel)->np.ndarray:
+    def __distribute_cycle_load(self,load:np.ndarray,overflow:np.ndarray,selectedStartWashingInMinutes:float,simulationConfig:SimulationConfig,cyclicModel:CyclicModel)->np.ndarray:
         totalTime=cyclicModel.get_cycle_minutes()
         timeRemaining=totalTime
         power=cyclicModel.get_cycle_power()
         while(timeRemaining>0):
             timeElapsed=totalTime-timeRemaining
             currentTimestampMinutes=selectedStartWashingInMinutes+timeElapsed
-            indicesPerMinute=profileConfig.num_indices()/1440
+            indicesPerMinute=simulationConfig.num_indices()/1440
             currentIndex=int(currentTimestampMinutes*indicesPerMinute)
             nextIndex=currentIndex+1
             nextIndexTimestampMinutes=nextIndex/indicesPerMinute
             hoursElapsedThisIteration=min(((nextIndexTimestampMinutes-currentTimestampMinutes)/60),timeRemaining/60)
             indexLoad=power*hoursElapsedThisIteration
-            if(currentIndex<profileConfig.num_indices()):#si hi cap al dia actual
+            if(currentIndex<simulationConfig.num_indices()):#si hi cap al dia actual
                 load[currentIndex]+=indexLoad
             else:#sino al overflow
-                transformedCurrentIndex=currentIndex-profileConfig.num_indices()
+                transformedCurrentIndex=currentIndex-simulationConfig.num_indices()
                 if transformedCurrentIndex<len(overflow):
                     overflow[transformedCurrentIndex]+=indexLoad
                 else:

@@ -23,12 +23,13 @@ from Profiles.Factors.ElectricCar.electricCarFactor import ElectricCarFactor
 from Profiles.Factors.ElectricCar.electricCarModel import ElectricCarModel
 from Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig import CarOnNeedUseConfig
 from Profiles.Factors.WindTurbine.windTurbineFactor import WindTurbineFactor
+from EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic import SomEnergiaIndexadaDomestic
+from EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic import SomEnergiaPeriodesDomestic
 from models import MODELS
 
 small_apartment_1=Profile(
     name='small_apartment_1',
-    exteriorContactArea=30,
-    insideVolume=125,
+    energyPlan=SomEnergiaIndexadaDomestic(),
     loadFactors=[
         ClimatitzationFactor(
             name="Climatitzation_heating",
@@ -46,7 +47,9 @@ small_apartment_1=Profile(
                     (MinuteInterval(12,24,True),22)
                 ],
                 startingTemperature=22
-            )
+            ),
+            exteriorContactArea=30,
+            insideVolume=125,
         ),
         CyclicFactor(
             cyclicModel=MODELS['DISHWASHERS']['STANDARD'],
@@ -201,8 +204,7 @@ small_apartment_1=Profile(
 
 small_apartment_2 = Profile(
     name='small_apartment_2',
-    exteriorContactArea=35,
-    insideVolume=130,
+    energyPlan=SomEnergiaPeriodesDomestic(),
     loadFactors=[
         # Climatización (calefacción)
         ClimatitzationFactor(
@@ -221,7 +223,9 @@ small_apartment_2 = Profile(
                     (MinuteInterval(18,22,True),21)
                 ],
                 startingTemperature=18
-            )
+            ),
+            exteriorContactArea=35,
+            insideVolume=130,
         ),
         # Lavavajillas
         CyclicFactor(
@@ -300,8 +304,7 @@ small_apartment_2 = Profile(
 
 small_apartment_3 = Profile(
     name='small_apartment_3',
-    exteriorContactArea=25,
-    insideVolume=110,
+    energyPlan=SomEnergiaPeriodesDomestic(),
     loadFactors=[
         # Climatización (calefacción)
         ClimatitzationFactor(
@@ -320,7 +323,9 @@ small_apartment_3 = Profile(
                     (MinuteInterval(18,22,True),20)
                 ],
                 startingTemperature=18
-            )
+            ),
+            exteriorContactArea=25,
+            insideVolume=110,
         ),
         # Refrigerador
         ContinuosCyclicFactor(
@@ -389,8 +394,7 @@ small_apartment_3 = Profile(
 
 small_apartment_4 = Profile(
     name='small_apartment_4',
-    exteriorContactArea=45,
-    insideVolume=150,
+    energyPlan=SomEnergiaPeriodesDomestic(),
     loadFactors=[
         # Climatización (calefacción)
         ClimatitzationFactor(
@@ -409,7 +413,9 @@ small_apartment_4 = Profile(
                     (MinuteInterval(18,22,True),22)
                 ],
                 startingTemperature=20
-            )
+            ),
+            exteriorContactArea=45,
+            insideVolume=150,
         ),
         # Lavadora
         CyclicFactor(
@@ -499,8 +505,7 @@ small_apartment_4 = Profile(
 
 small_apartment_5 = Profile(
     name='small_apartment_5',
-    exteriorContactArea=50,
-    insideVolume=160,
+    energyPlan=SomEnergiaIndexadaDomestic(),
     loadFactors=[
         # Climatización (aire acondicionado)
         ClimatitzationFactor(
@@ -520,7 +525,9 @@ small_apartment_5 = Profile(
                     (MinuteInterval(20,24,True),24)
                 ],
                 startingTemperature=26
-            )
+            ),
+            exteriorContactArea=50,
+            insideVolume=160,
         ),
         # Lavavajillas
         CyclicFactor(
@@ -587,8 +594,7 @@ small_apartment_5 = Profile(
 
 small_apartment_6 = Profile(
     name='small_apartment_6',
-    exteriorContactArea=35,
-    insideVolume=140,
+    energyPlan=SomEnergiaPeriodesDomestic(),
     loadFactors=[
         # Climatización (calefacción)
         ClimatitzationFactor(
@@ -607,7 +613,9 @@ small_apartment_6 = Profile(
                     (MinuteInterval(18,22,True),20)
                 ],
                 startingTemperature=18
-            )
+            ),
+            exteriorContactArea=35,
+            insideVolume=140,
         ),
         # Refrigerador
         ContinuosCyclicFactor(
