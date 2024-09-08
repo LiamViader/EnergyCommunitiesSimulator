@@ -12,6 +12,8 @@ from Profiles.Factors.SolarPanel.solarPV import SolarPV
 from Profiles.examples import small_apartment_1, small_apartment_2, small_apartment_3, small_apartment_4, small_apartment_5, small_apartment_6
 from Community.Sharing.virtualNetBilling import VirtualNetBilling
 from Community.Sharing.sequentialSharing import SequentialSharing
+from Community.Sharing.quotaConsumptionSharing import QuotaConsumptionSharing
+from Community.Sharing.quota import Quota
 
 from EnergyPrice.wholesaleMarket import WholesaleMarket
 from EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria import SomEnergiaIndexadaIndustria
@@ -49,7 +51,7 @@ community=Community(
         (small_apartment_3,0.25)
     ],
     communityAssets=[communityPanels],
-    sharingMethod=VirtualNetBilling(),
+    sharingMethod=QuotaConsumptionSharing(),
     sharePersonalPvs=False,
     costCalculationMethod=AlwaysUseBestPlan(),
     energyPlan=SomEnergiaIndexadaIndustria()
@@ -59,6 +61,18 @@ for i in range(10):
     community.simulate(simulationConfig=simulationConfig)
     simulationConfig.step_one_day()
 
-print(community.optimize_shares_best_community_cost())
+print("COST of QuotaConsumptionSharing With reassign based on shares:",community.simulatedCommunity.get_total_community_cost())
+community.set_sharing_method(QuotaConsumptionSharing(reassignBasedOnCommunityShares=False))
+community.shareSimulatedEnergies()
+print("COST of QuotaConsumptionSharing With reassign based on proportion:",community.simulatedCommunity.get_total_community_cost())
+community.set_sharing_method(SequentialSharing())
+community.shareSimulatedEnergies()
+print("COST of SequentialSharing:",community.simulatedCommunity.get_total_community_cost())
+community.set_sharing_method(VirtualNetBilling())
+community.shareSimulatedEnergies()
+print("COST of VirtualNetBilling:",community.simulatedCommunity.get_total_community_cost())
+community.set_sharing_method(Quota())
+community.shareSimulatedEnergies()
+print("COST of Quota:",community.simulatedCommunity.get_total_community_cost())
 
 
