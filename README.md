@@ -28,8 +28,41 @@ Ensure you have the following installed:
 ### Installation
 
 1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/LiamViader/EnergyCommunitiesSimulator
+    cd EnergyCommunitiesSimulator
+    ```
 
-   ```bash
-   git clone https://github.com/LiamViader/EnergyCommunitiesSimulator
-   cd EnergyCommunitiesSimulator
-   ```
+2. **Create and activate a virtual environment:**
+    - On Windows:
+      ```bash
+      python -m venv venv
+      .\venv\Scripts\activate
+      ```
+
+    - On macOS/Linux:
+      ```bash
+      python3 -m venv venv
+      source venv/bin/activate
+      ```
+
+3. **Install the required packages:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+
+### Running the Project
+
+```bash
+python main.py
+```
+### Usage
+
+### Contributing
+
+### License
+
+### Acknowledgments
+
+
