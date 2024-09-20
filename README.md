@@ -53,16 +53,16 @@ Ensure you have the following installed:
 
 
 ### Running the Project
-
+<!-- TODO -->
 ```bash
 python main.py
 ```
 ### Usage
-
+<!-- TODO: Add usage instructions later (could implement the input using a yaml and optional parameters for files. Or just implement the visual interactive interface)--> 
 ### Contributing
-
+<!-- TODO -->
 ### License
-
+<!-- TODO -->
 ### Acknowledgments
 
-
+<!-- TODO -->
