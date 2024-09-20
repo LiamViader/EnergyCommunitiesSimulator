@@ -61,18 +61,18 @@ for i in range(10):
     community.simulate(simulationConfig=simulationConfig)
     simulationConfig.step_one_day()
 
-print("COST of QuotaConsumptionSharing With reassign based on shares:",community.simulatedCommunity.get_total_community_cost())
+print("COST of QuotaConsumptionSharing With reassign based on shares:",community._simulatedCommunity.get_total_community_cost())
 community.set_sharing_method(QuotaConsumptionSharing(reassignBasedOnCommunityShares=False))
 community.shareSimulatedEnergies()
-print("COST of QuotaConsumptionSharing With reassign based on proportion:",community.simulatedCommunity.get_total_community_cost())
+print("COST of QuotaConsumptionSharing With reassign based on proportion:",community._simulatedCommunity.get_total_community_cost())
 community.set_sharing_method(SequentialSharing())
 community.shareSimulatedEnergies()
-print("COST of SequentialSharing:",community.simulatedCommunity.get_total_community_cost())
+print("COST of SequentialSharing:",community._simulatedCommunity.get_total_community_cost())
 community.set_sharing_method(VirtualNetBilling())
 community.shareSimulatedEnergies()
-print("COST of VirtualNetBilling:",community.simulatedCommunity.get_total_community_cost())
+print("COST of VirtualNetBilling:",community._simulatedCommunity.get_total_community_cost())
 community.set_sharing_method(Quota())
 community.shareSimulatedEnergies()
-print("COST of Quota:",community.simulatedCommunity.get_total_community_cost())
+print("COST of Quota:",community._simulatedCommunity.get_total_community_cost())
 
 

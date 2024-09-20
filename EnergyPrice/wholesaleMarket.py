@@ -5,6 +5,8 @@ import pandas as pd
 import warnings
 
 
+#python -m pip install git+https://github.com/acruzgarcia/OMIEData
+
 from OMIEData.DataImport.omie_marginalprice_importer import OMIEMarginalPriceFileImporter
 from OMIEData.Enums.all_enums import DataTypeInMarginalPriceFile
 

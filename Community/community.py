@@ -31,56 +31,56 @@ class Community():
                  sharingMethod:SharingMethod=SequentialSharing(),
                  wholesaleMarketCountry:MarketCountry=MarketCountry.Spain) -> None:
         
-        self.profiles= {tuple[0].get_id(): tuple[0] for tuple in profiles}
-        self.profilesShare={tuple[0].get_id(): tuple[1] for tuple in profiles}
-        self.communityAssets=communityAssets
-        self.sharePersonalPvs=sharePersonalPvs
-        self.energyPlan=energyPlan
-        self.costCalculationMethod=costCalculationMethod
-        self.pv=None
-        self.detailedPv:Dict[BaseFactor,np.ndarray]={}
-        self.sharingMethod=sharingMethod
-        self.configLastSimulation=None
-        self.simulatedCommunity=SimulatedCommunity()
+        self._profiles= {tuple[0].get_id(): tuple[0] for tuple in profiles}
+        self._profilesShare={tuple[0].get_id(): tuple[1] for tuple in profiles}
+        self._communityAssets=communityAssets
+        self._sharePersonalPvs=sharePersonalPvs
+        self._energyPlan=energyPlan
+        self._costCalculationMethod=costCalculationMethod
+        self._pv=None
+        self._detailedPv:Dict[BaseFactor,np.ndarray]={}
+        self._sharingMethod=sharingMethod
+        self._configLastSimulation=None
+        self._simulatedCommunity=SimulatedCommunity()
         WholesaleMarket(country=wholesaleMarketCountry)
 
 
     def simulate(self,simulationConfig:SimulationConfig)->None:
-        self.__simulate_community_assets(simulationConfig)
+        self._simulate_community_assets(simulationConfig)
 
-        for profile_id, profile in self.profiles.items():
+        for profile_id, profile in self._profiles.items():
             profile.simulate(simulationConfig=simulationConfig)
         
-        self.__update_simulateds(list(self.profiles.values()),simulationConfig)
-        self.__share_on_current_date(simulationConfig)
+        self._update_simulateds(list(self._profiles.values()),simulationConfig)
+        self._share_on_current_date(simulationConfig)
         
 
-        self.configLastSimulation=simulationConfig
+        self._configLastSimulation=simulationConfig
     
 
-    def __simulate_community_assets(self,simulationConfig:SimulationConfig)->None:
-        self.detailedPv:Dict[BaseFactor,np.ndarray]={}
-        self.pv=np.zeros(simulationConfig.num_indices())
-        for asset in self.communityAssets:
+    def _simulate_community_assets(self,simulationConfig:SimulationConfig)->None:
+        self._detailedPv:Dict[BaseFactor,np.ndarray]={}
+        self._pv=np.zeros(simulationConfig.num_indices())
+        for asset in self._communityAssets:
             assetLoad=asset.simulate(simulationConfig=simulationConfig)
             if asset.get_factor_type()==FactorType.Producer:
-                self.pv+=assetLoad
-                self.detailedPv[asset]=assetLoad
+                self._pv+=assetLoad
+                self._detailedPv[asset]=assetLoad
 
-    def __update_simulateds(self,profiles:List[Profile],simulationConfig:SimulationConfig)->None:
-        self.simulatedCommunity.add_profiles_simulation_day(profiles,simulationConfig.get_current_date(),override=True)
-        self.simulatedCommunity.add_simulated_community_pv(self.pv,self.detailedPv,simulationConfig.get_current_date(),override=True)
-        self.simulatedCommunity.add_simulated_external_factors(simulationConfig,simulationConfig.get_current_date(),override=True)
+    def _update_simulateds(self,profiles:List[Profile],simulationConfig:SimulationConfig)->None:
+        self._simulatedCommunity.add_profiles_simulation_day(profiles,simulationConfig.get_current_date(),override=True)
+        self._simulatedCommunity.add_simulated_community_pv(self._pv,self._detailedPv,simulationConfig.get_current_date(),override=True)
+        self._simulatedCommunity.add_simulated_external_factors(simulationConfig,simulationConfig.get_current_date(),override=True)
 
-    def __share_on_current_date(self,simulationConfig:SimulationConfig)->None:
+    def _share_on_current_date(self,simulationConfig:SimulationConfig)->None:
         currentDate=simulationConfig.get_current_date()
         datetimeStart = datetime.combine(currentDate,time.min)
         datetimeEnd = datetime.combine(currentDate, time.max)
         self.shareSimulatedEnergies(datetimeStart,datetimeEnd)
 
-    def shareSimulatedEnergies(self,start:datetime=None,end:datetime=None)->None: #shares the simulated energy using the self.sharingMethod on the range of time start-end (includes start includes end). si algun dels limits del rang es None, significa infinit
-        profilesDf=self.simulatedCommunity.get_summarized_simulated_profiles(start,end)
-        communityPvs=self.simulatedCommunity.get_community_pvs(start,end)
+    def shareSimulatedEnergies(self,start:datetime=None,end:datetime=None)->None: #shares the simulated energy using the self._sharingMethod on the range of time start-end (includes start includes end). si algun dels limits del rang es None, significa infinit
+        profilesDf=self._simulatedCommunity.get_summarized_simulated_profiles(start,end)
+        communityPvs=self._simulatedCommunity.get_community_pvs(start,end)
         groupedByDateTime = profilesDf.groupby(level='datetime')
         sharingInfoDatetimes:List[datetime]=[]
         profilesEnergySharings:Dict[datetime,List[ProfileSharingsDataAux]]={}
@@ -95,7 +95,7 @@ class Community():
             load = group['load']
             profileDataList:List[ProfileEnergyDataAux]=[]
             for profile_id, profile_name, pv_value, load_value in zip(profile_ids, profile_names, pv, load):
-                profileShare = self.profilesShare.get(profile_id, 0)
+                profileShare = self._profilesShare.get(profile_id, 0)
                 profileData = ProfileEnergyDataAux(
                     id=profile_id,
                     name=profile_name,
@@ -113,14 +113,14 @@ class Community():
                     print(f"There's more than one community pv instance for {datetime_value}")
                 communityPv = communityPvRows.iloc[0]["pv"]
             sharingInfoDatetimes.append(datetime_value)
-            profilesEnergySharings[datetime_value]=self.sharingMethod.share(profiles=profileDataList,sharePersonalPvs=self.sharePersonalPvs,communityPv=communityPv)
+            profilesEnergySharings[datetime_value]=self._sharingMethod.share(profiles=profileDataList,sharePersonalPvs=self._sharePersonalPvs,communityPv=communityPv)
 
-        self.simulatedCommunity.add_sharing_info(datetimes=sharingInfoDatetimes,sharingMethod=self.sharingMethod,sharedPersonalPvs=self.sharePersonalPvs)
-        self.simulatedCommunity.add_energy_sharings(energySharings=profilesEnergySharings)
+        self._simulatedCommunity.add_sharing_info(datetimes=sharingInfoDatetimes,sharingMethod=self._sharingMethod,sharedPersonalPvs=self._sharePersonalPvs)
+        self._simulatedCommunity.add_energy_sharings(energySharings=profilesEnergySharings)
         self._calculate_and_save_costs(sharings=profilesEnergySharings)
 
     def recalculate_cost(self,start:datetime=None,end:datetime=None)->None:
-        energySharingsDf=self.simulatedCommunity.get_energy_sharings(start,end)
+        energySharingsDf=self._simulatedCommunity.get_energy_sharings(start,end)
         groupedByDateTime = energySharingsDf.groupby(level='datetime')
         profilesEnergySharings:Dict[datetime,List[ProfileSharingsDataAux]]={}
         for datetime_value, group in groupedByDateTime:
@@ -155,22 +155,22 @@ class Community():
             profileSharingsAndPlans:List[Tuple[ProfileSharingsDataAux,BaseEnergyPlan]]=[
                 (
                     profileSharingsAux,
-                    self.profiles[profileSharingsAux.id].get_energy_plan() 
-                    if profileSharingsAux.id in self.profiles 
-                    else SomEnergiaIndexadaDomestic(contractedPower=5,iva=21) #en cas que el perfil no existeixi a self.profiles (mai hauria de pasar, pero per donar un plan default)
+                    self._profiles[profileSharingsAux.id].get_energy_plan() 
+                    if profileSharingsAux.id in self._profiles 
+                    else SomEnergiaIndexadaDomestic(contractedPower=5,iva=21) #en cas que el perfil no existeixi a self._profiles (mai hauria de pasar, pero per donar un plan default)
                 )
                 for profileSharingsAux in profileSharingsList
             ]
-            costs[datetime_value]=self.costCalculationMethod.calculate(sharingsAndPlan=profileSharingsAndPlans,communityPlan=self.energyPlan,datetimeValue=datetime_value)
-        self.simulatedCommunity.add_costs(costs=costs)
+            costs[datetime_value]=self._costCalculationMethod.calculate(sharingsAndPlan=profileSharingsAndPlans,communityPlan=self._energyPlan,datetimeValue=datetime_value)
+        self._simulatedCommunity.add_costs(costs=costs)
         datetimes = list(sharings.keys())
-        self.simulatedCommunity.add_cost_calculation_info(method=self.costCalculationMethod, datetimes=datetimes)
+        self._simulatedCommunity.add_cost_calculation_info(method=self._costCalculationMethod, datetimes=datetimes)
         return costs
 
     def _shareAndGetCostOptimized(self,start:datetime=None,end:datetime=None)->float:
         totalCost=0
-        profilesDf=self.simulatedCommunity.get_summarized_simulated_profiles(start,end)
-        communityPvs=self.simulatedCommunity.get_community_pvs(start,end)
+        profilesDf=self._simulatedCommunity.get_summarized_simulated_profiles(start,end)
+        communityPvs=self._simulatedCommunity.get_community_pvs(start,end)
         groupedByDateTime = profilesDf.groupby(level='datetime')
         for datetime_value, group in groupedByDateTime:
             duplicated_profile_ids = group.index.get_level_values('profile_id').duplicated(keep=False)
@@ -183,7 +183,7 @@ class Community():
             load = group['load']
             profileDataList:List[ProfileEnergyDataAux]=[]
             for profile_id, profile_name, pv_value, load_value in zip(profile_ids, profile_names, pv, load):
-                profileShare = self.profilesShare.get(profile_id, 0)
+                profileShare = self._profilesShare.get(profile_id, 0)
                 profileData = ProfileEnergyDataAux(
                     id=profile_id,
                     name=profile_name,
@@ -200,17 +200,17 @@ class Community():
                 if len(communityPvRows) > 1:
                     print(f"There's more than one community pv instance for {datetime_value}")
                 communityPv = communityPvRows.iloc[0]["pv"]
-            sharingsList=self.sharingMethod.share(profiles=profileDataList,sharePersonalPvs=self.sharePersonalPvs,communityPv=communityPv)
+            sharingsList=self._sharingMethod.share(profiles=profileDataList,sharePersonalPvs=self._sharePersonalPvs,communityPv=communityPv)
             profileSharingsAndPlans:List[Tuple[ProfileSharingsDataAux,BaseEnergyPlan]]=[
                 (
                     profileSharingsAux,
-                    self.profiles[profileSharingsAux.id].get_energy_plan() 
-                    if profileSharingsAux.id in self.profiles 
-                    else SomEnergiaIndexadaDomestic(contractedPower=5,iva=21) #en cas que el perfil no existeixi a self.profiles (mai hauria de pasar, pero per donar un plan default)
+                    self._profiles[profileSharingsAux.id].get_energy_plan() 
+                    if profileSharingsAux.id in self._profiles 
+                    else SomEnergiaIndexadaDomestic(contractedPower=5,iva=21) #en cas que el perfil no existeixi a self._profiles (mai hauria de pasar, pero per donar un plan default)
                 )
                 for profileSharingsAux in sharingsList
             ]
-            profilesCostList=self.costCalculationMethod.calculate(sharingsAndPlan=profileSharingsAndPlans,communityPlan=self.energyPlan,datetimeValue=datetime_value)
+            profilesCostList=self._costCalculationMethod.calculate(sharingsAndPlan=profileSharingsAndPlans,communityPlan=self._energyPlan,datetimeValue=datetime_value)
             for profileCost in profilesCostList:
                 totalCost+=profileCost.gridImportCost+profileCost.microgridCost-profileCost.gridExportRevenue-profileCost.microgridRevenue-profileCost.personalExcedentsRevenue
         return totalCost
@@ -233,10 +233,10 @@ class Community():
 
             community_cost=np.zeros(normalized_weights.shape[0])
             for index, row in enumerate(normalized_weights):
-                profileIds = list(self.profilesShare.keys())
+                profileIds = list(self._profilesShare.keys())
                 if len(profileIds) != len(row):
                     raise ValueError("Diferent numero de perfils que de pesos")
-                self.profilesShare={profileId: share for profileId,share in zip(profileIds,row)}
+                self._profilesShare={profileId: share for profileId,share in zip(profileIds,row)}
                 rowCost=self._shareAndGetCostOptimized(start=start,end=end)
                 print(row)
                 print(rowCost)
@@ -247,8 +247,8 @@ class Community():
 
             return total_cost
 
-        profilesShareBeforeOptimitzation=self.profilesShare     
-        numberOfProfiles=len(self.profilesShare)
+        profilesShareBeforeOptimitzation=self._profilesShare     
+        numberOfProfiles=len(self._profilesShare)
         x_max = np.ones(numberOfProfiles)
         x_min = np.zeros(numberOfProfiles)
         bounds = (x_min, x_max)
@@ -261,24 +261,24 @@ class Community():
         epsilon = 1e-10
         sum_weights += epsilon
         normalized_weights = weights / sum_weights
-        profileIds = list(self.profilesShare.keys())
+        profileIds = list(self._profilesShare.keys())
         shares={profileId: share for profileId,share in zip(profileIds,normalized_weights)}
 
         if saveSharesOptimized:
-            self.profilesShare=shares
+            self._profilesShare=shares
             self.shareSimulatedEnergies(start=start,end=end)
         else:
-            self.profilesShare=profilesShareBeforeOptimitzation
+            self._profilesShare=profilesShareBeforeOptimitzation
         
         return shares
 
 
     
     def set_sharing_method(self,sharingMethod:SharingMethod)->None:
-        self.sharingMethod=sharingMethod
+        self._sharingMethod=sharingMethod
 
     def set_share_personal_pvs(self,b:bool)->None:
-        self.sharePersonalPvs=b
+        self._sharePersonalPvs=b
             
 
     def export_sharings_to_excel(self):
