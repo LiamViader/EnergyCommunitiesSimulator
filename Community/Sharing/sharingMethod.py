@@ -7,11 +7,11 @@ import numpy as np
 
 class SharingMethod(ABC):
     def __init__(self, name:str) -> None:
-        self.name=name
+        self._name=name
 
     @abstractmethod
     def share(self,profiles:List[ProfileEnergyDataAux],sharePersonalPvs:bool,communityPv:float)->List[ProfileSharingsDataAux]:
         pass
 
     def get_name(self)->str:
-        return self.name
+        return self._name

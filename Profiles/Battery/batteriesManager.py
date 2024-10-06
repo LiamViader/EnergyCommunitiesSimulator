@@ -9,7 +9,7 @@ import numpy as np
 class BatteriesManager(BaseFactor):
     def __init__(self,batteries:List[Battery]):
         super().__init__("batteries", FactorType.Battery)
-        self.batteries=batteries
+        self._batteries=batteries
 
     def use_on(self,load:np.ndarray,config:SimulationConfig)->np.ndarray: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
         minutersPerIndex=1440/config.num_indices()
@@ -23,7 +23,7 @@ class BatteriesManager(BaseFactor):
                 return 0
             energyLeft=abs(value)
             batteriesLoad=0
-            for battery in self.batteries:
+            for battery in self._batteries:
                 if energyLeft>0:
                     if charging:
                         usedEnergy=battery.charge(energy=energyLeft,timeElapsed=minutersPerIndex)

@@ -9,14 +9,14 @@ from typing import Tuple
 class SomEnergiaPeriodesIndustria(BaseEnergyPlan):
     def __init__(self,contractedPowerPeriods:Tuple[float,float,float,float,float,float]=(50,50,50,50,50,50)) -> None:
         super().__init__('Som Energia Tarifa Periodes Per Industria (3.0TD periodes)')
-        self.iva=21#en tant per cent
-        self.contractedPowerPeriods=contractedPowerPeriods #kw
-        self.impostElectric= 5.11 #en tant per cent
-        self.boSocial=0.0384546136986301 #euros/dia
-        self.lloguerComptador=0.81 #euros/mes
-        self.potenciaPuntaPla=27.474 #euros/kW any
-        self.potenciaVall=3.059 #euros/kW any
-        self.periodesEnergia=(0.176,0.150,0.134,0.122,0.105,0.108) #en €/kwh
+        self._iva=21#en tant per cent
+        self._contractedPowerPeriods=contractedPowerPeriods #kw
+        self._impostElectric= 5.11 #en tant per cent
+        self._boSocial=0.0384546136986301 #euros/dia
+        self._lloguerComptador=0.81 #euros/mes
+        self._potenciaPuntaPla=27.474 #euros/kW any
+        self._potenciaVall=3.059 #euros/kW any
+        self._periodesEnergia=(0.176,0.150,0.134,0.122,0.105,0.108) #en €/kwh
 
 
     def selling_price(self,instant:datetime)->float: #returns €/kwh
@@ -25,61 +25,61 @@ class SomEnergiaPeriodesIndustria(BaseEnergyPlan):
 
     def _january_price_at(self,instant:datetime)->float:
         if 0 <= instant.hour < 8:
-            return self.periodesEnergia(5)
+            return self._periodesEnergia(5)
         if 8 <= instant.hour < 9:
-            return self.periodesEnergia(1)
+            return self._periodesEnergia(1)
         if 9 <= instant.hour < 14:
-            return self.periodesEnergia(0)
+            return self._periodesEnergia(0)
         if 14 <= instant.hour < 18:
-            return self.periodesEnergia(1)
+            return self._periodesEnergia(1)
         if 18 <= instant.hour < 22:
-            return self.periodesEnergia(0)
-        return self.periodesEnergia(1)
+            return self._periodesEnergia(0)
+        return self._periodesEnergia(1)
     
     def _february_price_at(self,instant:datetime)->float:
         return self._january_price_at(instant)
     
     def _march_price_at(self,instant:datetime)->float:
         if 0 <= instant.hour < 8:
-            return self.periodesEnergia(5)
+            return self._periodesEnergia(5)
         if 8 <= instant.hour < 9:
-            return self.periodesEnergia(2)
+            return self._periodesEnergia(2)
         if 9 <= instant.hour < 14:
-            return self.periodesEnergia(1)
+            return self._periodesEnergia(1)
         if 14 <= instant.hour < 18:
-            return self.periodesEnergia(2)
+            return self._periodesEnergia(2)
         if 18 <= instant.hour < 22:
-            return self.periodesEnergia(1)
-        return self.periodesEnergia(2)
+            return self._periodesEnergia(1)
+        return self._periodesEnergia(2)
     
     def _april_price_at(self,instant:datetime)->float:
         if 0 <= instant.hour < 8:
-            return self.periodesEnergia(5)
+            return self._periodesEnergia(5)
         if 8 <= instant.hour < 9:
-            return self.periodesEnergia(4)
+            return self._periodesEnergia(4)
         if 9 <= instant.hour < 14:
-            return self.periodesEnergia(3)
+            return self._periodesEnergia(3)
         if 14 <= instant.hour < 18:
-            return self.periodesEnergia(4)
+            return self._periodesEnergia(4)
         if 18 <= instant.hour < 22:
-            return self.periodesEnergia(3)
-        return self.periodesEnergia(4)
+            return self._periodesEnergia(3)
+        return self._periodesEnergia(4)
 
     def _may_price_at(self,instant:datetime)->float:
         return self._april_price_at(instant)
     
     def _june_price_at(self,instant:datetime)->float:
         if 0 <= instant.hour < 8:
-            return self.periodesEnergia(5)
+            return self._periodesEnergia(5)
         if 8 <= instant.hour < 9:
-            return self.periodesEnergia(3)
+            return self._periodesEnergia(3)
         if 9 <= instant.hour < 14:
-            return self.periodesEnergia(2)
+            return self._periodesEnergia(2)
         if 14 <= instant.hour < 18:
-            return self.periodesEnergia(3)
+            return self._periodesEnergia(3)
         if 18 <= instant.hour < 22:
-            return self.periodesEnergia(2)
-        return self.periodesEnergia(3)
+            return self._periodesEnergia(2)
+        return self._periodesEnergia(3)
 
     def _july_price_at(self,instant:datetime)->float:
         return self._january_price_at(instant)
@@ -101,9 +101,9 @@ class SomEnergiaPeriodesIndustria(BaseEnergyPlan):
 
 
     def buying_price(self,instant:datetime)->float: #returns €/kwh
-        preuBase=self.periodesEnergia(5)
+        preuBase=self._periodesEnergia(5)
         if instant.weekday() in (5,6):#dissabte o diumenge
-            preuBase=self.periodesEnergia(5)
+            preuBase=self._periodesEnergia(5)
         else:
             if  instant.month==1:
                 preuBase=self._january_price_at(instant)
@@ -132,8 +132,8 @@ class SomEnergiaPeriodesIndustria(BaseEnergyPlan):
 
         
         
-        preuDespresImpostos=preuBase + preuBase*(self.impostElectric/100)
-        preuDespresIva=preuDespresImpostos+preuDespresImpostos*(self.iva/100)
+        preuDespresImpostos=preuBase + preuBase*(self._impostElectric/100)
+        preuDespresIva=preuDespresImpostos+preuDespresImpostos*(self._iva/100)
         return preuDespresIva
 
     def flat_price_month(self,instant:Optional[datetime])->float: #returns €
@@ -143,20 +143,20 @@ class SomEnergiaPeriodesIndustria(BaseEnergyPlan):
             totalDays = 30  # Suposant 30 dies si no es proporciona una data
         
         # Cost de la potència mensual
-        annualPowerCost = self.contractedPowerPeriods(0)*15.713047+self.contractedPowerPeriods(1)*9.547036+self.contractedPowerPeriods(2)*4.658211+self.contractedPowerPeriods(3)*4.142560+self.contractedPowerPeriods(4)*2.285209+self.contractedPowerPeriods(5)*1.553638
+        annualPowerCost = self._contractedPowerPeriods(0)*15.713047+self._contractedPowerPeriods(1)*9.547036+self._contractedPowerPeriods(2)*4.658211+self._contractedPowerPeriods(3)*4.142560+self._contractedPowerPeriods(4)*2.285209+self._contractedPowerPeriods(5)*1.553638
         monthlyPowerCost = annualPowerCost / 12
         
         # Cost total mensual abans d'impost elèctric i IVA
-        baseMonthlyCost = monthlyPowerCost + (self.boSocial * totalDays) + self.lloguerComptador
+        baseMonthlyCost = monthlyPowerCost + (self._boSocial * totalDays) + self._lloguerComptador
         
         # Càlcul de l'impost elèctric
-        electricTaxAmount = baseMonthlyCost * (self.impostElectric / 100)
+        electricTaxAmount = baseMonthlyCost * (self._impostElectric / 100)
         
         # Cost total mensual abans d'IVA
         costBeforeIVA = baseMonthlyCost + electricTaxAmount
         
         # Càlcul de l'IVA
-        ivaAmount = costBeforeIVA * (self.iva / 100)
+        ivaAmount = costBeforeIVA * (self._iva / 100)
         
         # Cost total mensual amb IVA
         totalMonthlyCost = costBeforeIVA + ivaAmount

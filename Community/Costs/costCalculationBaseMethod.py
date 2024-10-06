@@ -9,11 +9,11 @@ from datetime import datetime
 
 class CostCalculationBaseMethod(ABC):
     def __init__(self, name:str) -> None:
-        self.name=name
+        self._name=name
 
     @abstractmethod
     def calculate(self,sharingsAndPlan:List[Tuple[ProfileSharingsDataAux,BaseEnergyPlan]],communityPlan:BaseEnergyPlan,datetimeValue:datetime)->List[ProfileCostDataAux]:
         pass
 
     def get_name(self)->str:
-        return self.name
+        return self._name

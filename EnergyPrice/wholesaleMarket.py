@@ -28,29 +28,29 @@ class WholesaleMarket:
             cls._instance = super(WholesaleMarket, cls).__new__(cls)
             cls._instance._initialize(country, start, end)
         else:
-            if cls._instance.country != country:
+            if cls._instance._country != country:
                 cls._instance._initialize(country, start, end)
         return cls._instance
 
     def _initialize(self, country: MarketCountry, start: Optional[date], end: Optional[date]) -> None:
-        self.country = country
-        if self.country == MarketCountry.Spain:
-            self.str_price_country = str(DataTypeInMarginalPriceFile.PRICE_SPAIN)
-        elif self.country == MarketCountry.Portugal:
-            self.str_price_country = str(DataTypeInMarginalPriceFile.PRICE_PORTUGAL)
+        self._country = country
+        if self._country == MarketCountry.Spain:
+            self._str_price_country = str(DataTypeInMarginalPriceFile.PRICE_SPAIN)
+        elif self._country == MarketCountry.Portugal:
+            self._str_price_country = str(DataTypeInMarginalPriceFile.PRICE_PORTUGAL)
 
         if start is None or end is None or start > self._maxDate:
-            self.prices = None
+            self._prices = None
         else:
             if end > self._maxDate:
                 end = self._maxDate
-            self.prices = self._fetch_prices(start, end)
+            self._prices = self._fetch_prices(start, end)
 
     
     def _fetch_prices(self,start:date,end:date)->pd.DataFrame:
         prices=OMIEMarginalPriceFileImporter(date_ini=start, date_end=end).read_to_dataframe(verbose=True)
         prices.sort_values(by='DATE', axis=0, inplace=True)
-        prices = prices[prices.CONCEPT == self.str_price_country]
+        prices = prices[prices.CONCEPT == self._str_price_country]
         prices.fillna(0, inplace=True)#aseguro que no hi hagi nan
         return prices
 
@@ -77,13 +77,13 @@ class WholesaleMarket:
 
     def prices_at_date(self,dateToGet:date)->np.ndarray:
         dateToGet=self._check_date(dateToGet)
-        if self.prices is None:
-            self.prices=self._fetch_prices(dateToGet,dateToGet)
+        if self._prices is None:
+            self._prices=self._fetch_prices(dateToGet,dateToGet)
         else:
-            pricesdf=self.prices[self.prices['DATE'] == dateToGet]
+            pricesdf=self._prices[self._prices['DATE'] == dateToGet]
             if pricesdf.empty:
-                self.prices=pd.concat([self.prices, self._fetch_prices(dateToGet,dateToGet)], ignore_index=True)
-        pricesdf=self.prices[self.prices['DATE'] == dateToGet]
+                self._prices=pd.concat([self._prices, self._fetch_prices(dateToGet,dateToGet)], ignore_index=True)
+        pricesdf=self._prices[self._prices['DATE'] == dateToGet]
         if pricesdf.empty: #per si per alguna rao no existís aquell dia
                 warnings.warn("Not found prices for that specific day, using example prices")
                 result=self._get_example_prices()
@@ -100,13 +100,13 @@ class WholesaleMarket:
     def price_at_instant(self,instant:datetime)->float: #retorna en euros/kwh
         instantDate=self._check_date(instant.date())
         instant = instant.replace(year=instantDate.year, month=instantDate.month, day=instantDate.day)
-        if self.prices is None:
-            self.prices=self._fetch_prices(instantDate,instantDate)
+        if self._prices is None:
+            self._prices=self._fetch_prices(instantDate,instantDate)
         else:
-            pricesdf=self.prices[self.prices['DATE'] == instantDate]
+            pricesdf=self._prices[self._prices['DATE'] == instantDate]
             if pricesdf.empty:
-                self.prices=pd.concat([self.prices, self._fetch_prices(instantDate,instantDate)], ignore_index=True)
-        pricesdf=self.prices[self.prices['DATE'] == instantDate]
+                self._prices=pd.concat([self._prices, self._fetch_prices(instantDate,instantDate)], ignore_index=True)
+        pricesdf=self._prices[self._prices['DATE'] == instantDate]
 
         if pricesdf.empty: #per si per alguna rao no existís aquell dia
             warnings.warn("Not found prices for that specific day, using example prices")

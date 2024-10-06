@@ -10,12 +10,12 @@ from typing import Tuple
 class SolarPanel(BaseFactor):
     def __init__(self, name: str, productionCapacity: float, efficiency: float):
         super().__init__(name,FactorType.Producer)
-        self.productionCapacity = productionCapacity #en kw, ja te en compte l'area del solar panel
-        self.efficiency = efficiency
+        self._productionCapacity = productionCapacity #en kw, ja te en compte l'area del solar panel
+        self._efficiency = efficiency
 
 
     def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray:
         hoursPerIndex=24/simulationConfig.num_indices()
-        load=simulationConfig.get_irradiation()*self.productionCapacity*self.efficiency*hoursPerIndex #en kwh
+        load=simulationConfig.get_irradiation()*self._productionCapacity*self._efficiency*hoursPerIndex #en kwh
         return load
 

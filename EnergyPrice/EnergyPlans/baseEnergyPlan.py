@@ -4,10 +4,10 @@ from typing import Optional
 
 class BaseEnergyPlan(ABC):
     def __init__(self,name:str) -> None:
-        self.name=name
+        self._name=name
     
     def get_name(self)->str:
-        return self.name
+        return self._name
 
     @abstractmethod
     def selling_price(self,instant:datetime)->float: #returns €/kwh

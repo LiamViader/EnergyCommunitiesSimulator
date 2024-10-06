@@ -4,10 +4,10 @@ from Profiles.Factors.Climatitzation.thermostat import Thermostat
 
 class Cooling(ClimatitzationComponent):
     def __init__(self, maxPower: float, minPower:float, efficiency: float, volume: float):
-        self.maxPower= maxPower #max power of cooling in kw
-        self.minPower= minPower
-        self.efficiency = efficiency  #heating efficiency
-        self.volume = volume  #volume that has to cool
+        self._maxPower= maxPower #max power of cooling in kw
+        self._minPower= minPower
+        self._efficiency = efficiency  #heating efficiency
+        self._volume = volume  #volume that has to cool
     
     def climatize(self, thermostat:Thermostat,idealTemperature:float,timeElapsed:float) -> Tuple[float, float]:#timeElapsed en hores
         if idealTemperature is not None:
@@ -15,19 +15,19 @@ class Cooling(ClimatitzationComponent):
             if tempDiff < 0:
                 tempDiff=abs(tempDiff)
                 # Calculate the power to use, considering the temperature difference
-                powerToUse = max(min(self.maxPower, self.maxPower * (tempDiff / 5)), self.minPower)
+                powerToUse = max(min(self._maxPower, self._maxPower * (tempDiff / 5)), self._minPower)
                 
                 # Calculate the energy load required in kWh
                 load = powerToUse * timeElapsed
                 
                 # Adjust the load by the efficiency of the cooler
-                effectiveLoad = load * self.efficiency
+                effectiveLoad = load * self._efficiency
                 
                 # Convert kWh to Joules (1 kWh = 3.6e6 Joules)
                 joules = effectiveLoad * 3.6e6
                 
                 # Calculate the mass of the air (density of air = 1.225 kg/m³)
-                mass = self.volume * 1.225
+                mass = self._volume * 1.225
                 
                 # Calculate the temperature increase in °C
                 deltaTemp = joules / (mass * 1005)

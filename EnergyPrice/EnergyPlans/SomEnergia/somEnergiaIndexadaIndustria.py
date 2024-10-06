@@ -9,11 +9,11 @@ import calendar
 class SomEnergiaIndexadaIndustria(BaseEnergyPlan):
     def __init__(self,contractedPowerPeriods:Tuple[float,float,float,float,float,float]=(50,50,50,50,50,50)) -> None: #sempre ha de: potencia periode n-1<=potencia periode n
         super().__init__('Som Energia Tarifa Indexada Per Industries i Empreses (3.0TD)')
-        self.iva=21#en tant per cent
-        self.contractedPowerPeriods=contractedPowerPeriods #kw
-        self.impostElectric= 5.11 #en tant per cent
-        self.boSocial=0.0384546136986301 #euros/dia
-        self.lloguerComptador=0.81 #euros/mes
+        self._iva=21#en tant per cent
+        self._contractedPowerPeriods=contractedPowerPeriods #kw
+        self._impostElectric= 5.11 #en tant per cent
+        self._boSocial=0.0384546136986301 #euros/dia
+        self._lloguerComptador=0.81 #euros/mes
 
 
     def selling_price(self,instant:datetime)->float: #returns €/kwh
@@ -40,8 +40,8 @@ class SomEnergiaIndexadaIndustria(BaseEnergyPlan):
             (phm + Pc + Sc + Dsv + GdO + POsOm) * (1 + Perd) + FE + F
         ) + PTD + CA
         
-        preuDespresImpostos=PH + PH*(self.impostElectric/100)
-        preuDespresIva=preuDespresImpostos+preuDespresImpostos*(self.iva/100)
+        preuDespresImpostos=PH + PH*(self._impostElectric/100)
+        preuDespresIva=preuDespresImpostos+preuDespresImpostos*(self._iva/100)
         return preuDespresIva
 
     def flat_price_month(self,instant:Optional[datetime])->float: #returns €
@@ -51,20 +51,20 @@ class SomEnergiaIndexadaIndustria(BaseEnergyPlan):
             totalDays = 30  # Suposant 30 dies si no es proporciona una data
         
         # Cost de la potència mensual
-        annualPowerCost = self.contractedPowerPeriods(0)*15.713047+self.contractedPowerPeriods(1)*9.547036+self.contractedPowerPeriods(2)*4.658211+self.contractedPowerPeriods(3)*4.142560+self.contractedPowerPeriods(4)*2.285209+self.contractedPowerPeriods(5)*1.553638
+        annualPowerCost = self._contractedPowerPeriods(0)*15.713047+self._contractedPowerPeriods(1)*9.547036+self._contractedPowerPeriods(2)*4.658211+self._contractedPowerPeriods(3)*4.142560+self._contractedPowerPeriods(4)*2.285209+self._contractedPowerPeriods(5)*1.553638
         monthlyPowerCost = annualPowerCost / 12
         
         # Cost total mensual abans d'impost elèctric i IVA
-        baseMonthlyCost = monthlyPowerCost + (self.boSocial * totalDays) + self.lloguerComptador
+        baseMonthlyCost = monthlyPowerCost + (self._boSocial * totalDays) + self._lloguerComptador
         
         # Càlcul de l'impost elèctric
-        electricTaxAmount = baseMonthlyCost * (self.impostElectric / 100)
+        electricTaxAmount = baseMonthlyCost * (self._impostElectric / 100)
         
         # Cost total mensual abans d'IVA
         costBeforeIVA = baseMonthlyCost + electricTaxAmount
         
         # Càlcul de l'IVA
-        ivaAmount = costBeforeIVA * (self.iva / 100)
+        ivaAmount = costBeforeIVA * (self._iva / 100)
         
         # Cost total mensual amb IVA
         totalMonthlyCost = costBeforeIVA + ivaAmount

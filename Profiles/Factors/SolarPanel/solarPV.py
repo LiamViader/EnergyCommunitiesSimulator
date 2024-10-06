@@ -13,11 +13,11 @@ from typing import Tuple
 class SolarPV(BaseFactor):
     def __init__(self, name: str, solarPanels:List[SolarPanel]):
         super().__init__(name, FactorType.Producer)
-        self.solarPanels=solarPanels
+        self._solarPanels=solarPanels
     
     def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray:
         totalLoad = pd.Series(np.zeros(simulationConfig.num_indices()))
-        for solarPanel in self.solarPanels:
+        for solarPanel in self._solarPanels:
             panelLoad=solarPanel.simulate(simulationConfig=simulationConfig)
             totalLoad+=panelLoad
         return totalLoad
