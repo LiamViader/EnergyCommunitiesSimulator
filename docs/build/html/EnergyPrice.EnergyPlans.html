@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnergyPrice.EnergyPlans package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="EnergyPrice.EnergyPlans.SomEnergia package" href="EnergyPrice.EnergyPlans.SomEnergia.html" />
+    <link rel="prev" title="EnergyPrice package" href="EnergyPrice.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="EnergyPrice.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">EnergyPrice.EnergyPlans package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html">EnergyPrice.EnergyPlans.SomEnergia package</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-EnergyPrice.EnergyPlans.baseEnergyPlan">EnergyPrice.EnergyPlans.baseEnergyPlan module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><code class="docutils literal notranslate"><span class="pre">BaseEnergyPlan</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.buying_price"><code class="docutils literal notranslate"><span class="pre">BaseEnergyPlan.buying_price()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.flat_price_month"><code class="docutils literal notranslate"><span class="pre">BaseEnergyPlan.flat_price_month()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.get_name"><code class="docutils literal notranslate"><span class="pre">BaseEnergyPlan.get_name()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.selling_price"><code class="docutils literal notranslate"><span class="pre">BaseEnergyPlan.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.html#module-EnergyPrice.wholesaleMarket">EnergyPrice.wholesaleMarket module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.html">Profiles package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="EnergyPrice.html">EnergyPrice package</a></li>
+      <li class="breadcrumb-item active">EnergyPrice.EnergyPlans package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/EnergyPrice.EnergyPlans.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="energyprice-energyplans-package">
+<h1>EnergyPrice.EnergyPlans package<a class="headerlink" href="#energyprice-energyplans-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html">EnergyPrice.EnergyPlans.SomEnergia package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic.buying_price()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic.flat_price_month()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria.buying_price()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria.flat_price_month()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic.buying_price()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic.flat_price_month()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria.buying_price()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria.flat_price_month()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="EnergyPrice.EnergyPlans.SomEnergia.html#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-EnergyPrice.EnergyPlans.baseEnergyPlan">
+<span id="energyprice-energyplans-baseenergyplan-module"></span><h2>EnergyPrice.EnergyPlans.baseEnergyPlan module<a class="headerlink" href="#module-EnergyPrice.EnergyPlans.baseEnergyPlan" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EnergyPrice.EnergyPlans.baseEnergyPlan.</span></span><span class="sig-name descname"><span class="pre">BaseEnergyPlan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/baseEnergyPlan.html#BaseEnergyPlan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An abstract base class representing a generic energy plan from an energy retailer.</p>
+<p>This class provides the basic structure for energy plans, including methods for 
+calculating selling and buying prices at any given time, and the flat price charged 
+for the energy plan per month.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>_name (str): The name of the energy plan.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>get_name(): </dt><dd><p>Returns the name of the energy plan.</p>
+</dd>
+<dt>selling_price(instant: datetime): </dt><dd><p>Abstract method to get the selling price of energy at a specific time.
+Must be implemented by subclasses to calculate and return the price (in €/kWh)
+for selling energy at the given time.</p>
+</dd>
+<dt>buying_price(instant: datetime): </dt><dd><p>Abstract method to get the buying price of energy at a specific time.
+Must be implemented by subclasses to calculate and return the price (in €/kWh)
+for buying energy at the given time.</p>
+</dd>
+<dt>flat_price_month(instant: Optional[datetime]): </dt><dd><p>Abstract method to get the flat monthly price of the energy plan.
+Must be implemented by subclasses to return the flat rate (in €) charged 
+per month for the energy plan.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.buying_price">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">buying_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/baseEnergyPlan.html#BaseEnergyPlan.buying_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.buying_price" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to get the buying price of energy at a specific time.</p>
+<p>This method must be implemented by subclasses to calculate and return the 
+price (in €/kWh) for buying energy at the given time.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time at which the buying price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The buying price in €/kWh.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.flat_price_month">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flat_price_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/baseEnergyPlan.html#BaseEnergyPlan.flat_price_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.flat_price_month" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to get the flat monthly price of the energy plan.</p>
+<p>This method must be implemented by subclasses to return the flat rate (in €) 
+charged per month for the energy plan. The specific time is optional.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (Optional[datetime]): The specific time at which the flat monthly price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The flat price in € for the month.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/baseEnergyPlan.html#BaseEnergyPlan.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.get_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the name of the energy plan.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the energy plan.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.selling_price">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">selling_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/baseEnergyPlan.html#BaseEnergyPlan.selling_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan.selling_price" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to get the selling price of energy at a specific time.</p>
+<p>This method must be implemented by subclasses to calculate and return the 
+price (in €/kWh) for selling energy at the given time.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time at which the selling price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The selling price in €/kWh.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="EnergyPrice.html" class="btn btn-neutral float-left" title="EnergyPrice package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="EnergyPrice.EnergyPlans.SomEnergia.html" class="btn btn-neutral float-right" title="EnergyPrice.EnergyPlans.SomEnergia package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

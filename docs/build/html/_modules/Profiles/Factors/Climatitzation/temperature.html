@@ -1,0 +1,243 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Climatitzation.temperature &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Climatitzation.temperature</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.Climatitzation.temperature</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">utils.geolocation</span> <span class="kn">import</span> <span class="n">Geolocation</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">date</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<div class="viewcode-block" id="Temperature">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature">[docs]</a>
+<span class="k">class</span> <span class="nc">Temperature</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the temperature simulation for a specific geolocation over a defined time period.</span>
+
+<span class="sd">    The class simulates temperature variations throughout the day based on geographical factors, seasonal changes, </span>
+<span class="sd">    and daily fluctuations. It also allows for the adjustment of the current date to simulate temperature for different days.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _currentDate (date): The current date for which temperatures are simulated.</span>
+
+<span class="sd">        _geolocation (Geolocation): The geographical context affecting temperature.</span>
+
+<span class="sd">        _numIndices (int): The number of time steps for the day.</span>
+<span class="sd">        </span>
+<span class="sd">        _temperature (np.ndarray): An array storing simulated temperatures for each time step.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">        simulate_temperature() -&gt; None:</span>
+<span class="sd">            Simulates the temperature for each time step based on the current date and geographical location.</span>
+
+<span class="sd">        change_date(date: date) -&gt; None:</span>
+<span class="sd">            Changes the current date and recalculates the temperature for the new date.</span>
+
+<span class="sd">        termic_response(insideTemp: float, timestamp: float, timeElapsed: float, superficialArea: float, insideVolume: float) -&gt; float:</span>
+<span class="sd">            Calculates the thermal response based on the inside temperature, time elapsed, and other factors.</span>
+
+<span class="sd">        get_temperature() -&gt; np.ndarray:</span>
+<span class="sd">            Returns the array of simulated temperatures of the day.</span>
+<span class="sd">    Notes:</span>
+<span class="sd">        - To use real temperature data, implement a method to read temperature data for the day whenever the date changes,</span>
+<span class="sd">          and store the values in the `_temperature` attribute.</span>
+<span class="sd">        - The temperature simulation uses a really basic sinusoidal model for temperature variations.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">geolocation</span><span class="p">:</span><span class="n">Geolocation</span><span class="p">,</span><span class="n">numIndices</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">currentDate</span><span class="p">:</span><span class="n">date</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Temperature simulation with a specific geolocation, number of indices, and the current date.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            geolocation (Geolocation): The geographical context for temperature simulation.</span>
+<span class="sd">            numIndices (int): The number of time indices for temperature simulation.</span>
+<span class="sd">            currentDate (date): The current date for temperature simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span><span class="o">=</span><span class="n">currentDate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">=</span><span class="n">geolocation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="o">=</span><span class="n">numIndices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulate_temperature</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Temperature.simulate_temperature">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.simulate_temperature">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the temperature for each time index based on the current date and geographical location.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="p">)</span>
+        <span class="n">indicesPerHour</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="o">/</span><span class="mi">24</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="p">):</span>
+            <span class="n">hour</span><span class="o">=</span><span class="n">i</span><span class="o">/</span><span class="n">indicesPerHour</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulate_temperature_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span><span class="p">,</span><span class="n">hour</span><span class="p">)</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">_simulate_temperature_at</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">date</span><span class="p">:</span><span class="n">date</span><span class="p">,</span><span class="n">hour</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the temperature at a specific date and hour.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            date (date): The date for which the temperature is simulated.</span>
+<span class="sd">            hour (float): The hour of the day (0-24) for which the temperature is simulated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The simulated temperature in degrees Celsius.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">baseTemp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">.</span><span class="n">get_base_temp</span><span class="p">()</span><span class="o">+</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">amplitude</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">.</span><span class="n">get_amplitude_temp</span><span class="p">()</span><span class="o">+</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">hourOffset</span><span class="o">=</span><span class="mi">10</span>
+        <span class="n">seasonOffset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">.</span><span class="n">get_season_offset</span><span class="p">()</span>
+        <span class="n">seasonalVariation</span><span class="o">=</span><span class="mi">10</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_yday</span> <span class="o">/</span> <span class="mf">365.0</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">seasonOffset</span> <span class="o">/</span> <span class="mf">365.0</span><span class="p">))</span>
+        <span class="n">dailyVariation</span><span class="o">=</span><span class="n">amplitude</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">hour</span> <span class="o">/</span> <span class="mf">24.0</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">hourOffset</span> <span class="o">/</span> <span class="mf">24.0</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">baseTemp</span> <span class="o">+</span> <span class="n">seasonalVariation</span> <span class="o">+</span> <span class="n">dailyVariation</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    
+<div class="viewcode-block" id="Temperature.change_date">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.change_date">[docs]</a>
+    <span class="k">def</span> <span class="nf">change_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">date</span><span class="p">:</span><span class="n">date</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Changes the current date and recalculates the temperature for the new date.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            date (date): The new date for temperature simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span><span class="o">=</span><span class="n">date</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulate_temperature</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Temperature.termic_response">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.termic_response">[docs]</a>
+    <span class="k">def</span> <span class="nf">termic_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">insideTemp</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">timestamp</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">timeElapsed</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">superficialArea</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">insideVolume</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the thermal response based on the inside temperature, time elapsed, and other factors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            insideTemp (float): The current inside temperature in degrees Celsius.</span>
+<span class="sd">            timestamp (float): The timestamp in minutes at which the thermal response is calculated.</span>
+<span class="sd">            timeElapsed (float): The time elapsed in hours since the last temperature calculation.</span>
+<span class="sd">            superficialArea (float): The area in square meters that is in contact with the outside.</span>
+<span class="sd">            insideVolume (float): The volume of the inside space in cubic meters.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The thermal response in degrees Celsius.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">termicTransferenceCoef</span><span class="o">=</span><span class="mf">0.5</span>
+        <span class="n">airDensity</span><span class="o">=</span><span class="mf">1.225</span>
+        <span class="n">airCaloricCapacity</span><span class="o">=</span><span class="mi">1005</span>
+        <span class="n">termicCapacityOfInteriorAir</span><span class="o">=</span><span class="n">insideVolume</span><span class="o">*</span><span class="n">airDensity</span><span class="o">*</span><span class="n">airCaloricCapacity</span>
+        <span class="n">indexPerMinute</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="o">/</span><span class="mi">1440</span>
+        <span class="n">index</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">indexPerMinute</span><span class="o">*</span><span class="n">timestamp</span><span class="p">)</span>
+        <span class="n">exteriorTemp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">exteriorTemp</span><span class="o">-</span><span class="n">insideTemp</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="p">((</span><span class="n">termicTransferenceCoef</span><span class="o">*</span><span class="n">superficialArea</span><span class="p">)</span><span class="o">/</span><span class="n">termicCapacityOfInteriorAir</span><span class="p">)</span><span class="o">*</span><span class="n">timeElapsed</span><span class="o">*</span><span class="mi">60</span><span class="p">))</span></div>
+
+    
+<div class="viewcode-block" id="Temperature.get_temperature">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.get_temperature">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the array of simulated temperatures.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: An array containing the simulated temperatures for each time index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temperature</span></div>
+</div>
+
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.SolarPanel.solarIrradiation &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.SolarPanel.solarIrradiation</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.SolarPanel.solarIrradiation</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">utils.enums</span> <span class="kn">import</span> <span class="n">Granularity</span>
+<span class="kn">from</span> <span class="nn">utils.geolocation</span> <span class="kn">import</span> <span class="n">Geolocation</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span><span class="p">,</span> <span class="n">date</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="SolarIrradiation">
+<a class="viewcode-back" href="../../../../Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation">[docs]</a>
+<span class="k">class</span> <span class="nc">SolarIrradiation</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simulates solar irradiation of a day for a given geolocation.</span>
+
+<span class="sd">    This class provides functionality to calculate the solar irradiation values based on geographic</span>
+<span class="sd">    location.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _currentDate (date): The current date for which solar irradiation is simulated.</span>
+
+<span class="sd">        _geolocation (Geolocation): The geographical location information for the irradiation calculation.</span>
+
+<span class="sd">        _numIndices (int): The number of time steps for the simulation day. It is based on granularity (Minutal = 1440 indices)</span>
+<span class="sd">        </span>
+<span class="sd">        _simulatedIrradiation (np.ndarray): An array of simulated solar irradiation values in kW/m².</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        simulate_irradiation() -&gt; None:</span>
+<span class="sd">            Calculates and simulates solar irradiation based on geographical and temporal parameters.</span>
+
+<span class="sd">        get_irradiation() -&gt; np.ndarray:</span>
+<span class="sd">            Returns the simulated solar irradiation values.</span>
+
+<span class="sd">        change_date(newDate: date) -&gt; None:</span>
+<span class="sd">            Updates the current date and re-simulates the solar irradiation values.</span>
+<span class="sd">    </span>
+<span class="sd">    Notes:</span>
+<span class="sd">        - To use real solar irradiation data, implement a method to read solar irradiation data for the day whenever the date changes,</span>
+<span class="sd">          and store the values in the `_simulatedIrradiation` attribute.</span>
+<span class="sd">        - The simulation does not take into account clouds or any type of atmospheric obstruction, which may affect actual solar irradiation values.</span>
+<span class="sd">        - The model assumes a constant efficiency for solar panels; real-world efficiencies can vary based on factors such as temperature, angle of incidence, and age of the solar panels.</span>
+<span class="sd">        - Consideration of geographic features such as mountains or tall buildings can influence solar angles and available sunlight, which are not included in this simulation.</span>
+<span class="sd">        - The irradiance values are averaged over the year, and seasonal variations are approximated using simple mathematical models. For more accurate simulations, additional meteorological data should be integrated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">geolocation</span><span class="p">:</span><span class="n">Geolocation</span><span class="p">,</span><span class="n">numIndices</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">currentDate</span><span class="p">:</span><span class="n">date</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a SolarIrradiation instance with the specified parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            geolocation (Geolocation): The geographical location for irradiation simulation.</span>
+<span class="sd">            numIndices (int): The number of indices to represent time intervals in the simulation day.</span>
+<span class="sd">            currentDate (date): The current date for the simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span><span class="o">=</span><span class="n">currentDate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">=</span><span class="n">geolocation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="o">=</span><span class="n">numIndices</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedIrradiation</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulate_irradiation</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="SolarIrradiation.simulate_irradiation">
+<a class="viewcode-back" href="../../../../Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation.simulate_irradiation">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate_irradiation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates and simulates solar irradiation based on geographical and temporal parameters.</span>
+
+<span class="sd">        The function computes the solar angle, solar declination, and extraterrestrial solar irradiation</span>
+<span class="sd">        to derive the solar irradiation values for each time index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedIrradiation</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="p">)</span>
+        <span class="n">current_date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span>
+        <span class="n">julianDay</span><span class="o">=</span><span class="n">current_date</span><span class="o">.</span><span class="n">timetuple</span><span class="p">()</span><span class="o">.</span><span class="n">tm_yday</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">B</span><span class="o">=</span><span class="p">(</span><span class="mi">360</span><span class="o">/</span><span class="mi">365</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">julianDay</span><span class="o">-</span><span class="mi">81</span><span class="p">)</span>
+        <span class="n">solarDeclination</span><span class="o">=</span><span class="mf">23.45</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">B</span><span class="p">))</span>
+        <span class="n">extraterrester_solar_irrad</span><span class="o">=</span><span class="mi">1361</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mf">0.033</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">((</span><span class="mi">360</span><span class="o">-</span><span class="n">julianDay</span><span class="p">)</span><span class="o">/</span><span class="mi">365</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="p">):</span>
+            <span class="n">hour</span><span class="o">=</span><span class="p">(</span><span class="mi">24</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_numIndices</span><span class="p">)</span><span class="o">*</span><span class="n">j</span>
+            <span class="n">localDatetime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_datetime_from_hour</span><span class="p">(</span><span class="n">hour</span><span class="p">)</span>
+            <span class="n">solar_angle</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">.</span><span class="n">solar_angle</span><span class="p">(</span><span class="n">localDatetime</span><span class="p">)</span>
+            <span class="n">cos_cenital_solar_angle</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">.</span><span class="n">get_latitude</span><span class="p">()))</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">solarDeclination</span><span class="p">))</span><span class="o">+</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">solarDeclination</span><span class="p">))</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_geolocation</span><span class="o">.</span><span class="n">get_latitude</span><span class="p">()))</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">solar_angle</span><span class="p">))</span>
+            <span class="n">irradiation</span><span class="o">=</span><span class="n">extraterrester_solar_irrad</span><span class="o">*</span><span class="n">cos_cenital_solar_angle</span>
+            <span class="n">irradiation</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">irradiation</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedIrradiation</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+=</span><span class="n">irradiation</span><span class="o">/</span><span class="mi">1000</span> <span class="c1">#convert from w/m2 to kw/m2</span></div>
+
+    
+<div class="viewcode-block" id="SolarIrradiation.get_irradiation">
+<a class="viewcode-back" href="../../../../Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation.get_irradiation">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_irradiation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">datetime</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the simulated solar irradiation values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: An array of solar irradiation values in kW/m². Each index represents a time step in the simulation day</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedIrradiation</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_build_datetime_from_hour</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hour_decimal</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructs a datetime object from a decimal hour value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            hour_decimal (float): The decimal hour value.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            datetime: A datetime object representing the specified hour on the current date.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hours</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hour_decimal</span><span class="p">)</span>
+        <span class="n">minutes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">hour_decimal</span> <span class="o">-</span> <span class="n">hours</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(((</span><span class="n">hour_decimal</span> <span class="o">-</span> <span class="n">hours</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">-</span> <span class="n">minutes</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
+        <span class="n">microseconds</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((((</span><span class="n">hour_decimal</span> <span class="o">-</span> <span class="n">hours</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">-</span> <span class="n">minutes</span><span class="p">)</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">-</span> <span class="n">seconds</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1e6</span><span class="p">)</span>
+        <span class="n">current_date</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span>
+        <span class="k">return</span> <span class="n">datetime</span><span class="p">(</span><span class="n">current_date</span><span class="o">.</span><span class="n">year</span><span class="p">,</span><span class="n">current_date</span><span class="o">.</span><span class="n">month</span><span class="p">,</span><span class="n">current_date</span><span class="o">.</span><span class="n">day</span><span class="p">,</span><span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span><span class="p">,</span> <span class="n">seconds</span><span class="p">,</span> <span class="n">microseconds</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SolarIrradiation.change_date">
+<a class="viewcode-back" href="../../../../Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation.change_date">[docs]</a>
+    <span class="k">def</span> <span class="nf">change_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">newDate</span><span class="p">:</span><span class="n">date</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the current date and re-simulates the solar irradiation values.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            newDate (date): The new date to set for irradiation simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentDate</span><span class="o">=</span><span class="n">newDate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">simulate_irradiation</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

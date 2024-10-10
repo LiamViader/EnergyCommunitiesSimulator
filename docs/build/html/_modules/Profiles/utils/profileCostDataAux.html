@@ -1,0 +1,162 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.utils.profileCostDataAux &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.utils.profileCostDataAux</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.utils.profileCostDataAux</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="ProfileCostDataAux">
+<a class="viewcode-back" href="../../../Profiles.utils.html#Profiles.utils.profileCostDataAux.ProfileCostDataAux">[docs]</a>
+<span></span><span class="k">class</span> <span class="nc">ProfileCostDataAux</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to represent the cost and revenue data for a specific profile.</span>
+
+<span class="sd">    This class holds information about the costs and revenues associated with </span>
+<span class="sd">    energy imports and exports for a profile, including pricing details for grid </span>
+<span class="sd">    and microgrid transactions, as well as plans for each of these transactions.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        id (int): A unique identifier for the profile.</span>
+
+<span class="sd">        gridImportPrice (float): The price per kwh for importing energy from the grid.</span>
+
+<span class="sd">        gridImportCost (float): The total cost incurred from importing energy from the grid.</span>
+
+<span class="sd">        gridExportPrice (float): The price per kwh for exporting energy to the grid.</span>
+
+<span class="sd">        gridExportRevenue (float): The total revenue earned from exporting energy to the grid.</span>
+
+<span class="sd">        microgridPrice (float): The price per kwh for energy transactions within the microgrid.</span>
+
+<span class="sd">        microgridRevenue (float): The total revenue earned from transactions within the microgrid.</span>
+
+<span class="sd">        microgridCost (float): The total cost incurred from transactions within the microgrid.</span>
+
+<span class="sd">        personalExcedentsPrice (float): The price per kwh for personal energy excess.</span>
+
+<span class="sd">        personalExcedentsRevenue (float): The total revenue earned from personal energy excess.</span>
+
+<span class="sd">        gridImportPlan (str): The name of the energy plan used to import from the grid.</span>
+
+<span class="sd">        gridExportPlan (str): The name of the energy plan used to export to the grid.</span>
+<span class="sd">        </span>
+<span class="sd">        personalExcedentsPlan (str): The name of the energy plan used to export personal excedents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a ProfileCostDataAux instance with the provided profile ID.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            id (int): A unique identifier for the profile.</span>
+
+<span class="sd">        All monetary attributes are initialized to zero by default, and all plan name attributes</span>
+<span class="sd">        are initialized to &quot;Missing&quot;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="o">=</span><span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridImportPrice</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridImportCost</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridExportPrice</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridExportRevenue</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">microgridPrice</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">microgridRevenue</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">microgridCost</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">personalExcedentsPrice</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">personalExcedentsRevenue</span><span class="o">=</span><span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridImportPlan</span><span class="o">=</span><span class="s2">&quot;Missing&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gridExportPlan</span><span class="o">=</span><span class="s2">&quot;Missing&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">personalExcedentsPlan</span><span class="o">=</span><span class="s2">&quot;Missing&quot;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

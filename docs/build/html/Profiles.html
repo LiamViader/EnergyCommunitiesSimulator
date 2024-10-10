@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Battery package" href="Profiles.Battery.html" />
+    <link rel="prev" title="EnergyPrice.EnergyPlans.SomEnergia package" href="EnergyPrice.EnergyPlans.SomEnergia.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Profiles package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Profiles.profile">Profiles.profile module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Profiles.profile.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.get_combined_load_pv"><code class="docutils literal notranslate"><span class="pre">Profile.get_combined_load_pv()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.get_detailed_load"><code class="docutils literal notranslate"><span class="pre">Profile.get_detailed_load()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.get_energy_plan"><code class="docutils literal notranslate"><span class="pre">Profile.get_energy_plan()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.get_id"><code class="docutils literal notranslate"><span class="pre">Profile.get_id()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.get_load_pv"><code class="docutils literal notranslate"><span class="pre">Profile.get_load_pv()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.get_name"><code class="docutils literal notranslate"><span class="pre">Profile.get_name()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Profiles.profile.Profile.simulate"><code class="docutils literal notranslate"><span class="pre">Profile.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+      <li class="breadcrumb-item active">Profiles package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-package">
+<h1>Profiles package<a class="headerlink" href="#profiles-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Battery.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Battery.html#module-Profiles.Battery.batteriesManager">Profiles.Battery.batteriesManager module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.batteriesManager.BatteriesManager"><code class="docutils literal notranslate"><span class="pre">BatteriesManager</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.batteriesManager.BatteriesManager.simulate"><code class="docutils literal notranslate"><span class="pre">BatteriesManager.simulate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.batteriesManager.BatteriesManager.use_on"><code class="docutils literal notranslate"><span class="pre">BatteriesManager.use_on()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Battery.html#module-Profiles.Battery.battery">Profiles.Battery.battery module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.battery.Battery"><code class="docutils literal notranslate"><span class="pre">Battery</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.battery.Battery.charge"><code class="docutils literal notranslate"><span class="pre">Battery.charge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.battery.Battery.discharge"><code class="docutils literal notranslate"><span class="pre">Battery.discharge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.climatitzationFactor">Profiles.Factors.Climatitzation.climatitzationFactor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.temperature">Profiles.Factors.Climatitzation.temperature module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.thermostat">Profiles.Factors.Climatitzation.thermostat module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#module-Profiles.Factors.Continuos.continuosCyclicFactor">Profiles.Factors.Continuos.continuosCyclicFactor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#module-Profiles.Factors.Continuos.continuosCyclicModel">Profiles.Factors.Continuos.continuosCyclicModel module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#module-Profiles.Factors.Continuos.continuosFactor">Profiles.Factors.Continuos.continuosFactor module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.html">Profiles.Factors.Cyclic package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#module-Profiles.Factors.Cyclic.cyclicFactor">Profiles.Factors.Cyclic.cyclicFactor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#module-Profiles.Factors.Cyclic.cyclicModel">Profiles.Factors.Cyclic.cyclicModel module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.ElectricCar.html">Profiles.Factors.ElectricCar package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#module-Profiles.Factors.ElectricCar.electricCarFactor">Profiles.Factors.ElectricCar.electricCarFactor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#module-Profiles.Factors.ElectricCar.electricCarModel">Profiles.Factors.ElectricCar.electricCarModel module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Lightning.html">Profiles.Factors.Lightning package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#module-Profiles.Factors.Lightning.lightningFactor">Profiles.Factors.Lightning.lightningFactor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#module-Profiles.Factors.Lightning.lightningModel">Profiles.Factors.Lightning.lightningModel module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#module-Profiles.Factors.SolarPanel.solarIrradiation">Profiles.Factors.SolarPanel.solarIrradiation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#module-Profiles.Factors.SolarPanel.solarPV">Profiles.Factors.SolarPanel.solarPV module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#module-Profiles.Factors.SolarPanel.solarPanel">Profiles.Factors.SolarPanel.solarPanel module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#module-Profiles.Factors.WindTurbine.wind">Profiles.Factors.WindTurbine.wind module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#module-Profiles.Factors.WindTurbine.windTurbineFactor">Profiles.Factors.WindTurbine.windTurbineFactor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#module-Profiles.Factors.WindTurbine.windTurbineModel">Profiles.Factors.WindTurbine.windTurbineModel module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.html#module-Profiles.Factors.baseFactor">Profiles.Factors.baseFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor"><code class="docutils literal notranslate"><span class="pre">BaseFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor.get_factor_type"><code class="docutils literal notranslate"><span class="pre">BaseFactor.get_factor_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor.get_id"><code class="docutils literal notranslate"><span class="pre">BaseFactor.get_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor.get_name"><code class="docutils literal notranslate"><span class="pre">BaseFactor.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor.simulate"><code class="docutils literal notranslate"><span class="pre">BaseFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.utils.html#module-Profiles.utils.profileCostDataAux">Profiles.utils.profileCostDataAux module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileCostDataAux.ProfileCostDataAux"><code class="docutils literal notranslate"><span class="pre">ProfileCostDataAux</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.utils.html#module-Profiles.utils.profileEnergyDataAux">Profiles.utils.profileEnergyDataAux module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux"><code class="docutils literal notranslate"><span class="pre">ProfileEnergyDataAux</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.utils.html#module-Profiles.utils.profileSharingsDataAux">Profiles.utils.profileSharingsDataAux module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><code class="docutils literal notranslate"><span class="pre">ProfileSharingsDataAux</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.examples">
+<span id="profiles-examples-module"></span><h2>Profiles.examples module<a class="headerlink" href="#module-Profiles.examples" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.profile">
+<span id="profiles-profile-module"></span><h2>Profiles.profile module<a class="headerlink" href="#module-Profiles.profile" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.profile.Profile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.profile.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">energyPlan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="EnergyPrice.EnergyPlans.html#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><span class="pre">BaseEnergyPlan</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">loadFactors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><span class="pre">BaseFactor</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batteries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Battery.html#Profiles.Battery.batteriesManager.BatteriesManager" title="Profiles.Battery.batteriesManager.BatteriesManager"><span class="pre">BatteriesManager</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/profile.html#Profile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class representing an energy profile.</p>
+<p>This class simulates the energy consumption and production of a profile over a day, 
+using load factors and batteries if available. It also stores the profile’s energy plan and
+detailed load calculations.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_idCounter (int): A class variable to generate unique IDs for each profile.</p>
+<p>_id (int): The unique identifier for the profile instance.</p>
+<p>_name (str): The name of the profile.</p>
+<p>_energyPlan (BaseEnergyPlan): The energy plan associated with this profile.</p>
+<p>_loadFactors (List[BaseFactor]): A list of factors that produce or consume energy used in the simulation.</p>
+<p>_batteries (BatteriesManager): The battery manager for the profile.</p>
+<p>_detailedLoad (Dict[BaseFactor, np.ndarray]): A dictionary mapping factors to their simulated energy arrays.</p>
+<p>_configLastSimulation (Optional[SimulationConfig]): The last simulation configuration used for the profile.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>simulate(simulationConfig: SimulationConfig) -&gt; None:</dt><dd><p>Simulates the energy consumed over time based on load factors and batteries.</p>
+</dd>
+<dt>get_detailed_load() -&gt; Dict[BaseFactor, np.ndarray]:</dt><dd><p>Retrieves the detailed load for the profile.</p>
+</dd>
+<dt>get_name() -&gt; str:</dt><dd><p>Retrieves the name of the profile.</p>
+</dd>
+<dt>get_id() -&gt; int:</dt><dd><p>Retrieves the unique identifier of the profile.</p>
+</dd>
+<dt>get_load_pv() -&gt; Tuple[np.ndarray, np.ndarray]:</dt><dd><p>Returns separate arrays for the load and production.</p>
+</dd>
+<dt>get_combined_load_pv() -&gt; Tuple[np.ndarray, np.ndarray]:</dt><dd><p>Returns the combined load and PV production.</p>
+</dd>
+<dt>get_energy_plan() -&gt; BaseEnergyPlan:</dt><dd><p>Retrieves the energy plan associated with the profile.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.get_combined_load_pv">
+<span class="sig-name descname"><span class="pre">get_combined_load_pv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.get_combined_load_pv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.get_combined_load_pv" title="Link to this definition"></a></dt>
+<dd><p>Returns the combined load and production.</p>
+<p>This method subtracts the aggregated production from the aggregated load and returns two arrays: one for 
+the adjusted load and another for the adjusted PV production. If the adjusted load is 
+negative, it is set to zero, and the corresponding production output is adjusted.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Tuple[np.ndarray, np.ndarray]: A tuple containing two NumPy arrays, one for the adjusted load 
+and another for the adjusted production. Each index of the array containing the energy consumed or produced for the timeElapsed based on granularity. The entire array represents a day</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If there is no simulated load available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.get_detailed_load">
+<span class="sig-name descname"><span class="pre">get_detailed_load</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><span class="pre">BaseFactor</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.get_detailed_load"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.get_detailed_load" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the detailed energy consumption and production for the profile.</p>
+<p>This method returns a dictionary where each key is a energy factor and the corresponding value 
+is the simulated consumption or production as a NumPy array.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Dict[BaseFactor, np.ndarray]: A dictionary mapping each energy factor to its detailed energy consumed or produced.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.get_energy_plan">
+<span class="sig-name descname"><span class="pre">get_energy_plan</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="EnergyPrice.EnergyPlans.html#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><span class="pre">BaseEnergyPlan</span></a></span></span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.get_energy_plan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.get_energy_plan" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the energy plan associated with the profile.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>BaseEnergyPlan: The energy plan object linked to this profile.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.get_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.get_id" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the unique identifier of the profile.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The unique ID of the profile.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.get_load_pv">
+<span class="sig-name descname"><span class="pre">get_load_pv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.get_load_pv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.get_load_pv" title="Link to this definition"></a></dt>
+<dd><p>Returns separate arrays for the agreggated load and the aggregated production.</p>
+<p>This method computes the total load and production output based on the last day simulation.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>Tuple[np.ndarray, np.ndarray]: A tuple containing two NumPy arrays, one for load and 
+another for PV production. Each index of the array containing the energy consumed or produced for the timeElapsed based on granularity. The entire array represents a day</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If there is no simulated load available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.get_name" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the name of the profile.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the profile.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.profile.Profile.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/profile.html#Profile.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.profile.Profile.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulates the energy consumed over time at intervals defined by the selected granularity in the simulationConfig.</p>
+<p>This method calculates the detailed load and production based on the provided simulation configuration,
+using the defined energy factors and batteries (if available).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): The configuration settings for the simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="EnergyPrice.EnergyPlans.SomEnergia.html" class="btn btn-neutral float-left" title="EnergyPrice.EnergyPlans.SomEnergia package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Battery.html" class="btn btn-neutral float-right" title="Profiles.Battery package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

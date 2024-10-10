@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Battery package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Factors package" href="Profiles.Factors.html" />
+    <link rel="prev" title="Profiles package" href="Profiles.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Profiles.html">Profiles package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Profiles.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Profiles.Battery package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Profiles.Battery.batteriesManager">Profiles.Battery.batteriesManager module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Profiles.Battery.batteriesManager.BatteriesManager"><code class="docutils literal notranslate"><span class="pre">BatteriesManager</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Battery.batteriesManager.BatteriesManager.simulate"><code class="docutils literal notranslate"><span class="pre">BatteriesManager.simulate()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Battery.batteriesManager.BatteriesManager.use_on"><code class="docutils literal notranslate"><span class="pre">BatteriesManager.use_on()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Profiles.Battery.battery">Profiles.Battery.battery module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Profiles.Battery.battery.Battery"><code class="docutils literal notranslate"><span class="pre">Battery</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Battery.battery.Battery.charge"><code class="docutils literal notranslate"><span class="pre">Battery.charge()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Battery.battery.Battery.discharge"><code class="docutils literal notranslate"><span class="pre">Battery.discharge()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.profile">Profiles.profile module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.html">Profiles package</a></li>
+      <li class="breadcrumb-item active">Profiles.Battery package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.Battery.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-battery-package">
+<h1>Profiles.Battery package<a class="headerlink" href="#profiles-battery-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.Battery.batteriesManager">
+<span id="profiles-battery-batteriesmanager-module"></span><h2>Profiles.Battery.batteriesManager module<a class="headerlink" href="#module-Profiles.Battery.batteriesManager" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Battery.batteriesManager.BatteriesManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Battery.batteriesManager.</span></span><span class="sig-name descname"><span class="pre">BatteriesManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batteries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#Profiles.Battery.battery.Battery" title="Profiles.Battery.battery.Battery"><span class="pre">Battery</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Battery/batteriesManager.html#BatteriesManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Battery.batteriesManager.BatteriesManager" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFactor</span></code></a></p>
+<p>Manages a collection of batteries to charge or discharge energy based on the input energy comsumption/production.</p>
+<p>This class acts as a bridge between the load demand or production excedents and the battery system, allowing for
+efficient energy storage and retrieval. It can charge batteries when there is excess energy
+and discharge them when energy is needed.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>_batteries (List[Battery]): A list of Battery objects managed by this manager.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>use_on(load: np.ndarray, config: SimulationConfig) -&gt; np.ndarray:</dt><dd><p>Applies the input load to the batteries and returns the load profile based on battery usage.</p>
+</dd>
+<dt>simulate(simulationConfig: SimulationConfig) -&gt; np.ndarray:</dt><dd><p>Placeholder method to fulfill the abstract base class requirement.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Battery.batteriesManager.BatteriesManager.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Profiles/Battery/batteriesManager.html#BatteriesManager.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Battery.batteriesManager.BatteriesManager.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulates the energy consumption or production over a day.</p>
+<p>This method must be implemented by subclasses. It returns an array representing 
+the energy consumed or produced over time during a day, measured in kWh.
+Each index of the array represents energy consumed or produced on the time elapsed based on granularity.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): Configuration settings for the simulation.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.ndarray: An array where the first series represents the energy over time 
+(in kWh) Each index of the array represents energy consumed or produced on the time elapsed based on granularity. The full array represents a day</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Battery.batteriesManager.BatteriesManager.use_on">
+<span class="sig-name descname"><span class="pre">use_on</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">load</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Profiles/Battery/batteriesManager.html#BatteriesManager.use_on"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Battery.batteriesManager.BatteriesManager.use_on" title="Link to this definition"></a></dt>
+<dd><p>Applies the input load profile to the batteries, managing charge and discharge cycles.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>load (np.ndarray): An array representing the load profile where positive values indicate consumption</dt><dd><p>and negative values indicate production.</p>
+</dd>
+</dl>
+<p>config (SimulationConfig): The simulation configuration.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.ndarray: An array representing the load profile of the batteries during the simulated day.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Profiles.Battery.battery">
+<span id="profiles-battery-battery-module"></span><h2>Profiles.Battery.battery module<a class="headerlink" href="#module-Profiles.Battery.battery" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Battery.battery.Battery">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Battery.battery.</span></span><span class="sig-name descname"><span class="pre">Battery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">capacity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chargeRate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dischargeRate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chargingEfficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dischargingEfficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startChargeLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Battery/battery.html#Battery"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Battery.battery.Battery" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a battery that can charge and discharge energy.</p>
+<p>This class manages the battery’s state, including its capacity, charge rate,
+discharge rate, and efficiency. It allows for charging and discharging operations
+based on the specified energy and time parameters.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_capacity (float): The total energy capacity of the battery in kWh.</p>
+<p>_chargeRate (float): The maximum charging rate of the battery in kW.</p>
+<p>_dischargeRate (float): The maximum discharging rate of the battery in kW.</p>
+<p>_chargingEfficiency (float): The efficiency of the charging process (0-1).</p>
+<p>_dischargingEfficiency (float): The efficiency of the discharging process (0-1).</p>
+<p>_chargeLevel (float): The current charge level of the battery in kWh.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>charge(energy: float, timeElapsed: float) -&gt; float:</dt><dd><p>Charges the battery with the specified energy over the given time period.</p>
+</dd>
+<dt>discharge(energy: float, timeElapsed: float) -&gt; float:</dt><dd><p>Discharges the battery with the specified energy over the given time period.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Battery.battery.Battery.charge">
+<span class="sig-name descname"><span class="pre">charge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeElapsed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Profiles/Battery/battery.html#Battery.charge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Battery.battery.Battery.charge" title="Link to this definition"></a></dt>
+<dd><p>Charges the battery with the specified energy over the given time period.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>energy (float): The amount of energy to charge the battery in kWh.
+timeElapsed (float): The time duration for charging in minutes.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The actual amount of energy charged to the battery in kWh.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Battery.battery.Battery.discharge">
+<span class="sig-name descname"><span class="pre">discharge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energy</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeElapsed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Profiles/Battery/battery.html#Battery.discharge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Battery.battery.Battery.discharge" title="Link to this definition"></a></dt>
+<dd><p>Discharges the battery with the specified energy over the given time period.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>energy (float): The amount of energy to discharge from the battery in kWh.
+timeElapsed (float): The time duration for discharging in minutes.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The actual amount of energy produced by the battery in kWh.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.html" class="btn btn-neutral float-left" title="Profiles package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Factors.html" class="btn btn-neutral float-right" title="Profiles.Factors package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,530 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mainCommunityExample module" href="mainCommunityExample.html" />
+    <link rel="prev" title="Profiles.utils package" href="Profiles.utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.html">Profiles package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Simulation package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Simulation.simulatedCommunity">Simulation.simulatedCommunity module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_cost_calculation_info"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_cost_calculation_info()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_costs"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_costs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_energy_sharings"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_energy_sharings()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_profiles_simulation_day"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_profiles_simulation_day()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_sharing_info"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_sharing_info()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_community_pv"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_simulated_community_pv()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_external_factors"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.add_simulated_external_factors()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_community_pvs"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.get_community_pvs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_energy_sharings"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.get_energy_sharings()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_summarized_simulated_profiles"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.get_summarized_simulated_profiles()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_total_community_cost"><code class="docutils literal notranslate"><span class="pre">SimulatedCommunity.get_total_community_cost()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Simulation.simulationConfiguration">Simulation.simulationConfiguration module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig"><code class="docutils literal notranslate"><span class="pre">SimulationConfig</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.get_current_date"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.get_current_date()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.get_day_of_week"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.get_day_of_week()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.get_irradiation"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.get_irradiation()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.get_str_date"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.get_str_date()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.get_temperature"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.get_temperature()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.get_wind"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.get_wind()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.num_indices"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.num_indices()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.outside_termic_response"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.outside_termic_response()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig.step_one_day"><code class="docutils literal notranslate"><span class="pre">SimulationConfig.step_one_day()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+      <li class="breadcrumb-item active">Simulation package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Simulation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="simulation-package">
+<h1>Simulation package<a class="headerlink" href="#simulation-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Simulation.simulatedCommunity">
+<span id="simulation-simulatedcommunity-module"></span><h2>Simulation.simulatedCommunity module<a class="headerlink" href="#module-Simulation.simulatedCommunity" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Simulation.simulatedCommunity.</span></span><span class="sig-name descname"><span class="pre">SimulatedCommunity</span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a simulated community for managing and analyzing energy consumption and production.</p>
+<p>This class stores detailed and summarized information about simulated profiles,
+community assets, external factors, energy sharing, and costs. All over time</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_detailedSimulatedProfiles (pd.DataFrame): DataFrame containing the detailed simulated profiles.</p>
+<p>_summarizedSimulatedProfiles (pd.DataFrame): DataFrame containing the summarized simulated profiles.</p>
+<p>_simulatedCommunityAssets (pd.DataFrame): DataFrame containing the detailed profiles of the community assets.</p>
+<p>_communityPv (pd.DataFrame): DataFrame containing community production data.</p>
+<p>_externalFactors (pd.DataFrame): DataFrame containing environmental factors data.</p>
+<p>_sharingInfo (pd.DataFrame): DataFrame containing information about sharing methods used.</p>
+<p>_energySharings (pd.DataFrame): DataFrame containing energy sharing details.</p>
+<p>_costs (pd.DataFrame): DataFrame containing cost-related data for profiles.</p>
+<p>_costCalculationInfo (pd.DataFrame): DataFrame containing information on cost calculation methods.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>add_simulated_community_pv(totalPv: np.ndarray, detailedPv: Dict[BaseFactor, np.ndarray], currentDate: date, override: bool = True) -&gt; None:</dt><dd><p>Adds simulated photovoltaic (PV) data for the community.</p>
+</dd>
+<dt>add_simulated_external_factors(simulationConfig: SimulationConfig, currentDate: date, override: bool = True) -&gt; None:</dt><dd><p>Adds external factors affecting energy production for the community.</p>
+</dd>
+<dt>add_sharing_info(datetimes: List[datetime], sharingMethod: SharingMethod, sharedPersonalPvs: bool) -&gt; None:</dt><dd><p>Adds sharing information used for energy sharing within the community.</p>
+</dd>
+<dt>add_energy_sharings(energySharings: Dict[datetime, List[ProfileSharingsDataAux]]) -&gt; None:</dt><dd><p>Adds energy sharing information for multiple profiles on different datetimes.</p>
+</dd>
+<dt>add_costs(costs: Dict[datetime, List[ProfileCostDataAux]]) -&gt; None:</dt><dd><p>Adds cost information for multiple profiles on different datetimes.</p>
+</dd>
+<dt>add_cost_calculation_info(datetimes: List[datetime], method: CostCalculationBaseMethod) -&gt; None:</dt><dd><p>Adds cost calculation method information for a list of datetimes.</p>
+</dd>
+<dt>get_summarized_simulated_profiles(start: datetime = None, end: datetime = None) -&gt; pd.DataFrame:</dt><dd><p>Retrieves summarized simulated profiles for a specified date range.</p>
+</dd>
+<dt>get_community_pvs(start: datetime = None, end: datetime = None) -&gt; pd.DataFrame:</dt><dd><p>Retrieves community PV data for a specified date range.</p>
+</dd>
+<dt>get_energy_sharings(start: datetime = None, end: datetime = None) -&gt; pd.DataFrame:</dt><dd><p>Retrieves energy sharing data for a specified date range.</p>
+</dd>
+<dt>get_total_community_cost(start: datetime = None, end: datetime = None) -&gt; float:</dt><dd><p>Calculates the total community cost for a specified date range.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_cost_calculation_info">
+<span class="sig-name descname"><span class="pre">add_cost_calculation_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datetimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Community.Costs.html#Community.Costs.costCalculationBaseMethod.CostCalculationBaseMethod" title="Community.Costs.costCalculationBaseMethod.CostCalculationBaseMethod"><span class="pre">CostCalculationBaseMethod</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_cost_calculation_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_cost_calculation_info" title="Link to this definition"></a></dt>
+<dd><p>Adds cost calculation method information for a list of datetimes.</p>
+<p>This method records the cost calculation method used for the specified datetimes.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>datetimes (List[datetime]): A list of datetime objects indicating the times for which the cost calculation method is recorded.
+method (CostCalculationBaseMethod): An object representing the cost calculation method used during the simulation.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>The method constructs a DataFrame for the cost calculation information and concatenates it with the existing data in the class, ensuring that duplicates are removed based on datetime.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_costs">
+<span class="sig-name descname"><span class="pre">add_costs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">costs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileCostDataAux.ProfileCostDataAux" title="Profiles.utils.profileCostDataAux.ProfileCostDataAux"><span class="pre">ProfileCostDataAux</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_costs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_costs" title="Link to this definition"></a></dt>
+<dd><p>Adds cost information for multiple profiles on different datetimes.</p>
+<p>This method processes a dictionary of cost data and appends it to the existing records in the class.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>costs (Dict[datetime, List[ProfileCostDataAux]]): A dictionary where each key is a datetime and each value is a list of ProfileCostDataAux objects containing cost data for each profile.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>The method constructs a DataFrame from the provided data and concatenates it with the existing cost data, ensuring that duplicates are removed based on datetime and profile ID.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_energy_sharings">
+<span class="sig-name descname"><span class="pre">add_energy_sharings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energySharings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux" title="Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><span class="pre">ProfileSharingsDataAux</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_energy_sharings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_energy_sharings" title="Link to this definition"></a></dt>
+<dd><p>Adds energy sharing information for multiple profiles on different datetimes.</p>
+<p>This method processes a dictionary of energy sharing data and appends it to the existing records in the class.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>energySharings (Dict[datetime, List[ProfileSharingsDataAux]]): A dictionary where each key is a datetime and each value is a list of ProfileSharingsDataAux objects containing sharing data for each profile.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>The method constructs a DataFrame from the provided data and concatenates it with the existing energy sharing data, ensuring that duplicates are removed based on datetime and profile ID.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_profiles_simulation_day">
+<span class="sig-name descname"><span class="pre">add_profiles_simulation_day</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.html#Profiles.profile.Profile" title="Profiles.profile.Profile"><span class="pre">Profile</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currentDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_profiles_simulation_day"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_profiles_simulation_day" title="Link to this definition"></a></dt>
+<dd><p>Adds simulation data for a list of profiles for a specific day.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>profiles (List[Profile]): A list of Profile objects containing load and production data of that day.
+currentDate (date): The date for which the profiles are simulated.
+override (bool): Whether to override existing data. If True, keeps the last entry for duplicates. if False, it will only keep the existing data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_sharing_info">
+<span class="sig-name descname"><span class="pre">add_sharing_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datetimes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">datetime</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharingMethod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sharingMethod.SharingMethod" title="Community.Sharing.sharingMethod.SharingMethod"><span class="pre">SharingMethod</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharedPersonalPvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_sharing_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_sharing_info" title="Link to this definition"></a></dt>
+<dd><p>Adds sharing information for a list of datetimes.</p>
+<p>This method records the sharing method used and whether personal PVs are shared for each datetime in the provided list.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>datetimes (List[datetime]): A list of datetime objects indicating the times for which sharing information is recorded.
+sharingMethod (SharingMethod): An object representing the sharing method used during the simulation.
+sharedPersonalPvs (bool): Indicates whether personal PVs are shared in the community.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_community_pv">
+<span class="sig-name descname"><span class="pre">add_simulated_community_pv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">totalPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detailedPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><span class="pre">BaseFactor</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currentDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_simulated_community_pv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_community_pv" title="Link to this definition"></a></dt>
+<dd><p>Adds simulated community production data for a specific day.</p>
+<p>This method adds both detailed production data for each asset and total community production data for the given date.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>totalPv (np.ndarray): A NumPy array containing the total PV energy output for the community, indexed by time based on granularity
+detailedPv (Dict[BaseFactor, np.ndarray]): A dictionary mapping BaseFactor objects to their corresponding production energy outputs.
+currentDate (date): The date for which the production data is being added.
+override (bool): If True, the method will overwrite any existing data for the same datetime; if False, it will only keep the existing data.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_external_factors">
+<span class="sig-name descname"><span class="pre">add_simulated_external_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">currentDate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">override</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.add_simulated_external_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_external_factors" title="Link to this definition"></a></dt>
+<dd><p>Adds simulated external factors such as irradiation, wind, and temperature for a specific day.</p>
+<p>This method uses a SimulationConfig object to obtain the external factors for each time index of the day.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>simulationConfig (SimulationConfig): An object containing the configuration for the simulation, including irradiation, wind, and temperature data.
+currentDate (date): The date for which the external factors are being added.
+override (bool): If True, the method will overwrite any existing data for the same datetime; if False, it will keep the existing data.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.get_community_pvs">
+<span class="sig-name descname"><span class="pre">get_community_pvs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.get_community_pvs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_community_pvs" title="Link to this definition"></a></dt>
+<dd><p>Retrieves community PV data for a specified date range.</p>
+<p>This method returns a DataFrame containing community production records filtered by the given start and end datetimes.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.
+end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: A DataFrame containing the filtered and sorted community production records.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.get_energy_sharings">
+<span class="sig-name descname"><span class="pre">get_energy_sharings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.get_energy_sharings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_energy_sharings" title="Link to this definition"></a></dt>
+<dd><p>Retrieves energy sharing data for a specified date range.</p>
+<p>This method returns a DataFrame containing energy sharing records filtered by the given start and end datetimes.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.
+end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: A DataFrame containing the filtered and sorted energy sharing records.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.get_summarized_simulated_profiles">
+<span class="sig-name descname"><span class="pre">get_summarized_simulated_profiles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.get_summarized_simulated_profiles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_summarized_simulated_profiles" title="Link to this definition"></a></dt>
+<dd><p>Retrieves summarized simulated profiles for a specified date range.</p>
+<p>This method returns a DataFrame containing summarized profiles filtered by the given start and end datetimes.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.
+end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: A DataFrame containing the filtered and sorted summarized simulated profiles.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulatedCommunity.SimulatedCommunity.get_total_community_cost">
+<span class="sig-name descname"><span class="pre">get_total_community_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Simulation/simulatedCommunity.html#SimulatedCommunity.get_total_community_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulatedCommunity.SimulatedCommunity.get_total_community_cost" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total community cost for a specified date range.</p>
+<p>This method computes the total costs for the community by summing grid import and microgrid costs, and subtracting revenues from grid export, microgrid exports, and personal exceedents for the specified date range.</p>
+<dl class="simple">
+<dt>Parameters:</dt><dd><p>start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.
+end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The total community cost for the specified date range.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Simulation.simulationConfiguration">
+<span id="simulation-simulationconfiguration-module"></span><h2>Simulation.simulationConfiguration module<a class="headerlink" href="#module-Simulation.simulationConfiguration" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Simulation.simulationConfiguration.</span></span><span class="sig-name descname"><span class="pre">SimulationConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">granularity:</span> <span class="pre">~utils.enums.Granularity</span> <span class="pre">=</span> <span class="pre">Granularity.Hour</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currentDate:</span> <span class="pre">~datetime.date</span> <span class="pre">=</span> <span class="pre">datetime.date(2024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geolocation:</span> <span class="pre">~utils.geolocation.Geolocation</span> <span class="pre">=</span> <span class="pre">&lt;utils.geolocation.Geolocation</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class for configuring simulation parameters related to energy profiles.</p>
+<p>This class manages the simulation settings, including granularity of time intervals,
+current date, and geolocation. It also initializes environmental factors like solar irradiation, 
+temperature, and wind based on the configured settings.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_currentDate (date): The current date for the simulation.</p>
+<p>_granularity (Granularity): The time granularity for the simulation (e.g., Granularity.Hour, Granularity.Minute, ..).</p>
+<p>_geolocation (Geolocation): The geographical location for the simulation.</p>
+<p>_indices (int): The number of time indices a day array has based on the granularity.</p>
+<p>_solarIrradiation (SolarIrradiation): An instance that provides solar irradiation data.</p>
+<p>_temperature (Temperature): An instance that provides temperature data.</p>
+<p>_wind (Wind): An instance that provides wind data.</p>
+</dd>
+<dt>Methods:</dt><dd><dl>
+<dt>num_indices() -&gt; int:</dt><dd><p>Returns the number of indices an array for a day simulation should have based on the granularity.</p>
+</dd>
+<dt>get_current_date() -&gt; date:</dt><dd><p>Retrieves the current date of the simulation.</p>
+</dd>
+<dt>get_irradiation() -&gt; np.ndarray:</dt><dd><p>Retrieves solar irradiation data as a NumPy array. 
+Each index of the array contains the irradiation value
+at the timestamp index, based on the specified granularity. 
+The entire array represents a full day.</p>
+</dd>
+<dt>step_one_day() -&gt; None:</dt><dd><p>Advances the current date by one day and updates the environmental factors.</p>
+</dd>
+<dt>get_day_of_week() -&gt; int:</dt><dd><p>Retrieves the current day of the week (0=Monday, 6=Sunday).</p>
+</dd>
+<dt>outside_termic_response(currentInsideTemp: float, timestamp: float, </dt><dd><blockquote>
+<div><p>timeElapsed: float, superficialArea: float, 
+insideVolume: float) -&gt; float:</p>
+</div></blockquote>
+<p>Calculates the thermal response based on inside temperature, area that contacts the exterior and environmental factors.</p>
+</dd>
+<dt>get_str_date() -&gt; str:</dt><dd><p>Retrieves the current date formatted as a string.</p>
+</dd>
+<dt>get_wind() -&gt; np.ndarray:</dt><dd><p>Retrieves wind data as a NumPy array.  
+Each index of the array contains the wind velocity value
+at the timestamp index, based on the specified granularity. 
+The entire array represents a full day.</p>
+</dd>
+<dt>get_temperature() -&gt; np.ndarray:</dt><dd><p>Retrieves temperature of the current day as a NumPy array.  
+Each index of the array contains the temperature value
+at the timestamp index, based on the specified granularity. 
+The entire array represents a full day.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.get_current_date">
+<span class="sig-name descname"><span class="pre">get_current_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">date</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.get_current_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.get_current_date" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the current date of the simulation.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>date: The current date of the simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.get_day_of_week">
+<span class="sig-name descname"><span class="pre">get_day_of_week</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.get_day_of_week"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.get_day_of_week" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the current day of the week.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The current day of the week (0=Monday, 6=Sunday).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.get_irradiation">
+<span class="sig-name descname"><span class="pre">get_irradiation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.get_irradiation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.get_irradiation" title="Link to this definition"></a></dt>
+<dd><p>Retrieves solar irradiation of the current date as a NumPy array.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>np.ndarray: An array of solar irradiation values. 
+Each index of the array contains the irradiation value
+at the timestamp index, based on the specified granularity. 
+The entire array represents a full day.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.get_str_date">
+<span class="sig-name descname"><span class="pre">get_str_date</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.get_str_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.get_str_date" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the current date formatted as a string.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The current date formatted as ‘YYYY_MM_DD’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.get_temperature">
+<span class="sig-name descname"><span class="pre">get_temperature</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.get_temperature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.get_temperature" title="Link to this definition"></a></dt>
+<dd><p>Retrieves temperature of the current date as a NumPy array.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>np.ndarray: An array of temperature values.
+Each index of the array contains the temperature value
+at the timestamp index, based on the specified granularity. 
+The entire array represents a full day.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.get_wind">
+<span class="sig-name descname"><span class="pre">get_wind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.get_wind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.get_wind" title="Link to this definition"></a></dt>
+<dd><p>Retrieves wind velocity of the current date as a NumPy array.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>np.ndarray: An array of wind speed values.
+Each index of the array contains the wind velocity value
+at the timestamp index, based on the specified granularity. 
+The entire array represents a full day.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.num_indices">
+<span class="sig-name descname"><span class="pre">num_indices</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.num_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.num_indices" title="Link to this definition"></a></dt>
+<dd><p>Returns the number of indices an array for a day simulation should have based on the granularity</p>
+<blockquote>
+<div><dl class="simple">
+<dt>Returns:</dt><dd><p>int: The number of indices based on the granularity.</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.outside_termic_response">
+<span class="sig-name descname"><span class="pre">outside_termic_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">currentInsideTemp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeElapsed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">superficialArea</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">insideVolume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.outside_termic_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.outside_termic_response" title="Link to this definition"></a></dt>
+<dd><p>Calculates the thermal response based on inside temperature and environmental factors.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>currentInsideTemp (float): The current inside temperature.
+timestamp (float): The current timestamp.
+timeElapsed (float): The time elapsed since the last calculation.
+superficialArea (float): The superficial area exposed to the environment.
+insideVolume (float): The inside volume of the space.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The calculated thermal response.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Simulation.simulationConfiguration.SimulationConfig.step_one_day">
+<span class="sig-name descname"><span class="pre">step_one_day</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Simulation/simulationConfiguration.html#SimulationConfig.step_one_day"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Simulation.simulationConfiguration.SimulationConfig.step_one_day" title="Link to this definition"></a></dt>
+<dd><p>Advances the current date by one day and updates the environmental factors.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.utils.html" class="btn btn-neutral float-left" title="Profiles.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mainCommunityExample.html" class="btn btn-neutral float-right" title="mainCommunityExample module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

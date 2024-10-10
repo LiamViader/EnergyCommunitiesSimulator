@@ -1,0 +1,258 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Lightning package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Factors.SolarPanel package" href="Profiles.Factors.SolarPanel.html" />
+    <link rel="prev" title="Profiles.Factors.ElectricCar.UseConfig package" href="Profiles.Factors.ElectricCar.UseConfig.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Profiles.html">Profiles package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Profiles.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="Profiles.Factors.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Cyclic.html">Profiles.Factors.Cyclic package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.ElectricCar.html">Profiles.Factors.ElectricCar package</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">Profiles.Factors.Lightning package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#module-Profiles.Factors.Lightning.lightningFactor">Profiles.Factors.Lightning.lightningFactor module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningFactor.LightningFactor"><code class="docutils literal notranslate"><span class="pre">LightningFactor</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningFactor.LightningFactor.simulate"><code class="docutils literal notranslate"><span class="pre">LightningFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-Profiles.Factors.Lightning.lightningModel">Profiles.Factors.Lightning.lightningModel module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningModel.LightningModel"><code class="docutils literal notranslate"><span class="pre">LightningModel</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningModel.LightningModel.get_max_power"><code class="docutils literal notranslate"><span class="pre">LightningModel.get_max_power()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningModel.LightningModel.get_name"><code class="docutils literal notranslate"><span class="pre">LightningModel.get_name()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningModel.LightningModel.get_power_per_light"><code class="docutils literal notranslate"><span class="pre">LightningModel.get_power_per_light()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#module-Profiles.Factors.baseFactor">Profiles.Factors.baseFactor module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.profile">Profiles.profile module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.html">Profiles package</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.Factors.html">Profiles.Factors package</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Lightning package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.Factors.Lightning.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-factors-lightning-package">
+<h1>Profiles.Factors.Lightning package<a class="headerlink" href="#profiles-factors-lightning-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.Factors.Lightning.lightningFactor">
+<span id="profiles-factors-lightning-lightningfactor-module"></span><h2>Profiles.Factors.Lightning.lightningFactor module<a class="headerlink" href="#module-Profiles.Factors.Lightning.lightningFactor" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Lightning.lightningFactor.LightningFactor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Lightning.lightningFactor.</span></span><span class="sig-name descname"><span class="pre">LightningFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Profiles.Factors.Lightning.lightningModel.LightningModel" title="Profiles.Factors.Lightning.lightningModel.LightningModel"><span class="pre">LightningModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">activityIntervals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="utils.html#utils.minuteInterval.MinuteInterval" title="utils.minuteInterval.MinuteInterval"><span class="pre">MinuteInterval</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Lightning/lightningFactor.html#LightningFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Lightning.lightningFactor.LightningFactor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFactor</span></code></a></p>
+<p>Represents the lightning load factor based on the given model and activity intervals.</p>
+<p>This class simulates the power consumption of lighting based on irradiation and specified activity intervals.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_model (LightningModel): The model that defines the characteristics of the lighting system.</p>
+<p>_activityIntervals (List[Tuple[MinuteInterval, float]]): A list of activity intervals and their respective amount of activity (0-1). Activity meaning how much active the residents are at home.
+Translating to how much they might be using lightning.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>simulate(simulationConfig: SimulationConfig) -&gt; np.ndarray:</dt><dd><p>Simulates the lighting load through the day.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Lightning.lightningFactor.LightningFactor.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Lightning/lightningFactor.html#LightningFactor.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Lightning.lightningFactor.LightningFactor.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulates the lighting load based on residents activity and irradiation.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): Configuration settings for the simulation.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.ndarray: An array of simulated energy consumption values for each time step of the day.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Profiles.Factors.Lightning.lightningModel">
+<span id="profiles-factors-lightning-lightningmodel-module"></span><h2>Profiles.Factors.Lightning.lightningModel module<a class="headerlink" href="#module-Profiles.Factors.Lightning.lightningModel" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Lightning.lightningModel.LightningModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Lightning.lightningModel.</span></span><span class="sig-name descname"><span class="pre">LightningModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lightsType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="utils.html#utils.enums.LightType" title="utils.enums.LightType"><span class="pre">LightType</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lightsNumber</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Lightning/lightningModel.html#LightningModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Lightning.lightningModel.LightningModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a lighting model that defines the type and number of lights, and their power characteristics.</p>
+<p>This class provides methods to calculate the maximum power consumption based on the type of lights used.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_name (str): The name of the lighting model.</p>
+<p>_lightsType (LightType): The type of lights (e.g., LED, CFL, Incandescent).</p>
+<p>_lightsNumber (int): The number of lights in the model.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>get_name() -&gt; str:</dt><dd><p>Returns the name of the lighting model.</p>
+</dd>
+<dt>get_max_power() -&gt; float:</dt><dd><p>Calculates the total maximum power consumption for all lights.</p>
+</dd>
+<dt>get_power_per_light() -&gt; float:</dt><dd><p>Returns the power consumption per individual light based on its type.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Lightning.lightningModel.LightningModel.get_max_power">
+<span class="sig-name descname"><span class="pre">get_max_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Lightning/lightningModel.html#LightningModel.get_max_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Lightning.lightningModel.LightningModel.get_max_power" title="Link to this definition"></a></dt>
+<dd><p>Calculates the total maximum power consumption for all lights in the model.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The total maximum power consumption in kilowatts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Lightning.lightningModel.LightningModel.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Lightning/lightningModel.html#LightningModel.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Lightning.lightningModel.LightningModel.get_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the name of the lighting model.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the lighting model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Lightning.lightningModel.LightningModel.get_power_per_light">
+<span class="sig-name descname"><span class="pre">get_power_per_light</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Lightning/lightningModel.html#LightningModel.get_power_per_light"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Lightning.lightningModel.LightningModel.get_power_per_light" title="Link to this definition"></a></dt>
+<dd><p>Returns the power consumption per individual light based on its type.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The power consumption of a single light in kilowatts.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.Factors.ElectricCar.UseConfig.html" class="btn btn-neutral float-left" title="Profiles.Factors.ElectricCar.UseConfig package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Factors.SolarPanel.html" class="btn btn-neutral float-right" title="Profiles.Factors.SolarPanel package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

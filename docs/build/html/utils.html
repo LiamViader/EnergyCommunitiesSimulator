@@ -1,0 +1,549 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="utils.RandomNumbers package" href="utils.RandomNumbers.html" />
+    <link rel="prev" title="models module" href="models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.html">Profiles package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.RandomNumbers.html">utils.RandomNumbers package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-utils.enums">utils.enums module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#utils.enums.FactorType"><code class="docutils literal notranslate"><span class="pre">FactorType</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.FactorType.Battery"><code class="docutils literal notranslate"><span class="pre">FactorType.Battery</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.FactorType.Consumer"><code class="docutils literal notranslate"><span class="pre">FactorType.Consumer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.FactorType.Producer"><code class="docutils literal notranslate"><span class="pre">FactorType.Producer</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.FactorType.Prosumer"><code class="docutils literal notranslate"><span class="pre">FactorType.Prosumer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.enums.Granularity"><code class="docutils literal notranslate"><span class="pre">Granularity</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.Granularity.FifteenMinutes"><code class="docutils literal notranslate"><span class="pre">Granularity.FifteenMinutes</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.Granularity.Hour"><code class="docutils literal notranslate"><span class="pre">Granularity.Hour</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.Granularity.Minute"><code class="docutils literal notranslate"><span class="pre">Granularity.Minute</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.enums.LightType"><code class="docutils literal notranslate"><span class="pre">LightType</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.LightType.Cfl"><code class="docutils literal notranslate"><span class="pre">LightType.Cfl</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.LightType.FluorescentTube"><code class="docutils literal notranslate"><span class="pre">LightType.FluorescentTube</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.LightType.Halogen"><code class="docutils literal notranslate"><span class="pre">LightType.Halogen</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.LightType.Incandescent"><code class="docutils literal notranslate"><span class="pre">LightType.Incandescent</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.LightType.Led"><code class="docutils literal notranslate"><span class="pre">LightType.Led</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.LightType.Neon"><code class="docutils literal notranslate"><span class="pre">LightType.Neon</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.enums.MarketCountry"><code class="docutils literal notranslate"><span class="pre">MarketCountry</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.MarketCountry.Portugal"><code class="docutils literal notranslate"><span class="pre">MarketCountry.Portugal</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.enums.MarketCountry.Spain"><code class="docutils literal notranslate"><span class="pre">MarketCountry.Spain</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-utils.geolocation">utils.geolocation module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#utils.geolocation.Geolocation"><code class="docutils literal notranslate"><span class="pre">Geolocation</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.get_amplitude_temp"><code class="docutils literal notranslate"><span class="pre">Geolocation.get_amplitude_temp()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.get_base_temp"><code class="docutils literal notranslate"><span class="pre">Geolocation.get_base_temp()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.get_latitude"><code class="docutils literal notranslate"><span class="pre">Geolocation.get_latitude()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.get_season_offset"><code class="docutils literal notranslate"><span class="pre">Geolocation.get_season_offset()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.get_zoneinfo_timezone"><code class="docutils literal notranslate"><span class="pre">Geolocation.get_zoneinfo_timezone()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.solar_angle"><code class="docutils literal notranslate"><span class="pre">Geolocation.solar_angle()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.geolocation.Geolocation.solar_hour"><code class="docutils literal notranslate"><span class="pre">Geolocation.solar_hour()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-utils.geolocationInfo">utils.geolocationInfo module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-utils.minuteInterval">utils.minuteInterval module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#utils.minuteInterval.MinuteInterval"><code class="docutils literal notranslate"><span class="pre">MinuteInterval</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#utils.minuteInterval.MinuteInterval.contains"><code class="docutils literal notranslate"><span class="pre">MinuteInterval.contains()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.minuteInterval.MinuteInterval.end_minute"><code class="docutils literal notranslate"><span class="pre">MinuteInterval.end_minute()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.minuteInterval.MinuteInterval.random"><code class="docutils literal notranslate"><span class="pre">MinuteInterval.random()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#utils.minuteInterval.MinuteInterval.start_minute"><code class="docutils literal notranslate"><span class="pre">MinuteInterval.start_minute()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+      <li class="breadcrumb-item active">utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utils-package">
+<h1>utils package<a class="headerlink" href="#utils-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="utils.RandomNumbers.html">utils.RandomNumbers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.RandomNumbers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.RandomNumbers.html#module-utils.RandomNumbers.baseNumberDistribution">utils.RandomNumbers.baseNumberDistribution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution"><code class="docutils literal notranslate"><span class="pre">BaseNumberDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution.generate_random"><code class="docutils literal notranslate"><span class="pre">BaseNumberDistribution.generate_random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.RandomNumbers.html#module-utils.RandomNumbers.fixedValueDistribution">utils.RandomNumbers.fixedValueDistribution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.fixedValueDistribution.FixedValueDistribution"><code class="docutils literal notranslate"><span class="pre">FixedValueDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.fixedValueDistribution.FixedValueDistribution.generate_random"><code class="docutils literal notranslate"><span class="pre">FixedValueDistribution.generate_random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.RandomNumbers.html#module-utils.RandomNumbers.normalDistribution">utils.RandomNumbers.normalDistribution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.normalDistribution.NormalDistribution"><code class="docutils literal notranslate"><span class="pre">NormalDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.normalDistribution.NormalDistribution.generate_random"><code class="docutils literal notranslate"><span class="pre">NormalDistribution.generate_random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.RandomNumbers.html#module-utils.RandomNumbers.piecewiseUniformDistribution">utils.RandomNumbers.piecewiseUniformDistribution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.piecewiseUniformDistribution.PiecewiseUniformDistribution"><code class="docutils literal notranslate"><span class="pre">PiecewiseUniformDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.piecewiseUniformDistribution.PiecewiseUniformDistribution.generate_random"><code class="docutils literal notranslate"><span class="pre">PiecewiseUniformDistribution.generate_random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.RandomNumbers.html#module-utils.RandomNumbers.truncatedNormalDistribution">utils.RandomNumbers.truncatedNormalDistribution module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.truncatedNormalDistribution.TruncatedNormalDistribution"><code class="docutils literal notranslate"><span class="pre">TruncatedNormalDistribution</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.truncatedNormalDistribution.TruncatedNormalDistribution.generate_random"><code class="docutils literal notranslate"><span class="pre">TruncatedNormalDistribution.generate_random()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-utils.enums">
+<span id="utils-enums-module"></span><h2>utils.enums module<a class="headerlink" href="#module-utils.enums" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.enums.FactorType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.enums.</span></span><span class="sig-name descname"><span class="pre">FactorType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/enums.html#FactorType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.enums.FactorType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum representing different types of energy factors.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>Consumer (int): Represents a consumer factor.</p>
+<p>Producer (int): Represents a producer factor.</p>
+<p>Prosumer (int): Represents a prosumer factor (both consumer and producer).</p>
+<p>Battery (int): Represents a battery factor.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.FactorType.Battery">
+<span class="sig-name descname"><span class="pre">Battery</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#utils.enums.FactorType.Battery" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.FactorType.Consumer">
+<span class="sig-name descname"><span class="pre">Consumer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#utils.enums.FactorType.Consumer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.FactorType.Producer">
+<span class="sig-name descname"><span class="pre">Producer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#utils.enums.FactorType.Producer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.FactorType.Prosumer">
+<span class="sig-name descname"><span class="pre">Prosumer</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#utils.enums.FactorType.Prosumer" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.enums.Granularity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.enums.</span></span><span class="sig-name descname"><span class="pre">Granularity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/enums.html#Granularity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.enums.Granularity" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum representing different granularities of time intervals.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>Hour (str): Represents a time interval of one hour.</p>
+<p>Minute (str): Represents a time interval of one minute.</p>
+<p>FifteenMinutes (str): Represents a time interval of fifteen minutes.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.Granularity.FifteenMinutes">
+<span class="sig-name descname"><span class="pre">FifteenMinutes</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fifteenMinutes'</span></em><a class="headerlink" href="#utils.enums.Granularity.FifteenMinutes" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.Granularity.Hour">
+<span class="sig-name descname"><span class="pre">Hour</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hour'</span></em><a class="headerlink" href="#utils.enums.Granularity.Hour" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.Granularity.Minute">
+<span class="sig-name descname"><span class="pre">Minute</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'minute'</span></em><a class="headerlink" href="#utils.enums.Granularity.Minute" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.enums.LightType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.enums.</span></span><span class="sig-name descname"><span class="pre">LightType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/enums.html#LightType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.enums.LightType" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum representing different types of lighting.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>Led (int): Represents LED lighting.</p>
+<p>Cfl (int): Represents Compact Fluorescent Lamp lighting.</p>
+<p>Incandescent (int): Represents incandescent lighting.</p>
+<p>Halogen (int): Represents halogen lighting.</p>
+<p>FluorescentTube (int): Represents fluorescent tube lighting.</p>
+<p>Neon (int): Represents neon lighting.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.LightType.Cfl">
+<span class="sig-name descname"><span class="pre">Cfl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#utils.enums.LightType.Cfl" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.LightType.FluorescentTube">
+<span class="sig-name descname"><span class="pre">FluorescentTube</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">5</span></em><a class="headerlink" href="#utils.enums.LightType.FluorescentTube" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.LightType.Halogen">
+<span class="sig-name descname"><span class="pre">Halogen</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">4</span></em><a class="headerlink" href="#utils.enums.LightType.Halogen" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.LightType.Incandescent">
+<span class="sig-name descname"><span class="pre">Incandescent</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#utils.enums.LightType.Incandescent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.LightType.Led">
+<span class="sig-name descname"><span class="pre">Led</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#utils.enums.LightType.Led" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.LightType.Neon">
+<span class="sig-name descname"><span class="pre">Neon</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">6</span></em><a class="headerlink" href="#utils.enums.LightType.Neon" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.enums.MarketCountry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.enums.</span></span><span class="sig-name descname"><span class="pre">MarketCountry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/enums.html#MarketCountry"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.enums.MarketCountry" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
+<p>Enum representing countries in the energy market.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>Spain (int): Represents Spain.</p>
+<p>Portugal (int): Represents Portugal.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.MarketCountry.Portugal">
+<span class="sig-name descname"><span class="pre">Portugal</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#utils.enums.MarketCountry.Portugal" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="utils.enums.MarketCountry.Spain">
+<span class="sig-name descname"><span class="pre">Spain</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#utils.enums.MarketCountry.Spain" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-utils.geolocation">
+<span id="utils-geolocation-module"></span><h2>utils.geolocation module<a class="headerlink" href="#module-utils.geolocation" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.geolocation.</span></span><span class="sig-name descname"><span class="pre">Geolocation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing geolocation information for a specific location.</p>
+<p>This class handles the retrieval of coordinates, timezone information, and climatic data such as 
+temperature and wind characteristics for the given location. It also provides methods to compute 
+solar hour and solar angle based on the local date and time.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_name (str): The name of the location.</p>
+<p>_latitude (float): The latitude of the location.</p>
+<p>_longitude (float): The longitude of the location.</p>
+<p>_timezoneInfo (ZoneInfo): The timezone information for the location.</p>
+</dd>
+<dt>Methods:     </dt><dd><dl class="simple">
+<dt>get_latitude() -&gt; float:</dt><dd><p>Returns the latitude of the location.</p>
+</dd>
+<dt>solar_hour(localDateTime: datetime) -&gt; float:</dt><dd><p>Calculates the solar hour for a given local date and time.</p>
+</dd>
+<dt>solar_angle(localDateTime: datetime) -&gt; float:</dt><dd><p>Calculates the solar angle for a given local date and time.</p>
+</dd>
+<dt>get_base_temp() -&gt; float:</dt><dd><p>Returns the base temperature for the location.</p>
+</dd>
+<dt>get_amplitude_temp() -&gt; float:</dt><dd><p>Returns the amplitude of temperature variation for the location.</p>
+</dd>
+<dt>get_season_offset() -&gt; int:</dt><dd><p>Returns the seasonal offset for the location.</p>
+</dd>
+<dt>get_wind(season: str) -&gt; Tuple[float, float]:</dt><dd><p>Retrieves the mean and standard deviation of wind for the specified season.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.get_amplitude_temp">
+<span class="sig-name descname"><span class="pre">get_amplitude_temp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.get_amplitude_temp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.get_amplitude_temp" title="Link to this definition"></a></dt>
+<dd><p>Returns the amplitude of temperature variation for the location.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The amplitude of temperature variation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.get_base_temp">
+<span class="sig-name descname"><span class="pre">get_base_temp</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.get_base_temp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.get_base_temp" title="Link to this definition"></a></dt>
+<dd><p>Returns the base temperature for the location.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The base temperature of the location.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.get_latitude">
+<span class="sig-name descname"><span class="pre">get_latitude</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.get_latitude"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.get_latitude" title="Link to this definition"></a></dt>
+<dd><p>Returns the latitude of the location.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The latitude of the location.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.get_season_offset">
+<span class="sig-name descname"><span class="pre">get_season_offset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.get_season_offset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.get_season_offset" title="Link to this definition"></a></dt>
+<dd><p>Returns the seasonal offset for the location.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The seasonal offset value.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.get_zoneinfo_timezone">
+<span class="sig-name descname"><span class="pre">get_zoneinfo_timezone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ZoneInfo</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.get_zoneinfo_timezone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.get_zoneinfo_timezone" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the timezone information for the location.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>ZoneInfo: The timezone information for the location.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If the timezone cannot be found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.solar_angle">
+<span class="sig-name descname"><span class="pre">solar_angle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">localDateTime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.solar_angle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.solar_angle" title="Link to this definition"></a></dt>
+<dd><p>Calculates the solar angle for a given local date and time.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>localDateTime (datetime): The local date and time for which to calculate the solar angle.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The solar angle in degrees.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.geolocation.Geolocation.solar_hour">
+<span class="sig-name descname"><span class="pre">solar_hour</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">localDateTime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/utils/geolocation.html#Geolocation.solar_hour"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.geolocation.Geolocation.solar_hour" title="Link to this definition"></a></dt>
+<dd><p>Calculates the solar hour for a given local date and time.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>localDateTime (datetime): The local date and time for which to calculate the solar hour.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The solar hour adjusted for the location’s timezone.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-utils.geolocationInfo">
+<span id="utils-geolocationinfo-module"></span><h2>utils.geolocationInfo module<a class="headerlink" href="#module-utils.geolocationInfo" title="Link to this heading"></a></h2>
+</section>
+<section id="module-utils.minuteInterval">
+<span id="utils-minuteinterval-module"></span><h2>utils.minuteInterval module<a class="headerlink" href="#module-utils.minuteInterval" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="utils.minuteInterval.MinuteInterval">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">utils.minuteInterval.</span></span><span class="sig-name descname"><span class="pre">MinuteInterval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inHours</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/minuteInterval.html#MinuteInterval"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.minuteInterval.MinuteInterval" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing a minute interval within a 24-hour period.</p>
+<p>This class is used to define an interval in minutes, providing functionality to generate random minutes
+within that interval, check if a specific minute falls within the interval, and access the start and end
+points of the interval.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_start (int): The starting minute of the interval (0-1439).</p>
+<p>_end (int): The ending minute of the interval (0-1439).</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>random() -&gt; int:</dt><dd><p>Generates a random minute within the defined interval.</p>
+</dd>
+<dt>start_minute() -&gt; int:</dt><dd><p>Returns the starting minute of the interval.</p>
+</dd>
+<dt>end_minute() -&gt; int:</dt><dd><p>Returns the ending minute of the interval.</p>
+</dd>
+<dt>contains(minute: int) -&gt; bool:</dt><dd><p>Checks if a given minute is within the defined interval.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.minuteInterval.MinuteInterval.contains">
+<span class="sig-name descname"><span class="pre">contains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">minute</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/minuteInterval.html#MinuteInterval.contains"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.minuteInterval.MinuteInterval.contains" title="Link to this definition"></a></dt>
+<dd><p>Checks if a given minute is within the defined interval.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>minute (int): The minute to check.</p>
+</dd>
+<dt>Returns:</dt><dd><p>bool: True if the minute is within the interval, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.minuteInterval.MinuteInterval.end_minute">
+<span class="sig-name descname"><span class="pre">end_minute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/minuteInterval.html#MinuteInterval.end_minute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.minuteInterval.MinuteInterval.end_minute" title="Link to this definition"></a></dt>
+<dd><p>Returns the ending minute of the interval.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The ending minute of the interval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.minuteInterval.MinuteInterval.random">
+<span class="sig-name descname"><span class="pre">random</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/utils/minuteInterval.html#MinuteInterval.random"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.minuteInterval.MinuteInterval.random" title="Link to this definition"></a></dt>
+<dd><p>Generates a random minute within the defined interval.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: A random minute within the interval, which is inclusive of the start and exclusive of the end.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="utils.minuteInterval.MinuteInterval.start_minute">
+<span class="sig-name descname"><span class="pre">start_minute</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/minuteInterval.html#MinuteInterval.start_minute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.minuteInterval.MinuteInterval.start_minute" title="Link to this definition"></a></dt>
+<dd><p>Returns the starting minute of the interval.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The starting minute of the interval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="models.html" class="btn btn-neutral float-left" title="models module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.RandomNumbers.html" class="btn btn-neutral float-right" title="utils.RandomNumbers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

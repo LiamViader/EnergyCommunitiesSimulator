@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Community.Sharing.sequentialSharing &#8212; Simulador  documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css?v=27fed22d" />
+    <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for Community.Sharing.sequentialSharing</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">Profiles.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileEnergyDataAux</span> <span class="kn">import</span> <span class="n">ProfileEnergyDataAux</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileSharingsDataAux</span> <span class="kn">import</span> <span class="n">ProfileSharingsDataAux</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.sharingMethod</span> <span class="kn">import</span> <span class="n">SharingMethod</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<div class="viewcode-block" id="SequentialSharing">
+<a class="viewcode-back" href="../../../Community.Sharing.html#Community.Sharing.sequentialSharing.SequentialSharing">[docs]</a>
+<span class="k">class</span> <span class="nc">SequentialSharing</span><span class="p">(</span><span class="n">SharingMethod</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of the Sequential Sharing energy sharing method.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the sharing method, set to &quot;Sequential Sharing&quot;.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">        share: Shares energy among profiles based on the Sequential Sharing method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a SequentialSharing instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Sequential Sharing&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SequentialSharing.share">
+<a class="viewcode-back" href="../../../Community.Sharing.html#Community.Sharing.sequentialSharing.SequentialSharing.share">[docs]</a>
+    <span class="k">def</span> <span class="nf">share</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profiles</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">],</span><span class="n">sharePersonalPvs</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span><span class="n">communityPv</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]:</span> <span class="c1">#profiles quedarà modificat al sortir de la funcio aixi q no usarlos. Sino cambiar una mica l&#39;implementació i ja, pero ho fare més endavant.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shares energy among profiles based on the Sequential Sharing method.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.</span>
+<span class="sd">            sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations.</span>
+<span class="sd">            communityPv (float): The total energy produced by community PV resources.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid and microgrid import/export values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sharings</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">minWeight</span><span class="o">=</span><span class="mf">1e-10</span> <span class="c1"># perque ningu tingui un pes de 0, ja que sino no se li comparteix res encara que sobri. És a dir si un individu A té weight de 0 i una demanda de 1kwh, llavors encara que un individu B tingui excedent de 1kwh, aquest s&#39;exportarà al grid en comptes de vendreho a A, el qual seria més logic ja que els dos guanyarien mes</span>
+        <span class="c1">#a més a més, un pes de 0 dóna problemes amb els calculs, si es necessita, s&#39;ha de tractar aquest cas, directament no tinguent en compte als individus amb weight 0, no posantlos a la funcio, i obviament no afegint el seu load al calcul tampoc. És a dir exclourels totalment de la repartició</span>
+        <span class="c1">#tal i com he comentat, ara no està implementat perque funcioni amb 0 i assignant un weight molt infim als que tindrien 0, fa que sigui més rentable per la comunitat</span>
+        <span class="n">totalPv</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">totalLoad</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">weights</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">,</span><span class="nb">float</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">if</span> <span class="n">sharePersonalPvs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">:</span>
+                <span class="n">load</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span>
+                <span class="n">communityPvOwned</span><span class="o">=</span><span class="n">communityPv</span><span class="o">*</span><span class="n">profile</span><span class="o">.</span><span class="n">share</span>
+                <span class="n">pv</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">+</span><span class="n">communityPvOwned</span>
+
+                <span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">=</span><span class="n">pv</span>
+                <span class="n">profile</span><span class="o">.</span><span class="n">personalPvExcedent</span><span class="o">=</span><span class="mi">0</span>
+                <span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">=</span><span class="n">load</span>
+
+                <span class="n">weights</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span><span class="o">=</span><span class="n">pv</span><span class="o">+</span><span class="n">communityPvOwned</span>
+                <span class="n">totalLoad</span><span class="o">+=</span><span class="n">load</span>
+                <span class="n">totalPv</span><span class="o">+=</span><span class="n">pv</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">:</span>
+                <span class="n">energy</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span>
+                <span class="k">if</span> <span class="n">energy</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">load</span><span class="o">=</span><span class="n">energy</span>
+                    <span class="n">pv</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pv</span><span class="o">=</span><span class="nb">abs</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+                    <span class="n">load</span><span class="o">=</span><span class="mi">0</span>
+                <span class="n">communityPvOwned</span><span class="o">=</span><span class="n">communityPv</span><span class="o">*</span><span class="n">profile</span><span class="o">.</span><span class="n">share</span>
+
+                <span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">=</span><span class="n">load</span>
+                <span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">=</span><span class="n">communityPvOwned</span>
+                <span class="n">profile</span><span class="o">.</span><span class="n">personalPvExcedent</span><span class="o">=</span><span class="n">pv</span>
+
+                <span class="n">weights</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">share</span>
+                <span class="n">totalLoad</span><span class="o">+=</span><span class="n">load</span>
+                <span class="n">totalPv</span><span class="o">+=</span><span class="n">communityPvOwned</span>
+
+        <span class="k">if</span> <span class="n">totalLoad</span><span class="o">&gt;=</span><span class="n">totalPv</span><span class="p">:</span>
+            <span class="n">pieceWiseFunc</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">,</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">]]</span><span class="o">=</span><span class="p">{}</span>
+            <span class="n">pvToExport</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">for</span> <span class="n">profile</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">weight</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span><span class="n">minWeight</span><span class="p">)</span> <span class="c1">#perque no sigui 0</span>
+                <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">&gt;=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="p">:</span>
+                    <span class="n">pvToExport</span><span class="o">+=</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="p">)</span>
+                    <span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">residualLoad</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span>
+                    <span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">residualLoad</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_solve_piecewise</span><span class="p">(</span><span class="n">pieceWiseFunc</span><span class="p">,</span><span class="n">pvToExport</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">profile</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">profileSharings</span><span class="o">=</span><span class="n">ProfileSharingsDataAux</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="n">profileSharings</span><span class="o">.</span><span class="n">communityShares</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">share</span>
+                <span class="n">profileSharings</span><span class="o">.</span><span class="n">personalPvExcedent</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">personalPvExcedent</span>
+                <span class="n">profileSharings</span><span class="o">.</span><span class="n">totalPvAbleToShare</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span>
+                <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">&gt;=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="p">:</span>
+                    <span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">profileSharings</span><span class="o">.</span><span class="n">gridImport</span><span class="o">=</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="p">)</span><span class="o">-</span><span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridImport</span>
+                <span class="n">sharings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">profileSharings</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pieceWiseFunc</span><span class="o">=</span><span class="p">{}</span>
+            <span class="n">loadToImport</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">for</span> <span class="n">profile</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">weight</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span><span class="n">minWeight</span><span class="p">)</span> <span class="c1">#perque no sigui 0</span>
+                <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">&gt;=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="p">:</span>
+                    <span class="n">loadToImport</span><span class="o">+=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span>
+                    <span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">residualPv</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span>
+                    <span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">]</span><span class="o">=</span><span class="p">(</span><span class="n">residualPv</span><span class="p">,</span><span class="n">weight</span><span class="p">)</span>
+            <span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_solve_piecewise</span><span class="p">(</span><span class="n">pieceWiseFunc</span><span class="p">,</span><span class="n">loadToImport</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">profile</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">profileSharings</span><span class="o">=</span><span class="n">ProfileSharingsDataAux</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+                <span class="n">profileSharings</span><span class="o">.</span><span class="n">communityShares</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">share</span>
+                <span class="n">profileSharings</span><span class="o">.</span><span class="n">personalPvExcedent</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">personalPvExcedent</span>
+                <span class="n">profileSharings</span><span class="o">.</span><span class="n">totalPvAbleToShare</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span>
+                <span class="k">if</span> <span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">&gt;=</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="p">:</span>
+                    <span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">pieceWiseFunc</span><span class="p">[</span><span class="n">profile</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">profileSharings</span><span class="o">.</span><span class="n">gridExport</span><span class="o">=</span><span class="p">(</span><span class="n">profile</span><span class="o">.</span><span class="n">production</span><span class="o">-</span><span class="n">profile</span><span class="o">.</span><span class="n">load</span><span class="p">)</span><span class="o">-</span><span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridExport</span>
+                <span class="n">sharings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">profileSharings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sharings</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_solve_piecewise</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">piecewiseFunc</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">,</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">]],</span><span class="n">y</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Solves a piecewise linear equation. (e.g y=min(a,bx) + min(c,dx)...)</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            piecewiseFunc (Dict[ProfileEnergyDataAux, Tuple[float, float]]): A dictionary containing a tuple mapping tuple[a,b] to min(a,bx) for the equation</span>
+<span class="sd">            y (float): The total demand or supply that needs to be satisfied.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The value of x that satisfies the piecewise function for the given y.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">func</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">piecewiseFunc</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="c1">#determinar punts critics</span>
+        <span class="n">critical_points</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">func2</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">func</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">b</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">critical_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">a</span> <span class="o">/</span> <span class="n">b</span><span class="p">)</span>
+                <span class="n">func2</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">))</span>
+        <span class="n">func</span><span class="o">=</span><span class="n">func2</span>
+                
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">critical_points</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        
+        <span class="n">critical_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="n">critical_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+        <span class="n">critical_points</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">#llista ordenada</span>
+        <span class="n">critical_points</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">critical_points</span><span class="p">)</span>
+
+        <span class="c1">#evaluar cada interval</span>
+
+        <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">func</span><span class="p">)</span>
+        
+        <span class="k">def</span> <span class="nf">isEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">rel_tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">abs_tol</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">critical_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="n">critical_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">x2</span> <span class="o">=</span> <span class="n">critical_points</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+
+            <span class="c1"># Determinar coeficients per cada terme en aquest interval</span>
+            <span class="n">total_constant</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">total_coefficient</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">func</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">bx2</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">bx2</span><span class="o">=</span><span class="n">b</span><span class="o">*</span><span class="n">x2</span>
+                <span class="k">if</span> <span class="n">bx2</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">isEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">bx2</span><span class="p">):</span>
+                    <span class="n">total_coefficient</span> <span class="o">+=</span> <span class="n">b</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">total_constant</span> <span class="o">+=</span> <span class="n">a</span>
+
+            <span class="k">if</span> <span class="n">total_coefficient</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">x_sol</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">total_constant</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_coefficient</span>
+                <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="n">x_sol</span> <span class="o">&lt;=</span> <span class="n">x2</span> <span class="ow">or</span> <span class="n">isEqual</span><span class="p">(</span><span class="n">x_sol</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">x_sol</span>
+        
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;something went bad on computing x in pieceWise func&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">critical_points</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">x1</span> <span class="o">=</span> <span class="n">critical_points</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">x2</span> <span class="o">=</span> <span class="n">critical_points</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+
+            <span class="c1"># Determinar coeficients per cada terme en aquest interval</span>
+            <span class="n">total_constant</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">total_coefficient</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">func</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isinf</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span> <span class="ow">and</span> <span class="n">b</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">bx2</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">bx2</span><span class="o">=</span><span class="n">b</span><span class="o">*</span><span class="n">x2</span>
+                <span class="k">if</span> <span class="n">bx2</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="ow">or</span> <span class="n">isEqual</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">bx2</span><span class="p">):</span>
+                    <span class="n">total_coefficient</span> <span class="o">+=</span> <span class="n">b</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">total_constant</span> <span class="o">+=</span> <span class="n">a</span>
+
+            <span class="k">if</span> <span class="n">total_coefficient</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">x_sol</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">total_constant</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_coefficient</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_sol</span><span class="p">),</span><span class="n">y</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span> <span class="n">x_sol</span><span class="p">,</span><span class="n">x2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">x1</span> <span class="o">&lt;</span> <span class="n">x_sol</span> <span class="o">&lt;=</span> <span class="n">x2</span> <span class="ow">or</span> <span class="n">isEqual</span><span class="p">(</span><span class="n">x_sol</span><span class="p">,</span><span class="n">x2</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">x_sol</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">suma</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">func</span><span class="p">:</span>
+                    <span class="n">suma</span><span class="o">+=</span><span class="n">a</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;noo&quot;</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">suma</span><span class="p">,</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">bx2</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">critical_points</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Simulador</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Simulador</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Author.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

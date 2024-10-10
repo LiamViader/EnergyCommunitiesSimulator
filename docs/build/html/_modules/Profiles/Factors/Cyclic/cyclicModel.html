@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Cyclic.cyclicModel &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Cyclic.cyclicModel</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.Cyclic.cyclicModel</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">utils.RandomNumbers.baseNumberDistribution</span> <span class="kn">import</span> <span class="n">BaseNumberDistribution</span>
+
+<div class="viewcode-block" id="CyclicModel">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel">[docs]</a>
+<span class="k">class</span> <span class="nc">CyclicModel</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a cyclic energy-consuming model, such as an appliance that follows a regular cycle (e.g., washing machine).</span>
+
+<span class="sd">    This class models the behavior of appliances that have a regular operation cycle, including active power during cycles,</span>
+<span class="sd">    standby power consumption, and the duration of these states.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _name (str): Name of the cyclic model.</span>
+
+<span class="sd">        _cyclePower (BaseNumberDistribution): Distribution that defines the average power consumed during the cycle.</span>
+
+<span class="sd">        _cycleTime (BaseNumberDistribution): Distribution that defines the duration of each cycle (in hours).</span>
+
+<span class="sd">        _standByPower (BaseNumberDistribution): Distribution that defines the power consumed during standby mode.</span>
+<span class="sd">        </span>
+<span class="sd">        _standByTime (float): The average amount of time (in hours) that the model spends in standby mode per day.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        get_cycle_power() -&gt; float: Returns a random value for the average cycle power.</span>
+<span class="sd">        get_cycle_minutes() -&gt; float: Returns a random value for the cycle duration in minutes.</span>
+<span class="sd">        get_stand_by_power() -&gt; float: Returns the standby power, based on probability and the standby time.</span>
+<span class="sd">        get_name() -&gt; str: Returns the name of the cyclic model.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
+                 <span class="n">cyclePower</span><span class="p">:</span><span class="n">BaseNumberDistribution</span><span class="p">,</span> 
+                 <span class="n">cycleTime</span><span class="p">:</span><span class="n">BaseNumberDistribution</span><span class="p">,</span> 
+                 <span class="n">standByPower</span><span class="p">:</span><span class="n">BaseNumberDistribution</span><span class="p">,</span>
+                 <span class="n">standByTime</span><span class="p">:</span><span class="nb">float</span>
+                 <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a CyclicModel instance with the given parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Name of the cyclic model.</span>
+<span class="sd">            cyclePower (BaseNumberDistribution): A distribution representing the average power consumed during each cycle (in kW).</span>
+<span class="sd">            cycleTime (BaseNumberDistribution): A distribution representing the duration of each cycle (in hours).</span>
+<span class="sd">            standByPower (BaseNumberDistribution): A distribution representing the power consumed while in standby (in kW).</span>
+<span class="sd">            standByTime (float): Average time (in hours) spent in standby mode per day.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="o">=</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cyclePower</span><span class="o">=</span><span class="n">cyclePower</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cycleTime</span><span class="o">=</span><span class="n">cycleTime</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_standByPower</span><span class="o">=</span><span class="n">standByPower</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_standByTime</span><span class="o">=</span><span class="n">standByTime</span> 
+
+<div class="viewcode-block" id="CyclicModel.get_cycle_power">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_power">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_cycle_power</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the average power consumption during the active cycle, generated randomly based on the power distribution.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The average power consumed during the cycle (in kW).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cyclePower</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="CyclicModel.get_cycle_minutes">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_minutes">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_cycle_minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the duration of the active cycle, generated randomly from the cycle time distribution and converted to minutes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The duration of the cycle in minutes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cycleTime</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span><span class="o">*</span><span class="mi">60</span></div>
+
+
+<div class="viewcode-block" id="CyclicModel.get_stand_by_power">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_stand_by_power">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_stand_by_power</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the power consumed during standby mode. This is determined based on the probability of the model</span>
+<span class="sd">        being in standby, which is calculated from the standby time divided by 24 hours. If the model is in standby,</span>
+<span class="sd">        the power is randomly generated from the standby power distribution.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The standby power consumed (in kW), or 0 if not in standby.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">probability</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_standByTime</span><span class="o">/</span><span class="mi">24</span>
+        <span class="n">number</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">number</span><span class="o">&lt;</span><span class="n">probability</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_standByPower</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span></div>
+
+    
+<div class="viewcode-block" id="CyclicModel.get_name">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_name">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the name of the cyclic model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the cyclic model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

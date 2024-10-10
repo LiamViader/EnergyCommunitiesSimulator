@@ -1,0 +1,483 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnergyPrice.EnergyPlans.SomEnergia package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles package" href="Profiles.html" />
+    <link rel="prev" title="EnergyPrice.EnergyPlans package" href="EnergyPrice.EnergyPlans.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="EnergyPrice.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="EnergyPrice.EnergyPlans.html">EnergyPrice.EnergyPlans package</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="EnergyPrice.EnergyPlans.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l6 current"><a class="current reference internal" href="#">EnergyPrice.EnergyPlans.SomEnergia package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic.buying_price()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic.flat_price_month()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaDomestic.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria.buying_price()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria.flat_price_month()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaIndexadaIndustria.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic.buying_price()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic.flat_price_month()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesDomestic.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.buying_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria.buying_price()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.flat_price_month"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria.flat_price_month()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.selling_price"><code class="docutils literal notranslate"><span class="pre">SomEnergiaPeriodesIndustria.selling_price()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="EnergyPrice.EnergyPlans.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="EnergyPrice.EnergyPlans.html#module-EnergyPrice.EnergyPlans.baseEnergyPlan">EnergyPrice.EnergyPlans.baseEnergyPlan module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="EnergyPrice.html#module-EnergyPrice.wholesaleMarket">EnergyPrice.wholesaleMarket module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.html">Profiles package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="EnergyPrice.html">EnergyPrice package</a></li>
+          <li class="breadcrumb-item"><a href="EnergyPrice.EnergyPlans.html">EnergyPrice.EnergyPlans package</a></li>
+      <li class="breadcrumb-item active">EnergyPrice.EnergyPlans.SomEnergia package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/EnergyPrice.EnergyPlans.SomEnergia.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="energyprice-energyplans-somenergia-package">
+<h1>EnergyPrice.EnergyPlans.SomEnergia package<a class="headerlink" href="#energyprice-energyplans-somenergia-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic">
+<span id="energyprice-energyplans-somenergia-somenergiaindexadadomestic-module"></span><h2>EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic module<a class="headerlink" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.</span></span><span class="sig-name descname"><span class="pre">SomEnergiaIndexadaDomestic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contractedPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iva</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">21</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaDomestic.html#SomEnergiaIndexadaDomestic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="EnergyPrice.EnergyPlans.html#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEnergyPlan</span></code></a></p>
+<p>Represents the ‘Som Energia Tarifa Indexada Per Domestic (2.0TD)’ energy plan for domestic consumers.
+<a class="reference external" href="https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-indexada/#tarifa20TD">https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-indexada/#tarifa20TD</a></p>
+<p>This energy plan indexes prices based on the wholesale market while considering contracted power, 
+various regulatory costs, and taxes. It also calculates a flat monthly price for domestic customers.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_iva (float): The VAT percentage (default is 21%, can be 10%).</p>
+<p>_potenciaContractada (float): The contracted power in kW (default is 12 kW, capped at 15 kW).</p>
+<p>_impostElectric (float): The electricity tax percentage (default is 5.11%).</p>
+<p>_boSocial (float): The daily social bonus cost (default is 0.038 €/day).</p>
+<p>_lloguerComptador (float): The monthly cost for renting the energy meter (default is 0.81 €/month).</p>
+<p>_potenciaPuntaPla (float): Power cost for peak and flat periods (default is 27.474 €/kW per year).</p>
+<p>_potenciaVall (float): Power cost for valley periods (default is 3.059 €/kW per year).</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>selling_price(instant: datetime) -&gt; float:</dt><dd><p>Returns the wholesale market price at the given instant.</p>
+</dd>
+<dt>buying_price(instant: datetime) -&gt; float:</dt><dd><p>Returns the indexed energy price at the given time, adjusted for the wholesale market price, taxes, 
+losses, and other fixed components.</p>
+</dd>
+<dt>flat_price_month(instant: Optional[datetime]) -&gt; float:</dt><dd><p>Returns the flat monthly price considering contracted power, taxes, and other fixed costs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.buying_price">
+<span class="sig-name descname"><span class="pre">buying_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaDomestic.html#SomEnergiaIndexadaDomestic.buying_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.buying_price" title="Link to this definition"></a></dt>
+<dd><p>Calculates the buying price of energy based on the wholesale market price and several fixed components 
+related to system costs, losses, and regulatory charges. The price is adjusted for taxes and VAT.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time for which the buying price is calculated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The buying price in €/kWh after applying taxes, losses, and fixed charges.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.flat_price_month">
+<span class="sig-name descname"><span class="pre">flat_price_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaDomestic.html#SomEnergiaIndexadaDomestic.flat_price_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.flat_price_month" title="Link to this definition"></a></dt>
+<dd><p>Calculates the flat monthly price for the contracted power, considering the power contracted 
+for both peak/flat and valley periods. It also includes taxes, social bonus, and meter rental cost.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>instant (Optional[datetime]): The specific time at which the flat price is calculated. </dt><dd><p>If not provided, a default of 30 days is assumed for the month.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>float: The flat price in euros for the month, including taxes and VAT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.selling_price">
+<span class="sig-name descname"><span class="pre">selling_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaDomestic.html#SomEnergiaIndexadaDomestic.selling_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic.SomEnergiaIndexadaDomestic.selling_price" title="Link to this definition"></a></dt>
+<dd><p>Returns the selling price of energy at the given time, based on the wholesale market price.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time for which the selling price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The selling price in €/kWh, based on the wholesale market price.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria">
+<span id="energyprice-energyplans-somenergia-somenergiaindexadaindustria-module"></span><h2>EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria module<a class="headerlink" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.</span></span><span class="sig-name descname"><span class="pre">SomEnergiaIndexadaIndustria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contractedPowerPeriods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(50,</span> <span class="pre">50,</span> <span class="pre">50,</span> <span class="pre">50,</span> <span class="pre">50,</span> <span class="pre">50)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaIndustria.html#SomEnergiaIndexadaIndustria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="EnergyPrice.EnergyPlans.html#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEnergyPlan</span></code></a></p>
+<p>Represents the ‘Som Energia Tarifa Indexada Per Industries i Empreses (3.0TD)’ energy plan.
+<a class="reference external" href="https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-indexada/#tarifa30TD">https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-indexada/#tarifa30TD</a></p>
+<p>This energy plan is designed for industrial and business clients, with energy prices indexed 
+to the wholesale market. It considers multiple contracted power periods and calculates both 
+the selling and buying prices of energy for a given time. It also calculates the flat monthly 
+power cost for the contracted power.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_iva (float): The VAT percentage (default 21%).</p>
+<p>_contractedPowerPeriods (Tuple[float, float, float, float, float, float]): The contracted 
+power in kW for six different periods (each period must have an equal or increasing value 
+compared to the previous one).</p>
+<p>_impostElectric (float): The electricity tax percentage (default 5.11%).</p>
+<p>_boSocial (float): A fixed cost per day for social services in energy billing (default 0.038 €/day).</p>
+<p>_lloguerComptador (float): The monthly cost of renting the energy meter (default 0.81 €/month).</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>selling_price(instant: datetime) -&gt; float:</dt><dd><p>Returns the wholesale market price at the given instant.</p>
+</dd>
+<dt>buying_price(instant: datetime) -&gt; float:</dt><dd><p>Returns the indexed energy price at the given time, adjusted for wholesale market price, taxes, 
+losses, and other fixed components.</p>
+</dd>
+<dt>flat_price_month(instant: Optional[datetime]) -&gt; float:</dt><dd><p>Returns the flat monthly price considering the contracted power, taxes, and other fixed costs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.buying_price">
+<span class="sig-name descname"><span class="pre">buying_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaIndustria.html#SomEnergiaIndexadaIndustria.buying_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.buying_price" title="Link to this definition"></a></dt>
+<dd><p>Calculates the buying price of energy based on the wholesale market price and several fixed components 
+related to system costs, losses, and regulatory charges. The price is adjusted for taxes and iva.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time for which the buying price is calculated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The buying price in €/kWh after applying taxes, losses, and fixed charges.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.flat_price_month">
+<span class="sig-name descname"><span class="pre">flat_price_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaIndustria.html#SomEnergiaIndexadaIndustria.flat_price_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.flat_price_month" title="Link to this definition"></a></dt>
+<dd><p>Calculates the flat monthly price for the contracted power, considering the power contracted 
+for each of the six periods. It also includes taxes, social bonus, and meter rental cost.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>instant (Optional[datetime]): The specific time at which the flat price is calculated. </dt><dd><p>If not provided, a default of 30 days is assumed for the month.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>float: The flat price in euros for the month, including taxes and VAT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.selling_price">
+<span class="sig-name descname"><span class="pre">selling_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaIndexadaIndustria.html#SomEnergiaIndexadaIndustria.selling_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaIndustria.SomEnergiaIndexadaIndustria.selling_price" title="Link to this definition"></a></dt>
+<dd><p>Returns the selling price of energy at the given time, based on the wholesale market price.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time for which the selling price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The selling price in €/kWh, based on the wholesale market price.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic">
+<span id="energyprice-energyplans-somenergia-somenergiaperiodesdomestic-module"></span><h2>EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic module<a class="headerlink" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.</span></span><span class="sig-name descname"><span class="pre">SomEnergiaPeriodesDomestic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contractedPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">12</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iva</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">21</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesDomestic.html#SomEnergiaPeriodesDomestic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="EnergyPrice.EnergyPlans.html#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEnergyPlan</span></code></a></p>
+<p>Represents the ‘Som Energia Tarifa Periodes Per Domestic (2.0TD periodes)’ energy plan.
+<a class="reference external" href="https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-periodes/#tarifa20TD">https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-periodes/#tarifa20TD</a></p>
+<p>This energy plan is designed for domestic clients, considering contracted power and time-of-day
+energy rates divided into valley, flat, and peak periods. The class calculates both the selling 
+and buying prices of energy for a given time, as well as the flat price charged per month.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_iva (float): The VAT percentage (either 10% or 21%).</p>
+<p>_potenciaContractada (float): The contracted power in kW (capped at 15 kW).</p>
+<p>_impostElectric (float): The electricity tax in percentage.</p>
+<p>_boSocial (float): A fixed cost per day for social services in energy billing.</p>
+<p>_lloguerComptador (float): The monthly cost of renting the energy meter.</p>
+<p>_potenciaPuntaPla (float): The annual cost per kW during peak periods.</p>
+<p>_potenciaVall (float): The annual cost per kW during valley periods.</p>
+<p>_energiaPunta (float): The energy cost per kWh during peak hours.</p>
+<p>_energiaPla (float): The energy cost per kWh during flat hours.</p>
+<p>_energiaVall (float): The energy cost per kWh during valley hours.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>selling_price(instant: datetime) -&gt; float:</dt><dd><p>Returns the fixed selling price of energy (€/kWh) at the given time.</p>
+</dd>
+<dt>buying_price(instant: datetime) -&gt; float:</dt><dd><p>Returns the buying price of energy (€/kWh) at the given time, adjusted for taxes and VAT.</p>
+</dd>
+<dt>flat_price_month(instant: Optional[datetime]) -&gt; float:</dt><dd><p>Returns the flat monthly cost for the energy plan, considering the contracted power, 
+taxes, and other fixed costs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.buying_price">
+<span class="sig-name descname"><span class="pre">buying_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesDomestic.html#SomEnergiaPeriodesDomestic.buying_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.buying_price" title="Link to this definition"></a></dt>
+<dd><p>Calculates the buying price of energy based on the time of day and day of the week.
+The price varies according to whether it’s a weekday or weekend, and the time of day 
+(peak, flat, or valley hours). The price is adjusted with taxes and VAT.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The time for which the buying price is calculated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The buying price in €/kWh after applying taxes and VAT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.flat_price_month">
+<span class="sig-name descname"><span class="pre">flat_price_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesDomestic.html#SomEnergiaPeriodesDomestic.flat_price_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.flat_price_month" title="Link to this definition"></a></dt>
+<dd><p>Calculates the flat monthly price for the contracted power, taxes, and additional fixed costs.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>instant (Optional[datetime]): The specific time at which the flat price is calculated. </dt><dd><p>If not provided, a default of 30 days is assumed for the month.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>float: The flat price in euros for the month, including taxes and VAT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.selling_price">
+<span class="sig-name descname"><span class="pre">selling_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesDomestic.html#SomEnergiaPeriodesDomestic.selling_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesDomestic.SomEnergiaPeriodesDomestic.selling_price" title="Link to this definition"></a></dt>
+<dd><p>Returns the fixed selling price of energy for this energy plan.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time for which the selling price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The selling price in €/kWh (fixed at 0.060 €/kWh).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria">
+<span id="energyprice-energyplans-somenergia-somenergiaperiodesindustria-module"></span><h2>EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria module<a class="headerlink" href="#module-EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.</span></span><span class="sig-name descname"><span class="pre">SomEnergiaPeriodesIndustria</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contractedPowerPeriods</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(50,</span> <span class="pre">50,</span> <span class="pre">50,</span> <span class="pre">50,</span> <span class="pre">50,</span> <span class="pre">50)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesIndustria.html#SomEnergiaPeriodesIndustria"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="EnergyPrice.EnergyPlans.html#EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan" title="EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEnergyPlan</span></code></a></p>
+<p>Represents the ‘Som Energia Tarifa Periodes Per Industria (3.0TD periodes)’ energy plan.
+<a class="reference external" href="https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-periodes/#tarifa30TD">https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-periodes/#tarifa30TD</a></p>
+<p>This energy plan is designed for industrial clients, considering six different periods 
+of contracted power (in kW) and corresponding energy prices per period. The class calculates 
+both the selling and buying prices of energy for a given time, as well as the flat price per month.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_iva (int): The iva percentage applied to prices.</p>
+<p>_contractedPowerPeriods (Tuple[float]): The contracted power in kW for each of the 6 periods.</p>
+<p>_impostElectric (float): The electricity tax in percentage.</p>
+<p>_boSocial (float): A fixed cost per day for social services in energy billing.</p>
+<p>_lloguerComptador (float): The monthly cost of renting the energy meter.</p>
+<p>_potenciaPuntaPla (float): The annual cost per kW during peak periods.</p>
+<p>_potenciaVall (float): The annual cost per kW during valley periods.</p>
+<p>_periodesEnergia (Tuple[float]): The energy cost per kWh for each of the six periods.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>selling_price(instant: datetime): </dt><dd><p>Returns the selling price of energy (€/kWh) at the given time.</p>
+</dd>
+<dt>buying_price(instant: datetime): </dt><dd><p>Returns the buying price of energy (€/kWh) at the given time, adjusted for taxes and VAT.</p>
+</dd>
+<dt>flat_price_month(instant: Optional[datetime]): </dt><dd><p>Returns the flat monthly cost for the energy plan, considering the contracted power, 
+taxes, and other fixed costs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.buying_price">
+<span class="sig-name descname"><span class="pre">buying_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesIndustria.html#SomEnergiaPeriodesIndustria.buying_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.buying_price" title="Link to this definition"></a></dt>
+<dd><p>Calculates the buying price of energy based on the specific month and time of day.
+The price varies according to the hour and month of the year. The price is adjusted 
+with taxes and VAT.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The time for which the buying price is calculated.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The buying price in €/kWh after applying taxes and VAT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.flat_price_month">
+<span class="sig-name descname"><span class="pre">flat_price_month</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesIndustria.html#SomEnergiaPeriodesIndustria.flat_price_month"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.flat_price_month" title="Link to this definition"></a></dt>
+<dd><p>Calculates the flat monthly price for the contracted power, taxes, and additional fixed costs.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>instant (Optional[datetime]): The specific time at which the flat price is calculated. </dt><dd><p>If not provided, a default of 30 days is assumed for the month.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>float: The flat price in euros for the month, including taxes and VAT.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.selling_price">
+<span class="sig-name descname"><span class="pre">selling_price</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instant</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/EnergyPrice/EnergyPlans/SomEnergia/somEnergiaPeriodesIndustria.html#SomEnergiaPeriodesIndustria.selling_price"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#EnergyPrice.EnergyPlans.SomEnergia.somEnergiaPeriodesIndustria.SomEnergiaPeriodesIndustria.selling_price" title="Link to this definition"></a></dt>
+<dd><p>Returns the fixed selling price of energy for this energy plan.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>instant (datetime): The specific time for which the selling price is needed.</p>
+</dd>
+<dt>Returns:</dt><dd><p>float: The selling price in €/kWh (fixed at 0.060 €/kWh).</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="EnergyPrice.EnergyPlans.html" class="btn btn-neutral float-left" title="EnergyPrice.EnergyPlans package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.html" class="btn btn-neutral float-right" title="Profiles package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

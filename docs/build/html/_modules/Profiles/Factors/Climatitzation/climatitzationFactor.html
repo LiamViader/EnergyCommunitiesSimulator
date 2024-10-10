@@ -1,0 +1,188 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Climatitzation.climatitzationFactor &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Climatitzation.climatitzationFactor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.Climatitzation.climatitzationFactor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">ndarray</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.baseFactor</span> <span class="kn">import</span> <span class="n">BaseFactor</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">utils.enums</span> <span class="kn">import</span> <span class="n">FactorType</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.Climatitzation.Components.climatitzationComponent</span> <span class="kn">import</span> <span class="n">ClimatitzationComponent</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.Climatitzation.thermostat</span> <span class="kn">import</span> <span class="n">Thermostat</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="ClimatitzationFactor">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.climatitzationFactor.ClimatitzationFactor">[docs]</a>
+<span class="k">class</span> <span class="nc">ClimatitzationFactor</span><span class="p">(</span><span class="n">BaseFactor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simulation factor that models the climatization of a space using various components and a thermostat.</span>
+
+<span class="sd">    This class simulates the energy load required to maintain a desired internal temperature </span>
+<span class="sd">    based on external conditions and the specified climatization components.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _climatitzationComponents (List[ClimatitzationComponent]): List of climatization components used in the simulation.</span>
+
+<span class="sd">        _thermostat (Thermostat): The thermostat controlling the temperature of the climatitzationFactor zone.</span>
+
+<span class="sd">        _insideVolume (float): The volume of the space being climatized, in cubic meters.</span>
+<span class="sd">            </span>
+<span class="sd">        _exteriorContactArea (float): The area of the climatization assets zone that contacts the exterior, in square meters.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        simulate(simulationConfig: SimulationConfig) -&gt; ndarray:</span>
+<span class="sd">            Simulates the climatization process over the simulated day.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span><span class="n">climatitzationComponents</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ClimatitzationComponent</span><span class="p">],</span><span class="n">thermostat</span><span class="p">:</span><span class="n">Thermostat</span><span class="p">,</span><span class="n">insideVolume</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mi">150</span><span class="p">,</span><span class="n">exteriorContactArea</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ClimatitzationFactor with the given parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): </span>
+<span class="sd">                The name of the climatization factor.</span>
+<span class="sd">            climatitzationComponents (List[ClimatitzationComponent]): </span>
+<span class="sd">                List of climatization components used in the simulation.</span>
+<span class="sd">            thermostat (Thermostat): </span>
+<span class="sd">                The thermostat controlling the temperature.</span>
+<span class="sd">            insideVolume (float, optional): </span>
+<span class="sd">                The volume affected by the climatization assets, default is 150 cubic meters.</span>
+<span class="sd">            exteriorContactArea (float, optional): </span>
+<span class="sd">                The area of the climatization assets zone that contacts the exterior, default is 50 square meters.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">FactorType</span><span class="o">.</span><span class="n">Consumer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_climatitzationComponents</span><span class="o">=</span><span class="n">climatitzationComponents</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_thermostat</span><span class="o">=</span><span class="n">thermostat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_insideVolume</span><span class="o">=</span><span class="n">insideVolume</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">_exteriorContactArea</span><span class="o">=</span><span class="n">exteriorContactArea</span> 
+    
+<div class="viewcode-block" id="ClimatitzationFactor.simulate">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.climatitzationFactor.ClimatitzationFactor.simulate">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulationConfig</span><span class="p">:</span> <span class="n">SimulationConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the climatization process over the specified simulation day.</span>
+
+<span class="sd">        This method calculates the energy load required at each time step based on the current </span>
+<span class="sd">        and ideal temperatures, as well as the external temperature response.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulationConfig (SimulationConfig): </span>
+<span class="sd">                Configuration of the current simulation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            ndarray: </span>
+<span class="sd">                Array representing the energy load required for climatization during each </span>
+<span class="sd">                simulation time step of the day.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">load</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">())</span>
+        <span class="n">minutesPerIndex</span><span class="o">=</span><span class="mi">1440</span><span class="o">/</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()):</span>
+            <span class="n">currentInsideTemp</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_thermostat</span><span class="o">.</span><span class="n">get_current_temperature</span><span class="p">()</span>
+            <span class="n">currentInsideTemp</span><span class="o">+=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">outside_termic_response</span><span class="p">(</span><span class="n">currentInsideTemp</span><span class="p">,</span><span class="n">minutesPerIndex</span><span class="o">*</span><span class="n">i</span><span class="p">,</span><span class="n">minutesPerIndex</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_exteriorContactArea</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_insideVolume</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thermostat</span><span class="o">.</span><span class="n">set_current_temperature</span><span class="p">(</span><span class="n">currentInsideTemp</span><span class="p">)</span>
+            <span class="n">idealTemperature</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_thermostat</span><span class="o">.</span><span class="n">get_ideal_temperature</span><span class="p">(</span><span class="n">minutesPerIndex</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">indexLoad</span><span class="o">=</span><span class="mi">0</span>
+            <span class="k">for</span> <span class="n">climatitzationComponent</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_climatitzationComponents</span><span class="p">:</span>
+                <span class="n">hoursElapsed</span><span class="o">=</span><span class="n">minutesPerIndex</span><span class="o">/</span><span class="mi">60</span>
+                <span class="n">componentLoad</span><span class="p">,</span><span class="n">currentInsideTemp</span><span class="o">=</span> <span class="n">climatitzationComponent</span><span class="o">.</span><span class="n">climatize</span><span class="p">(</span><span class="n">thermostat</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_thermostat</span><span class="p">,</span><span class="n">idealTemperature</span><span class="o">=</span><span class="n">idealTemperature</span><span class="p">,</span><span class="n">timeElapsed</span><span class="o">=</span><span class="n">hoursElapsed</span><span class="p">)</span>
+                <span class="n">indexLoad</span><span class="o">+=</span><span class="n">componentLoad</span>
+            <span class="n">load</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">indexLoad</span>
+        <span class="k">return</span> <span class="n">load</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

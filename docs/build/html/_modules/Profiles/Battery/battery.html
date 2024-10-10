@@ -1,0 +1,211 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Battery.battery &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Battery.battery</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Battery.battery</h1><div class="highlight"><pre>
+<span></span>
+<div class="viewcode-block" id="Battery">
+<a class="viewcode-back" href="../../../Profiles.Battery.html#Profiles.Battery.battery.Battery">[docs]</a>
+<span class="k">class</span> <span class="nc">Battery</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a battery that can charge and discharge energy.</span>
+
+<span class="sd">    This class manages the battery&#39;s state, including its capacity, charge rate,</span>
+<span class="sd">    discharge rate, and efficiency. It allows for charging and discharging operations</span>
+<span class="sd">    based on the specified energy and time parameters.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _capacity (float): The total energy capacity of the battery in kWh.</span>
+
+<span class="sd">        _chargeRate (float): The maximum charging rate of the battery in kW.</span>
+
+<span class="sd">        _dischargeRate (float): The maximum discharging rate of the battery in kW.</span>
+
+<span class="sd">        _chargingEfficiency (float): The efficiency of the charging process (0-1).</span>
+
+<span class="sd">        _dischargingEfficiency (float): The efficiency of the discharging process (0-1).</span>
+<span class="sd">        </span>
+<span class="sd">        _chargeLevel (float): The current charge level of the battery in kWh.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        charge(energy: float, timeElapsed: float) -&gt; float:</span>
+<span class="sd">            Charges the battery with the specified energy over the given time period.</span>
+<span class="sd">        </span>
+<span class="sd">        discharge(energy: float, timeElapsed: float) -&gt; float:</span>
+<span class="sd">            Discharges the battery with the specified energy over the given time period.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">capacity</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">chargeRate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">dischargeRate</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">chargingEfficiency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">dischargingEfficiency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+                <span class="n">startChargeLevel</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Battery instance with specified parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            capacity (float): The total energy capacity of the battery in kWh.</span>
+<span class="sd">            chargeRate (float): The maximum charging rate of the battery in kW.</span>
+<span class="sd">            dischargeRate (float): The maximum discharging rate of the battery in kW.</span>
+<span class="sd">            chargingEfficiency (float): Efficiency of the charging process (0-1).</span>
+<span class="sd">            dischargingEfficiency (float): Efficiency of the discharging process (0-1).</span>
+<span class="sd">            startChargeLevel (float): Initial charge level of the battery in kWh (default is 0).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span> <span class="o">=</span> <span class="n">capacity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chargeRate</span> <span class="o">=</span> <span class="n">chargeRate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dischargeRate</span> <span class="o">=</span> <span class="n">dischargeRate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chargingEfficiency</span> <span class="o">=</span> <span class="n">chargingEfficiency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dischargingEfficiency</span> <span class="o">=</span> <span class="n">dischargingEfficiency</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">=</span><span class="n">startChargeLevel</span>
+    
+<div class="viewcode-block" id="Battery.charge">
+<a class="viewcode-back" href="../../../Profiles.Battery.html#Profiles.Battery.battery.Battery.charge">[docs]</a>
+    <span class="k">def</span> <span class="nf">charge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">energy</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">timeElapsed</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Charges the battery with the specified energy over the given time period.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            energy (float): The amount of energy to charge the battery in kWh.</span>
+<span class="sd">            timeElapsed (float): The time duration for charging in minutes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The actual amount of energy charged to the battery in kWh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timeElapsedHours</span><span class="o">=</span><span class="n">timeElapsed</span><span class="o">/</span><span class="mi">60</span>
+        <span class="n">averagePower</span><span class="o">=</span><span class="n">energy</span><span class="o">/</span><span class="n">timeElapsedHours</span>
+        <span class="n">rate</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">averagePower</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargeRate</span><span class="p">)</span>
+        <span class="n">energyToCharge</span><span class="o">=</span><span class="n">rate</span><span class="o">*</span><span class="n">timeElapsedHours</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargingEfficiency</span>
+        <span class="k">if</span> <span class="n">energyToCharge</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="p">:</span>
+            <span class="n">energyUsed</span><span class="o">=</span><span class="n">energyToCharge</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargingEfficiency</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">+=</span><span class="n">energyToCharge</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">energyUsed</span><span class="o">=</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargingEfficiency</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_capacity</span>
+
+        <span class="k">return</span> <span class="n">energyUsed</span></div>
+
+        
+<div class="viewcode-block" id="Battery.discharge">
+<a class="viewcode-back" href="../../../Profiles.Battery.html#Profiles.Battery.battery.Battery.discharge">[docs]</a>
+    <span class="k">def</span> <span class="nf">discharge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">energy</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">timeElapsed</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Discharges the battery with the specified energy over the given time period.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            energy (float): The amount of energy to discharge from the battery in kWh.</span>
+<span class="sd">            timeElapsed (float): The time duration for discharging in minutes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The actual amount of energy produced by the battery in kWh.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timeElapsedHours</span><span class="o">=</span><span class="n">timeElapsed</span><span class="o">/</span><span class="mi">60</span>
+        <span class="n">realEnergy</span><span class="o">=</span><span class="n">energy</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">_dischargingEfficiency</span>
+        <span class="n">averagePower</span><span class="o">=</span><span class="n">realEnergy</span><span class="o">/</span><span class="n">timeElapsedHours</span>
+        <span class="n">rate</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">averagePower</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_dischargeRate</span><span class="p">)</span>
+        <span class="n">energyToDischarge</span><span class="o">=</span><span class="n">rate</span><span class="o">*</span><span class="n">timeElapsedHours</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">-</span><span class="n">energyToDischarge</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">producedEnergy</span><span class="o">=</span><span class="n">energyToDischarge</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_dischargingEfficiency</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">-=</span><span class="n">energyToDischarge</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">producedEnergy</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_dischargingEfficiency</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_chargeLevel</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">return</span> <span class="n">producedEnergy</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

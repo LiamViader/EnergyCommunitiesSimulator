@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.ElectricCar.electricCarFactor &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.ElectricCar.electricCarFactor</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.ElectricCar.electricCarFactor</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">Profiles.Factors.baseFactor</span> <span class="kn">import</span> <span class="n">BaseFactor</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.ElectricCar.electricCarModel</span> <span class="kn">import</span> <span class="n">ElectricCarModel</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig</span> <span class="kn">import</span> <span class="n">CarBaseUseConfig</span>
+<span class="kn">from</span> <span class="nn">utils.enums</span> <span class="kn">import</span> <span class="n">FactorType</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<div class="viewcode-block" id="ElectricCarFactor">
+<a class="viewcode-back" href="../../../../Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor">[docs]</a>
+<span class="k">class</span> <span class="nc">ElectricCarFactor</span><span class="p">(</span><span class="n">BaseFactor</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simulation factor that models the charging and discharging behavior of an electric car.</span>
+
+<span class="sd">    This class simulates the energy usage of an electric car based on its model, usage patterns, and charging behavior.</span>
+<span class="sd">    It accounts the recharging process based on usage configuration.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _model (ElectricCarModel): The model of the electric car being simulated.</span>
+
+<span class="sd">        _useConfig (CarBaseUseConfig): Configuration detailing the car&#39;s usage and charging behavior.</span>
+
+<span class="sd">        _currentBatteryLevel (float): The current battery level of the car in kWh.</span>
+<span class="sd">        </span>
+<span class="sd">        _overflow (np.ndarray): Tracks the overflow of energy usage when charging spills over into the next day.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        simulate(simulationConfig):</span>
+<span class="sd">            Simulates the energy usage of the electric car and the charging consumption during the simulation day.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">ElectricCarModel</span><span class="p">,</span> <span class="n">useConfig</span><span class="p">:</span> <span class="n">CarBaseUseConfig</span><span class="p">,</span><span class="n">startChargeLevel</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ElectricCarFactor with a specific car model, usage configuration, and an optional starting charge level.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (ElectricCarModel): The electric car model.</span>
+<span class="sd">            useConfig (CarBaseUseConfig): The usage configuration for the car&#39;s energy consumption and charging.</span>
+<span class="sd">            startChargeLevel (float, optional): Initial battery level in kWh. Defaults to a full charge.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">get_name</span><span class="p">(),</span> <span class="n">FactorType</span><span class="o">.</span><span class="n">Consumer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_useConfig</span> <span class="o">=</span> <span class="n">useConfig</span>
+        <span class="k">if</span> <span class="n">startChargeLevel</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">get_battery_capacity</span><span class="p">()</span>  <span class="c1">#comenca amb la bateria carregada</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="o">=</span><span class="n">startChargeLevel</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span><span class="o">=</span><span class="kc">None</span>
+
+<div class="viewcode-block" id="ElectricCarFactor.simulate">
+<a class="viewcode-back" href="../../../../Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor.simulate">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">simulationConfig</span><span class="p">:</span> <span class="n">SimulationConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the energy usage of the electric car recharging over the simulation period.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulationConfig (SimulationConfig): Configuration of the current simulation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Array representing the energy consumption during each simulation time step of the day.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">load</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">())</span>
+        <span class="n">lastOverflowCharge</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lastOverflowCharge</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">get_charge_efficiency</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">get_battery_capacity</span><span class="p">(),(</span><span class="n">lastOverflowCharge</span><span class="p">)</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="p">)</span>
+            <span class="n">overflowPadded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">load</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span><span class="p">)),</span> <span class="s1">&#39;constant&#39;</span><span class="p">)</span>
+            <span class="n">load</span><span class="o">+=</span><span class="n">overflowPadded</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">())</span>
+
+        <span class="n">weekDay</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_day_of_week</span><span class="p">()</span>
+        <span class="n">km</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_useConfig</span><span class="o">.</span><span class="n">get_usage_at_day</span><span class="p">(</span><span class="n">weekDay</span><span class="p">)</span>
+        <span class="n">energyUsed</span><span class="o">=</span><span class="n">km</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">get_consumption_per_km</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="o">-</span><span class="n">energyUsed</span><span class="p">)</span>
+        <span class="n">start</span><span class="p">,</span><span class="n">duration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_useConfig</span><span class="o">.</span><span class="n">get_charge_usage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="p">,</span><span class="n">weekDay</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_distribute_cycle_load</span><span class="p">(</span><span class="n">load</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">duration</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">get_battery_capacity</span><span class="p">(),(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">load</span><span class="p">)</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">get_charge_efficiency</span><span class="p">()</span><span class="o">-</span><span class="n">lastOverflowCharge</span><span class="p">)</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">_currentBatteryLevel</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">load</span></div>
+
+
+
+
+    <span class="k">def</span> <span class="nf">_distribute_cycle_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">load</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">duration</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Distributes the charging load over the simulation time steps, adjusting for overflow if necessary.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            load (np.ndarray): The array representing energy comsumption in each time step.</span>
+<span class="sd">            start (float): The start time of the charging cycle (in hours).</span>
+<span class="sd">            duration (float): The duration of the charging cycle (in hours).</span>
+<span class="sd">            simulationConfig (SimulationConfig): The simulation configuration with time indices.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#faig que si el start son entre les 00 i la 05, es refereix al següent dia realment</span>
+        <span class="k">if</span> <span class="n">start</span><span class="o">&lt;=</span><span class="mf">5.0</span><span class="p">:</span>
+            <span class="n">start</span><span class="o">+=</span><span class="mi">24</span>
+        
+        <span class="n">duration</span><span class="o">=</span><span class="n">duration</span><span class="o">*</span><span class="mi">60</span>
+        <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="o">*</span><span class="mi">60</span>
+        <span class="n">timeRemaining</span><span class="o">=</span><span class="n">duration</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">timeRemaining</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">timeElapsed</span><span class="o">=</span><span class="n">duration</span><span class="o">-</span><span class="n">timeRemaining</span>
+            <span class="n">currentTimestampMinutes</span><span class="o">=</span><span class="n">start</span><span class="o">+</span><span class="n">timeElapsed</span>
+            <span class="n">indicesPerMinute</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()</span><span class="o">/</span><span class="mi">1440</span>
+            <span class="n">currentIndex</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">currentTimestampMinutes</span><span class="o">*</span><span class="n">indicesPerMinute</span><span class="p">)</span>
+            <span class="n">nextIndex</span><span class="o">=</span><span class="n">currentIndex</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">nextIndexTimestampMinutes</span><span class="o">=</span><span class="n">nextIndex</span><span class="o">/</span><span class="n">indicesPerMinute</span>
+            <span class="n">hoursElapsedThisIteration</span><span class="o">=</span><span class="nb">min</span><span class="p">(((</span><span class="n">nextIndexTimestampMinutes</span><span class="o">-</span><span class="n">currentTimestampMinutes</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="p">),</span><span class="n">timeRemaining</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">indexLoad</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_model</span><span class="o">.</span><span class="n">get_charge_power</span><span class="p">()</span><span class="o">*</span><span class="n">hoursElapsedThisIteration</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">currentIndex</span><span class="o">&lt;</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()):</span><span class="c1">#si hi cap al dia actual</span>
+                <span class="n">load</span><span class="p">[</span><span class="n">currentIndex</span><span class="p">]</span><span class="o">+=</span><span class="n">indexLoad</span>
+            <span class="k">else</span><span class="p">:</span><span class="c1">#sino al overflow</span>
+                <span class="n">transformedCurrentIndex</span><span class="o">=</span><span class="n">currentIndex</span><span class="o">-</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_overflow</span><span class="p">[</span><span class="n">transformedCurrentIndex</span><span class="p">]</span><span class="o">+=</span><span class="n">indexLoad</span>
+            <span class="n">timeRemaining</span><span class="o">=</span><span class="n">timeRemaining</span><span class="o">-</span><span class="n">hoursElapsedThisIteration</span><span class="o">*</span><span class="mi">60</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

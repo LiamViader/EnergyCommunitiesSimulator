@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community.Sharing.quotaConsumptionSharing &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Community.Sharing.quotaConsumptionSharing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Community.Sharing.quotaConsumptionSharing</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">Profiles.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.sharingMethod</span> <span class="kn">import</span> <span class="n">SharingMethod</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.quota</span> <span class="kn">import</span> <span class="n">Quota</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileEnergyDataAux</span> <span class="kn">import</span> <span class="n">ProfileEnergyDataAux</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileSharingsDataAux</span> <span class="kn">import</span> <span class="n">ProfileSharingsDataAux</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="QuotaConsumptionSharing">
+<a class="viewcode-back" href="../../../Community.Sharing.html#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing">[docs]</a>
+<span class="k">class</span> <span class="nc">QuotaConsumptionSharing</span><span class="p">(</span><span class="n">SharingMethod</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implementation of the Quota/Consumption Sharing energy sharing method.</span>
+
+<span class="sd">    This method first allocates energy to profiles based on quotas and then reassigns excess energy </span>
+<span class="sd">    to cover deficits among profiles. The method allows for two different approaches to redistribute </span>
+<span class="sd">    excess energy: based on community shares or based on the proportion of each household&#39;s residual load.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name (str): The name of the sharing method, set to &quot;Quota/Consumption Sharing&quot;.</span>
+<span class="sd">        </span>
+<span class="sd">        reassignBasedOnCommunityShares (bool): Determines the method for reallocating excess energy.</span>
+<span class="sd">    </span>
+<span class="sd">    Methods:</span>
+<span class="sd">        share: Shares energy among profiles based on the Quota/Consumption Sharing method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">reassignBasedOnCommunityShares</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a QuotaConsumptionSharing instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            reassignBasedOnCommunityShares (bool): Flag to determine how to reassign excess energy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="s2">&quot;Quota/Consumption Sharing&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reassignBasedOnCommunityShares</span><span class="o">=</span><span class="n">reassignBasedOnCommunityShares</span>
+
+
+<div class="viewcode-block" id="QuotaConsumptionSharing.share">
+<a class="viewcode-back" href="../../../Community.Sharing.html#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing.share">[docs]</a>
+    <span class="k">def</span> <span class="nf">share</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profiles</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">],</span><span class="n">sharePersonalPvs</span><span class="p">:</span><span class="nb">bool</span><span class="p">,</span><span class="n">communityPv</span><span class="p">:</span><span class="nb">float</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shares energy among profiles based on the Quota/Consumption Sharing method.</span>
+
+<span class="sd">        The method first allocates energy using the Quota sharing method, then redistributes excess energy </span>
+<span class="sd">        to cover any deficits in consumption.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.</span>
+<span class="sd">            sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations. </span>
+<span class="sd">            communityPv (float): The total energy produced by community PV resources.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid import/export values.</span>
+<span class="sd">        </span>
+<span class="sd">        Notes:</span>
+<span class="sd">            This method can&#39;t share personal pvs, because there is not microtrading</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">profilesSharingsList</span><span class="o">=</span><span class="n">Quota</span><span class="p">()</span><span class="o">.</span><span class="n">share</span><span class="p">(</span><span class="n">profiles</span><span class="o">=</span><span class="n">profiles</span><span class="p">,</span><span class="n">sharePersonalPvs</span><span class="o">=</span><span class="n">sharePersonalPvs</span><span class="p">,</span><span class="n">communityPv</span><span class="o">=</span><span class="n">communityPv</span><span class="p">)</span> <span class="c1">#first step is to do quota sharing</span>
+        <span class="c1">#now reassign the excedents to cover deficits</span>
+        <span class="c1">#the paper is not clear about how to redistribute the excedents. if there&#39;s more demand than excedents, then how does this method decide which HH gets more or less energy? Same case if there&#39;s more excedents than demand, how does the method decide who which HH trades sells more or less energy.</span>
+        <span class="c1">#There is 2 ways to do it. Based on the communityShares or based on the HHs proportion of HHnresidual/totalResidual. I implemented both, use the attribute reassignBasedOnCommunityShares in the init method to choose which way to do it</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">reassignBasedOnCommunityShares</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reassign_based_on_shares</span><span class="p">(</span><span class="n">profilesSharingsList</span><span class="o">=</span><span class="n">profilesSharingsList</span><span class="p">)</span>            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reassign_based_on_proportion</span><span class="p">(</span><span class="n">profilesSharingsList</span><span class="o">=</span><span class="n">profilesSharingsList</span><span class="p">)</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">_reassign_based_on_shares</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profilesSharingsList</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reassigns excess energy based on community shares.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profilesSharingsList (List[ProfileSharingsDataAux]): A list of profile sharing data to redistribute excess energy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[ProfileSharingsDataAux]: The updated list of sharing data with reallocated energy values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">totalExport</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">totalExportingShares</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">totalImportingShares</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">totalImport</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">profileSharingsData</span> <span class="ow">in</span> <span class="n">profilesSharingsList</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">totalExport</span><span class="o">+=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span>
+                <span class="n">totalExportingShares</span><span class="o">+=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">communityShares</span>
+            <span class="k">elif</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">totalImport</span><span class="o">+=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span>
+                <span class="n">totalImportingShares</span><span class="o">+=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">communityShares</span>
+        <span class="k">for</span> <span class="n">profileSharingsData</span> <span class="ow">in</span> <span class="n">profilesSharingsList</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">totalImport</span><span class="o">&gt;</span><span class="n">totalExport</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">elif</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">totalImportingShares</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span> <span class="n">shareProportionToImportingProfiles</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">communityShares</span><span class="o">/</span><span class="n">totalImportingShares</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="n">shareProportionToImportingProfiles</span><span class="o">=</span><span class="mi">0</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="n">totalExport</span><span class="o">*</span><span class="n">shareProportionToImportingProfiles</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">-</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridImport</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">totalExportingShares</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span> <span class="n">shareProportionToExportingProfiles</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">communityShares</span><span class="o">/</span><span class="n">totalExportingShares</span>
+                    <span class="k">else</span><span class="p">:</span> <span class="n">shareProportionToExportingProfiles</span><span class="o">=</span><span class="mi">0</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="n">totalImport</span><span class="o">*</span><span class="n">shareProportionToExportingProfiles</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">-</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridExport</span>
+                <span class="k">elif</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">return</span> <span class="n">profilesSharingsList</span>
+    
+    <span class="k">def</span> <span class="nf">_reassign_based_on_proportion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profilesSharingsList</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">])</span><span class="o">-&gt;</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reassigns excess energy based on the proportion of each household&#39;s residual load.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profilesSharingsList (List[ProfileSharingsDataAux]): A list of profile sharing data to redistribute excess energy.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List[ProfileSharingsDataAux]: The updated list of sharing data with reallocated energy values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#I think reassigning this way is the same than using Virtual Net Billing</span>
+        <span class="n">totalExport</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">totalImport</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">for</span> <span class="n">profileSharingsData</span> <span class="ow">in</span> <span class="n">profilesSharingsList</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">totalExport</span><span class="o">+=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span>
+            <span class="k">elif</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                <span class="n">totalImport</span><span class="o">+=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span>
+
+        <span class="k">for</span> <span class="n">profileSharingsData</span> <span class="ow">in</span> <span class="n">profilesSharingsList</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">totalImport</span><span class="o">&gt;</span><span class="n">totalExport</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">=</span><span class="mi">0</span>
+                <span class="k">elif</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="p">(</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">/</span><span class="n">totalImport</span><span class="p">)</span><span class="o">*</span><span class="n">totalExport</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">-</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridImport</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="p">(</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">/</span><span class="n">totalExport</span><span class="p">)</span><span class="o">*</span><span class="n">totalImport</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridExport</span><span class="o">-</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridExport</span>
+                <span class="k">elif</span> <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span>
+                    <span class="n">profileSharingsData</span><span class="o">.</span><span class="n">gridImport</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">return</span> <span class="n">profilesSharingsList</span></div>
+
+
+
+                
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

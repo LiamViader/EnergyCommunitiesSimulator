@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Cyclic package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Factors.Cyclic.UseConfig package" href="Profiles.Factors.Cyclic.UseConfig.html" />
+    <link rel="prev" title="Profiles.Factors.Continuos package" href="Profiles.Factors.Continuos.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Profiles.html">Profiles package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Profiles.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="Profiles.Factors.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">Profiles.Factors.Cyclic package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html">Profiles.Factors.Cyclic.UseConfig package</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#module-Profiles.Factors.Cyclic.cyclicFactor">Profiles.Factors.Cyclic.cyclicFactor module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor"><code class="docutils literal notranslate"><span class="pre">CyclicFactor</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.changeUseConfig"><code class="docutils literal notranslate"><span class="pre">CyclicFactor.changeUseConfig()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.simulate"><code class="docutils literal notranslate"><span class="pre">CyclicFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-Profiles.Factors.Cyclic.cyclicModel">Profiles.Factors.Cyclic.cyclicModel module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel"><code class="docutils literal notranslate"><span class="pre">CyclicModel</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_minutes"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_cycle_minutes()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_power"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_cycle_power()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_name"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_name()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_stand_by_power"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_stand_by_power()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.ElectricCar.html">Profiles.Factors.ElectricCar package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Lightning.html">Profiles.Factors.Lightning package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#module-Profiles.Factors.baseFactor">Profiles.Factors.baseFactor module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.profile">Profiles.profile module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.html">Profiles package</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.Factors.html">Profiles.Factors package</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Cyclic package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.Factors.Cyclic.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-factors-cyclic-package">
+<h1>Profiles.Factors.Cyclic package<a class="headerlink" href="#profiles-factors-cyclic-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html">Profiles.Factors.Cyclic.UseConfig package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#module-Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig">Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig.CyclicBaseUseConfig"><code class="docutils literal notranslate"><span class="pre">CyclicBaseUseConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig.CyclicBaseUseConfig.use"><code class="docutils literal notranslate"><span class="pre">CyclicBaseUseConfig.use()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#module-Profiles.Factors.Cyclic.UseConfig.cyclicDaylyUseConfig">Profiles.Factors.Cyclic.UseConfig.cyclicDaylyUseConfig module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicDaylyUseConfig.CyclicDaylyUseConfig"><code class="docutils literal notranslate"><span class="pre">CyclicDaylyUseConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicDaylyUseConfig.CyclicDaylyUseConfig.use"><code class="docutils literal notranslate"><span class="pre">CyclicDaylyUseConfig.use()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#module-Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig">Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig.CyclicWeeklyUseConfig"><code class="docutils literal notranslate"><span class="pre">CyclicWeeklyUseConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig.CyclicWeeklyUseConfig.get_random_interval"><code class="docutils literal notranslate"><span class="pre">CyclicWeeklyUseConfig.get_random_interval()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig.CyclicWeeklyUseConfig.use"><code class="docutils literal notranslate"><span class="pre">CyclicWeeklyUseConfig.use()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.Factors.Cyclic.cyclicFactor">
+<span id="profiles-factors-cyclic-cyclicfactor-module"></span><h2>Profiles.Factors.Cyclic.cyclicFactor module<a class="headerlink" href="#module-Profiles.Factors.Cyclic.cyclicFactor" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Cyclic.cyclicFactor.</span></span><span class="sig-name descname"><span class="pre">CyclicFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cyclicModel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel" title="Profiles.Factors.Cyclic.cyclicModel.CyclicModel"><span class="pre">CyclicModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">useConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig.CyclicBaseUseConfig" title="Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig.CyclicBaseUseConfig"><span class="pre">CyclicBaseUseConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicFactor.html#CyclicFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFactor</span></code></a></p>
+<p>Class representing a cyclic energy-consuming factor, such as appliances with repetitive usage patterns. (eg. Dishwashers, Washing machines…)</p>
+<p>This class models the behavior of cyclic consumers, such as appliances that follow specific usage patterns
+throughout the day or week. It simulates energy consumption, including standby power and active use, based
+on a defined configuration and cyclic model.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_cyclicModel (CyclicModel): The model representing the characteristics of the cyclic factor.</p>
+<p>_useConfig (CyclicBaseUseConfig): Configuration for usage, such as weekly schedules and hourly ranges.</p>
+<p>_overflow (Optional[np.ndarray]): Stores energy overflow from the current simulated day to carry over to the next day.</p>
+</dd>
+<dt>Methods:</dt><dd><p>simulate(simulationConfig: SimulationConfig) -&gt; np.ndarray: Simulates the energy consumption of the factor.
+changeUseConfig(useConfig: CyclicBaseUseConfig): Changes the usage configuration for the cyclic factor.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.changeUseConfig">
+<span class="sig-name descname"><span class="pre">changeUseConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">useConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig.CyclicBaseUseConfig" title="Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig.CyclicBaseUseConfig"><span class="pre">CyclicBaseUseConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicFactor.html#CyclicFactor.changeUseConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.changeUseConfig" title="Link to this definition"></a></dt>
+<dd><p>Changes the usage configuration for the cyclic factor.</p>
+<p>This method allows updating the configuration that controls the usage patterns of the cyclic factor,
+such as the days of the week or the time intervals during which the factor operates.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>useConfig (CyclicBaseUseConfig): The new usage configuration to apply.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicFactor.html#CyclicFactor.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulates the energy consumption of the cyclic factor over a day.</p>
+<p>This method computes the energy consumption for each time interval (as defined by the simulation configuration),
+including standby power and active usage as dictated by the cyclic model and the usage configuration.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): The configuration settings for the simulation, such as the number of time indices based on granularity.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.ndarray: An array representing the energy consumption of the cyclic factor over the simulation day.
+Each index of the array represents energy consumed or produced on the time elapsed based on granularity. The full array represents a day</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Profiles.Factors.Cyclic.cyclicModel">
+<span id="profiles-factors-cyclic-cyclicmodel-module"></span><h2>Profiles.Factors.Cyclic.cyclicModel module<a class="headerlink" href="#module-Profiles.Factors.Cyclic.cyclicModel" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicModel.CyclicModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Cyclic.cyclicModel.</span></span><span class="sig-name descname"><span class="pre">CyclicModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cyclePower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution" title="utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution"><span class="pre">BaseNumberDistribution</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">cycleTime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution" title="utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution"><span class="pre">BaseNumberDistribution</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">standByPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="utils.RandomNumbers.html#utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution" title="utils.RandomNumbers.baseNumberDistribution.BaseNumberDistribution"><span class="pre">BaseNumberDistribution</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">standByTime</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicModel.html#CyclicModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class representing a cyclic energy-consuming model, such as an appliance that follows a regular cycle (e.g., washing machine).</p>
+<p>This class models the behavior of appliances that have a regular operation cycle, including active power during cycles,
+standby power consumption, and the duration of these states.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_name (str): Name of the cyclic model.</p>
+<p>_cyclePower (BaseNumberDistribution): Distribution that defines the average power consumed during the cycle.</p>
+<p>_cycleTime (BaseNumberDistribution): Distribution that defines the duration of each cycle (in hours).</p>
+<p>_standByPower (BaseNumberDistribution): Distribution that defines the power consumed during standby mode.</p>
+<p>_standByTime (float): The average amount of time (in hours) that the model spends in standby mode per day.</p>
+</dd>
+<dt>Methods:</dt><dd><p>get_cycle_power() -&gt; float: Returns a random value for the average cycle power.
+get_cycle_minutes() -&gt; float: Returns a random value for the cycle duration in minutes.
+get_stand_by_power() -&gt; float: Returns the standby power, based on probability and the standby time.
+get_name() -&gt; str: Returns the name of the cyclic model.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_minutes">
+<span class="sig-name descname"><span class="pre">get_cycle_minutes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicModel.html#CyclicModel.get_cycle_minutes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_minutes" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the duration of the active cycle, generated randomly from the cycle time distribution and converted to minutes.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The duration of the cycle in minutes.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_power">
+<span class="sig-name descname"><span class="pre">get_cycle_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicModel.html#CyclicModel.get_cycle_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_power" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the average power consumption during the active cycle, generated randomly based on the power distribution.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The average power consumed during the cycle (in kW).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicModel.html#CyclicModel.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_name" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the name of the cyclic model.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the cyclic model.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_stand_by_power">
+<span class="sig-name descname"><span class="pre">get_stand_by_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Cyclic/cyclicModel.html#CyclicModel.get_stand_by_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_stand_by_power" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the power consumed during standby mode. This is determined based on the probability of the model
+being in standby, which is calculated from the standby time divided by 24 hours. If the model is in standby,
+the power is randomly generated from the standby power distribution.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The standby power consumed (in kW), or 0 if not in standby.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.Factors.Continuos.html" class="btn btn-neutral float-left" title="Profiles.Factors.Continuos package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Factors.Cyclic.UseConfig.html" class="btn btn-neutral float-right" title="Profiles.Factors.Cyclic.UseConfig package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Climatitzation.Components package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Factors.Continuos package" href="Profiles.Factors.Continuos.html" />
+    <link rel="prev" title="Profiles.Factors.Climatitzation package" href="Profiles.Factors.Climatitzation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Profiles.html">Profiles package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Profiles.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="Profiles.Factors.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l6 current"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a><ul class="current">
+<li class="toctree-l7 current"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l8 current"><a class="current reference internal" href="#">Profiles.Factors.Climatitzation.Components package</a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l9"><a class="reference internal" href="#module-Profiles.Factors.Climatitzation.Components.climatitzationComponent">Profiles.Factors.Climatitzation.Components.climatitzationComponent module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="#Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent"><code class="docutils literal notranslate"><span class="pre">ClimatitzationComponent</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="#module-Profiles.Factors.Climatitzation.Components.cooling">Profiles.Factors.Climatitzation.Components.cooling module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="#Profiles.Factors.Climatitzation.Components.cooling.Cooling"><code class="docutils literal notranslate"><span class="pre">Cooling</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l9"><a class="reference internal" href="#module-Profiles.Factors.Climatitzation.Components.heating">Profiles.Factors.Climatitzation.Components.heating module</a><ul>
+<li class="toctree-l10"><a class="reference internal" href="#Profiles.Factors.Climatitzation.Components.heating.Heating"><code class="docutils literal notranslate"><span class="pre">Heating</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.climatitzationFactor">Profiles.Factors.Climatitzation.climatitzationFactor module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.temperature">Profiles.Factors.Climatitzation.temperature module</a></li>
+<li class="toctree-l7"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.thermostat">Profiles.Factors.Climatitzation.thermostat module</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Cyclic.html">Profiles.Factors.Cyclic package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.ElectricCar.html">Profiles.Factors.ElectricCar package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Lightning.html">Profiles.Factors.Lightning package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#module-Profiles.Factors.baseFactor">Profiles.Factors.baseFactor module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.profile">Profiles.profile module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.html">Profiles package</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.Factors.html">Profiles.Factors package</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Climatitzation.Components package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.Factors.Climatitzation.Components.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-factors-climatitzation-components-package">
+<h1>Profiles.Factors.Climatitzation.Components package<a class="headerlink" href="#profiles-factors-climatitzation-components-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.Factors.Climatitzation.Components.climatitzationComponent">
+<span id="profiles-factors-climatitzation-components-climatitzationcomponent-module"></span><h2>Profiles.Factors.Climatitzation.Components.climatitzationComponent module<a class="headerlink" href="#module-Profiles.Factors.Climatitzation.Components.climatitzationComponent" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Climatitzation.Components.climatitzationComponent.</span></span><span class="sig-name descname"><span class="pre">ClimatitzationComponent</span></span><a class="reference internal" href="_modules/Profiles/Factors/Climatitzation/Components/climatitzationComponent.html#ClimatitzationComponent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for climatization components.</p>
+<p>This class serves as a blueprint for all climatization components that will 
+interact with a thermostat to achieve the desired indoor temperature. 
+Each component must implement its specific climatization behavior.</p>
+<dl class="simple">
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>climatize(thermostat: Thermostat, idealTemperature: float, timeElapsed: float) -&gt; Tuple[float, float]:</dt><dd><p>Abstract method to climatize towards the ideal temperature over a specified time.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent.climatize">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">climatize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thermostat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat" title="Profiles.Factors.Climatitzation.thermostat.Thermostat"><span class="pre">Thermostat</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">idealTemperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeElapsed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Climatitzation/Components/climatitzationComponent.html#ClimatitzationComponent.climatize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent.climatize" title="Link to this definition"></a></dt>
+<dd><p>Climatizes the space towards the ideal temperature over a specified time period.</p>
+<p>This method must be implemented by subclasses. It calculates the energy load 
+required to adjust the temperature towards the ideal level during the specified 
+time elapsed.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>thermostat (Thermostat): </dt><dd><p>The thermostat controlling the climatization process.</p>
+</dd>
+<dt>idealTemperature (float): </dt><dd><p>The desired temperature to reach.</p>
+</dd>
+<dt>timeElapsed (float): </dt><dd><p>The time duration over which to climatize, in hours.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[float, float]: </dt><dd><p>A tuple where the first element is the energy load (in kWh) required 
+for climatization, and the second element is the temperature.
+(in degrees Celsius).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Profiles.Factors.Climatitzation.Components.cooling">
+<span id="profiles-factors-climatitzation-components-cooling-module"></span><h2>Profiles.Factors.Climatitzation.Components.cooling module<a class="headerlink" href="#module-Profiles.Factors.Climatitzation.Components.cooling" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Climatitzation.Components.cooling.Cooling">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Climatitzation.Components.cooling.</span></span><span class="sig-name descname"><span class="pre">Cooling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Climatitzation/Components/cooling.html#Cooling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Climatitzation.Components.cooling.Cooling" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent" title="Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClimatitzationComponent</span></code></a></p>
+<p>Represents a cooling climatization component that adjusts the temperature of a space.</p>
+<p>This class extends the ClimatitzationComponent and provides an implementation 
+for the climatization process using cooling power. It calculates the energy 
+required to cool a volume of air based on the difference between the current 
+temperature and the ideal temperature.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_maxPower (float): Maximum power of the cooling system in kilowatts (kW).</p>
+<p>_minPower (float): Minimum power of the cooling system in kilowatts (kW).</p>
+<p>_efficiency (float): Efficiency of the cooling system.</p>
+<p>_volume (float): Volume of the space being cooled in cubic meters (m³).</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>climatize(thermostat: Thermostat, idealTemperature: float, timeElapsed: float) -&gt; Tuple[float, float]:</dt><dd><p>Climatizes the space towards the ideal temperature over a specified time.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Climatitzation.Components.cooling.Cooling.climatize">
+<span class="sig-name descname"><span class="pre">climatize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thermostat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat" title="Profiles.Factors.Climatitzation.thermostat.Thermostat"><span class="pre">Thermostat</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">idealTemperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeElapsed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Climatitzation/Components/cooling.html#Cooling.climatize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Climatitzation.Components.cooling.Cooling.climatize" title="Link to this definition"></a></dt>
+<dd><p>Climatizes the space towards the ideal temperature over a specified time period.</p>
+<p>This method calculates the energy load required to adjust the temperature 
+towards the ideal level during the specified time elapsed.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>thermostat (Thermostat): </dt><dd><p>The thermostat controlling the climatization process.</p>
+</dd>
+<dt>idealTemperature (float): </dt><dd><p>The desired temperature to reach.</p>
+</dd>
+<dt>timeElapsed (float): </dt><dd><p>The time duration over which to climatize, in hours.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[float, float]: </dt><dd><p>A tuple where the first element is the energy load (in kWh) required 
+for cooling, and the second element is the new temperature (in degrees Celsius).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Profiles.Factors.Climatitzation.Components.heating">
+<span id="profiles-factors-climatitzation-components-heating-module"></span><h2>Profiles.Factors.Climatitzation.Components.heating module<a class="headerlink" href="#module-Profiles.Factors.Climatitzation.Components.heating" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.Climatitzation.Components.heating.Heating">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.Climatitzation.Components.heating.</span></span><span class="sig-name descname"><span class="pre">Heating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minPower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">efficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/Climatitzation/Components/heating.html#Heating"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Climatitzation.Components.heating.Heating" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent" title="Profiles.Factors.Climatitzation.Components.climatitzationComponent.ClimatitzationComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClimatitzationComponent</span></code></a></p>
+<p>Represents a heating climatization component that adjusts the temperature of a space.</p>
+<p>This class extends the ClimatitzationComponent and provides an implementation 
+for the climatization process using heating power. It calculates the energy 
+required to heat a volume of air based on the difference between the current 
+temperature and the ideal temperature.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_maxPower (float): Maximum power of the heating system in kilowatts (kW).</p>
+<p>_minPower (float): Minimum power of the heating system in kilowatts (kW).</p>
+<p>_efficiency (float): Efficiency of the heating system.</p>
+<p>_volume (float): Volume of the space being heated in cubic meters (m³).</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>climatize(thermostat: Thermostat, idealTemperature: float, timeElapsed: float) -&gt; Tuple[float, float]:</dt><dd><p>Climatizes the space towards the ideal temperature over a specified time.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.Climatitzation.Components.heating.Heating.climatize">
+<span class="sig-name descname"><span class="pre">climatize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thermostat</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat" title="Profiles.Factors.Climatitzation.thermostat.Thermostat"><span class="pre">Thermostat</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">idealTemperature</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeElapsed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Profiles/Factors/Climatitzation/Components/heating.html#Heating.climatize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.Climatitzation.Components.heating.Heating.climatize" title="Link to this definition"></a></dt>
+<dd><p>Climatizes the space towards the ideal temperature over a specified time period.</p>
+<p>This method calculates the energy load required to adjust the temperature 
+towards the ideal level during the specified time elapsed.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>thermostat (Thermostat): </dt><dd><p>The thermostat controlling the climatization process.</p>
+</dd>
+<dt>idealTemperature (float): </dt><dd><p>The desired temperature to reach.</p>
+</dd>
+<dt>timeElapsed (float): </dt><dd><p>The time duration over which to climatize, in hours.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>Tuple[float, float]: </dt><dd><p>A tuple where the first element is the energy load (in kWh) required 
+for heating, and the second element is the new temperature (in degrees Celsius).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.Factors.Climatitzation.html" class="btn btn-neutral float-left" title="Profiles.Factors.Climatitzation package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Factors.Continuos.html" class="btn btn-neutral float-right" title="Profiles.Factors.Continuos package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

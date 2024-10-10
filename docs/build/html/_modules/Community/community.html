@@ -1,0 +1,605 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community.community &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Community.community</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Community.community</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span> <span class="nn">Profiles.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileEnergyDataAux</span> <span class="kn">import</span> <span class="n">ProfileEnergyDataAux</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileSharingsDataAux</span> <span class="kn">import</span> <span class="n">ProfileSharingsDataAux</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileCostDataAux</span> <span class="kn">import</span> <span class="n">ProfileCostDataAux</span>
+<span class="kn">from</span> <span class="nn">utils.enums</span> <span class="kn">import</span> <span class="n">FactorType</span><span class="p">,</span> <span class="n">MarketCountry</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.sharingMethod</span> <span class="kn">import</span> <span class="n">SharingMethod</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.virtualNetBilling</span> <span class="kn">import</span> <span class="n">VirtualNetBilling</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.sequentialSharing</span> <span class="kn">import</span> <span class="n">SequentialSharing</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">Community.Costs.costCalculationBaseMethod</span> <span class="kn">import</span> <span class="n">CostCalculationBaseMethod</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.baseFactor</span> <span class="kn">import</span> <span class="n">BaseFactor</span>
+<span class="kn">from</span> <span class="nn">EnergyPrice.EnergyPlans.baseEnergyPlan</span> <span class="kn">import</span> <span class="n">BaseEnergyPlan</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulatedCommunity</span> <span class="kn">import</span> <span class="n">SimulatedCommunity</span>
+<span class="kn">from</span> <span class="nn">EnergyPrice.wholesaleMarket</span> <span class="kn">import</span> <span class="n">WholesaleMarket</span>
+<span class="kn">from</span> <span class="nn">EnergyPrice.EnergyPlans.SomEnergia.somEnergiaIndexadaDomestic</span> <span class="kn">import</span> <span class="n">SomEnergiaIndexadaDomestic</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">timedelta</span>
+
+<span class="kn">import</span> <span class="nn">pyswarms</span> <span class="k">as</span> <span class="nn">ps</span>
+
+<span class="kn">from</span> <span class="nn">pyswarms.single.global_best</span> <span class="kn">import</span> <span class="n">GlobalBestPSO</span>
+
+<div class="viewcode-block" id="Community">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community">[docs]</a>
+<span class="k">class</span> <span class="nc">Community</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a community that consists of multiple profiles, energy production assets, and sharing methods.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _profiles (dict): A dictionary mapping profile IDs to Profile instances.</span>
+
+<span class="sd">        _profilesShare (dict): A dictionary mapping profile IDs to their respective sharing percentages.</span>
+
+<span class="sd">        _communityAssets (List[BaseFactor]): A list of community assets that can produce energy.</span>
+
+<span class="sd">        _sharePersonalPvs (bool): Indicates if personal production should be shared with the community .</span>
+
+<span class="sd">        _energyPlan (BaseEnergyPlan): The energy plan applied to the community.</span>
+
+<span class="sd">        _costCalculationMethod (CostCalculationBaseMethod): The method used for cost calculation (specifys if the cost calculation should be using each profile plan, the community plan or the best option).</span>
+
+<span class="sd">        _sharingMethod (SharingMethod): The method used for sharing energy within the community.</span>
+
+<span class="sd">        _wholesaleMarketCountry (MarketCountry): The country in which the wholesale market operates.</span>
+
+<span class="sd">        _pv (np.ndarray): The total photovoltaic energy produced in the community during the current day simulation.</span>
+
+<span class="sd">        _detailedPv (Dict[BaseFactor, np.ndarray]): Detailed energy production from community assets during the  current day simulation.</span>
+
+<span class="sd">        _simulatedCommunity (SimulatedCommunity): The simulated community containing simulation results of all the simulated days.</span>
+<span class="sd">        </span>
+<span class="sd">        _configLastSimulation (SimulationConfig): Configuration of the last simulation run.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        simulate(simulationConfig: SimulationConfig) -&gt; None:</span>
+<span class="sd">            Runs a day simulation based on the provided configuration.</span>
+
+<span class="sd">        shareSimulatedEnergies(start: datetime=None, end: datetime=None) -&gt; None:</span>
+<span class="sd">            Shares simulated energy among profiles based on the defined sharing method.</span>
+
+<span class="sd">        recalculate_cost(start: datetime=None, end: datetime=None) -&gt; None:</span>
+<span class="sd">            Recalculates costs for energy sharing within a specific time frame.</span>
+
+<span class="sd">        optimize_shares_best_community_cost(start: datetime=None, end: datetime=None, saveSharesOptimized=False) -&gt; Dict[int, float]:</span>
+<span class="sd">            Optimizes each profile shares of community to minimize community costs.</span>
+
+<span class="sd">        set_sharing_method(sharingMethod: SharingMethod) -&gt; None:</span>
+<span class="sd">            Sets the method used for sharing energy among profiles.</span>
+
+<span class="sd">        set_share_personal_pvs(b: bool) -&gt; None:</span>
+<span class="sd">            Sets the flag indicating whether to share personal PV production.</span>
+
+<span class="sd">        get_simulated_community() -&gt; SimulatedCommunity:</span>
+<span class="sd">            Returns the simulated community object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profiles</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">Profile</span><span class="p">,</span><span class="nb">float</span><span class="p">]],</span>
+                 <span class="n">communityAssets</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">BaseFactor</span><span class="p">],</span>
+                 <span class="n">energyPlan</span><span class="p">:</span><span class="n">BaseEnergyPlan</span><span class="p">,</span>
+                 <span class="n">costCalculationMethod</span><span class="p">:</span><span class="n">CostCalculationBaseMethod</span><span class="p">,</span>
+                 <span class="n">sharePersonalPvs</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">sharingMethod</span><span class="p">:</span><span class="n">SharingMethod</span><span class="o">=</span><span class="n">SequentialSharing</span><span class="p">(),</span>
+                 <span class="n">wholesaleMarketCountry</span><span class="p">:</span><span class="n">MarketCountry</span><span class="o">=</span><span class="n">MarketCountry</span><span class="o">.</span><span class="n">Spain</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the Community instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profiles (List[Tuple[Profile, float]]): A list of tuples containing Profile instances and their corresponding sharing percentages in decimals (0-1).</span>
+<span class="sd">            communityAssets (List[BaseFactor]): A list of community assets that can produce energy.</span>
+<span class="sd">            energyPlan (BaseEnergyPlan): The energy plan applied to the community.</span>
+<span class="sd">            costCalculationMethod (CostCalculationBaseMethod): The method used for cost calculation.</span>
+<span class="sd">            sharePersonalPvs (bool, optional): Flag to indicate whether personal production should be shared. Defaults to False.</span>
+<span class="sd">            sharingMethod (SharingMethod, optional): The method used for sharing energy within the community. Defaults to SequentialSharing().</span>
+<span class="sd">            wholesaleMarketCountry (MarketCountry, optional): The country for the wholesale market. Defaults to MarketCountry.Spain.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span><span class="o">=</span> <span class="p">{</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_id</span><span class="p">():</span> <span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">=</span><span class="p">{</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_id</span><span class="p">():</span> <span class="nb">tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_communityAssets</span><span class="o">=</span><span class="n">communityAssets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sharePersonalPvs</span><span class="o">=</span><span class="n">sharePersonalPvs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_energyPlan</span><span class="o">=</span><span class="n">energyPlan</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationMethod</span><span class="o">=</span><span class="n">costCalculationMethod</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pv</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detailedPv</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">BaseFactor</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sharingMethod</span><span class="o">=</span><span class="n">sharingMethod</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configLastSimulation</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">=</span><span class="n">SimulatedCommunity</span><span class="p">()</span>
+        <span class="n">WholesaleMarket</span><span class="p">(</span><span class="n">country</span><span class="o">=</span><span class="n">wholesaleMarketCountry</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Community.simulate">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.simulate">[docs]</a>
+    <span class="k">def</span> <span class="nf">simulate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs a day simulation for the community based on the given simulation configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulationConfig (SimulationConfig): Configuration settings for the simulation run.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If any error occurs during simulation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulate_community_assets</span><span class="p">(</span><span class="n">simulationConfig</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">profile_id</span><span class="p">,</span> <span class="n">profile</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">profile</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">=</span><span class="n">simulationConfig</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_update_simulateds</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span><span class="n">simulationConfig</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_share_on_current_date</span><span class="p">(</span><span class="n">simulationConfig</span><span class="p">)</span>
+        
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configLastSimulation</span><span class="o">=</span><span class="n">simulationConfig</span></div>
+
+    
+
+    <span class="k">def</span> <span class="nf">_simulate_community_assets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the energy production of community assets based on the given simulation configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulationConfig (SimulationConfig): Configuration settings for the simulation run.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detailedPv</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">BaseFactor</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pv</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_communityAssets</span><span class="p">:</span>
+            <span class="n">assetLoad</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">simulate</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">=</span><span class="n">simulationConfig</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">asset</span><span class="o">.</span><span class="n">get_factor_type</span><span class="p">()</span><span class="o">==</span><span class="n">FactorType</span><span class="o">.</span><span class="n">Producer</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_pv</span><span class="o">+=</span><span class="n">assetLoad</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_detailedPv</span><span class="p">[</span><span class="n">asset</span><span class="p">]</span><span class="o">=</span><span class="n">assetLoad</span>
+
+    <span class="k">def</span> <span class="nf">_update_simulateds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profiles</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Profile</span><span class="p">],</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the simulatedCommunity data for profiles, community PV and external factors after the current day simulation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profiles (List[Profile]): A list of Profile instances to update.</span>
+<span class="sd">            simulationConfig (SimulationConfig): Configuration settings for the simulation run.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_profiles_simulation_day</span><span class="p">(</span><span class="n">profiles</span><span class="p">,</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_current_date</span><span class="p">(),</span><span class="n">override</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_simulated_community_pv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pv</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_detailedPv</span><span class="p">,</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_current_date</span><span class="p">(),</span><span class="n">override</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_simulated_external_factors</span><span class="p">(</span><span class="n">simulationConfig</span><span class="p">,</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_current_date</span><span class="p">(),</span><span class="n">override</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_share_on_current_date</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shares simulated energy for the current date based on the simulation configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            simulationConfig (SimulationConfig): Configuration settings for the simulation run.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">currentDate</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_current_date</span><span class="p">()</span>
+        <span class="n">datetimeStart</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">currentDate</span><span class="p">,</span><span class="n">time</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+        <span class="n">datetimeEnd</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">combine</span><span class="p">(</span><span class="n">currentDate</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shareSimulatedEnergies</span><span class="p">(</span><span class="n">datetimeStart</span><span class="p">,</span><span class="n">datetimeEnd</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Community.shareSimulatedEnergies">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.shareSimulatedEnergies">[docs]</a>
+    <span class="k">def</span> <span class="nf">shareSimulatedEnergies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span> <span class="c1">#shares the simulated energy using the self._sharingMethod on the range of time start-end (includes start includes end). si algun dels limits del rang es None, significa infinit</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shares the simulated energy among profiles for the specified time range.</span>
+
+<span class="sd">        This method uses energy profiles and community pv data from the simulated community and processes it to </span>
+<span class="sd">        compute the detailed shared energy each individual obtains, then updates _simulatedCommunity.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start (datetime, optional): Start time for sharing. Defaults to None (infinity).</span>
+<span class="sd">            end (datetime, optional): End time for sharing. Defaults to None (infinity).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If duplicate profile IDs are found during sharing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">profilesDf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">get_summarized_simulated_profiles</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">communityPvs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">get_community_pvs</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">groupedByDateTime</span> <span class="o">=</span> <span class="n">profilesDf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
+        <span class="n">sharingInfoDatetimes</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">profilesEnergySharings</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]]</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">datetime_value</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groupedByDateTime</span><span class="p">:</span>
+            <span class="n">duplicated_profile_ids</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;profile_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">duplicated_profile_ids</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duplicate profile_id found in energy simulated with datetime </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="n">profile_ids</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;profile_id&#39;</span><span class="p">)</span>
+            <span class="n">profile_names</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;profile_name&#39;</span><span class="p">]</span>
+            <span class="n">pv</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;pv&#39;</span><span class="p">]</span>
+            <span class="n">load</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">]</span>
+            <span class="n">profileDataList</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">profile_id</span><span class="p">,</span> <span class="n">profile_name</span><span class="p">,</span> <span class="n">pv_value</span><span class="p">,</span> <span class="n">load_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">profile_ids</span><span class="p">,</span> <span class="n">profile_names</span><span class="p">,</span> <span class="n">pv</span><span class="p">,</span> <span class="n">load</span><span class="p">):</span>
+                <span class="n">profileShare</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">profile_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">profileData</span> <span class="o">=</span> <span class="n">ProfileEnergyDataAux</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="n">profile_id</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">profile_name</span><span class="p">,</span>
+                    <span class="n">production</span><span class="o">=</span><span class="n">pv_value</span><span class="p">,</span>
+                    <span class="n">load</span><span class="o">=</span><span class="n">load_value</span><span class="p">,</span>
+                    <span class="n">share</span><span class="o">=</span><span class="n">profileShare</span>
+                <span class="p">)</span>
+                <span class="n">profileDataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">profileData</span><span class="p">)</span>
+            <span class="n">communityPvRows</span> <span class="o">=</span> <span class="n">communityPvs</span><span class="p">[</span><span class="n">communityPvs</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">datetime_value</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">communityPvRows</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">communityPv</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There&#39;s no community pv instance for </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">communityPvRows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There&#39;s more than one community pv instance for </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">communityPv</span> <span class="o">=</span> <span class="n">communityPvRows</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;pv&quot;</span><span class="p">]</span>
+            <span class="n">sharingInfoDatetimes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime_value</span><span class="p">)</span>
+            <span class="n">profilesEnergySharings</span><span class="p">[</span><span class="n">datetime_value</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharingMethod</span><span class="o">.</span><span class="n">share</span><span class="p">(</span><span class="n">profiles</span><span class="o">=</span><span class="n">profileDataList</span><span class="p">,</span><span class="n">sharePersonalPvs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharePersonalPvs</span><span class="p">,</span><span class="n">communityPv</span><span class="o">=</span><span class="n">communityPv</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_sharing_info</span><span class="p">(</span><span class="n">datetimes</span><span class="o">=</span><span class="n">sharingInfoDatetimes</span><span class="p">,</span><span class="n">sharingMethod</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharingMethod</span><span class="p">,</span><span class="n">sharedPersonalPvs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharePersonalPvs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_energy_sharings</span><span class="p">(</span><span class="n">energySharings</span><span class="o">=</span><span class="n">profilesEnergySharings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_and_save_costs</span><span class="p">(</span><span class="n">sharings</span><span class="o">=</span><span class="n">profilesEnergySharings</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Community.recalculate_cost">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.recalculate_cost">[docs]</a>
+    <span class="k">def</span> <span class="nf">recalculate_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Recalculates the cost of energy sharing within the community based on the specified date range.</span>
+
+<span class="sd">        This method uses energy sharing data from the simulated community and processes it to </span>
+<span class="sd">        compute the costs associated with energy imports and exports for each profile in the community.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start (datetime, optional): The start date for the calculation period. Defaults to None(infinity).</span>
+<span class="sd">            end (datetime, optional): The end date for the calculation period. Defaults to None(infinity).</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If duplicate profile IDs are found in the energy sharing data for a given datetime.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energySharingsDf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">get_energy_sharings</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">groupedByDateTime</span> <span class="o">=</span> <span class="n">energySharingsDf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
+        <span class="n">profilesEnergySharings</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]]</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">datetime_value</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groupedByDateTime</span><span class="p">:</span>
+            <span class="n">duplicated_profile_ids</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;profile_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">duplicated_profile_ids</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duplicate profile_id found in energy sharings with datetime </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">profilesEnergySharings</span><span class="p">[</span><span class="n">datetime_value</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+            <span class="n">profile_ids</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;profile_id&#39;</span><span class="p">)</span>
+            <span class="n">gridImports</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;grid_import&#39;</span><span class="p">]</span>
+            <span class="n">microgridImports</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;microgrid_import&#39;</span><span class="p">]</span>
+            <span class="n">gridExports</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;grid_export&#39;</span><span class="p">]</span>
+            <span class="n">microgridExports</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;microgrid_export&#39;</span><span class="p">]</span>
+            <span class="n">personalPvExcedents</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;personal_pv_excedent&#39;</span><span class="p">]</span>
+            <span class="n">communityShares</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;community_shares&#39;</span><span class="p">]</span>
+            <span class="n">totalPvsAbleToShare</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;total_pv_able_to_share&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">profile_id</span><span class="p">,</span> <span class="n">gridImport</span><span class="p">,</span> <span class="n">microgridImport</span><span class="p">,</span> <span class="n">gridExport</span><span class="p">,</span> <span class="n">microgridExport</span><span class="p">,</span> <span class="n">personalPvExcedent</span><span class="p">,</span> <span class="n">communityShare</span><span class="p">,</span> <span class="n">totalPvAbleToShare</span>  <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">profile_ids</span><span class="p">,</span> <span class="n">gridImports</span><span class="p">,</span> <span class="n">microgridImports</span><span class="p">,</span> <span class="n">gridExports</span><span class="p">,</span> <span class="n">microgridExports</span><span class="p">,</span> <span class="n">personalPvExcedents</span><span class="p">,</span> <span class="n">communityShares</span><span class="p">,</span> <span class="n">totalPvsAbleToShare</span><span class="p">):</span>
+                <span class="n">aux</span><span class="o">=</span><span class="n">ProfileSharingsDataAux</span><span class="p">(</span><span class="n">profile_id</span><span class="o">=</span><span class="n">profile_id</span><span class="p">)</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">gridImport</span><span class="o">=</span><span class="n">gridImport</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">gridExport</span><span class="o">=</span><span class="n">gridExport</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">microgridExport</span><span class="o">=</span><span class="n">microgridExport</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">microgridImport</span><span class="o">=</span><span class="n">microgridImport</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">personalPvExcedent</span><span class="o">=</span><span class="n">personalPvExcedent</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">communityShares</span><span class="o">=</span><span class="n">communityShare</span>
+                <span class="n">aux</span><span class="o">.</span><span class="n">totalPvAbleToShare</span><span class="o">=</span><span class="n">totalPvAbleToShare</span>
+                <span class="n">profilesEnergySharings</span><span class="p">[</span><span class="n">datetime_value</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aux</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_calculate_and_save_costs</span><span class="p">(</span><span class="n">sharings</span><span class="o">=</span><span class="n">profilesEnergySharings</span><span class="p">)</span></div>
+
+    
+    <span class="k">def</span> <span class="nf">_calculate_and_save_costs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">sharings</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]])</span><span class="o">-&gt;</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileCostDataAux</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the costs associated with the energy sharing data and saves the results to the simulated community.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sharings (Dict[datetime, List[ProfileSharingsDataAux]]): A dictionary containing energy sharing data grouped by datetime.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[datetime, List[ProfileCostDataAux]]: A dictionary mapping each datetime to a list of associated profile costs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">costs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileCostDataAux</span><span class="p">]]</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">for</span> <span class="n">datetime_value</span><span class="p">,</span> <span class="n">profileSharingsList</span> <span class="ow">in</span> <span class="n">sharings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">costs</span><span class="p">[</span><span class="n">datetime_value</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+            <span class="n">profileSharingsAndPlans</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">,</span><span class="n">BaseEnergyPlan</span><span class="p">]]</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span>
+                    <span class="n">profileSharingsAux</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span><span class="p">[</span><span class="n">profileSharingsAux</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">get_energy_plan</span><span class="p">()</span> 
+                    <span class="k">if</span> <span class="n">profileSharingsAux</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span> 
+                    <span class="k">else</span> <span class="n">SomEnergiaIndexadaDomestic</span><span class="p">(</span><span class="n">contractedPower</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">iva</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span> <span class="c1">#en cas que el perfil no existeixi a self._profiles (mai hauria de pasar, pero per donar un plan default)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">profileSharingsAux</span> <span class="ow">in</span> <span class="n">profileSharingsList</span>
+            <span class="p">]</span>
+            <span class="n">costs</span><span class="p">[</span><span class="n">datetime_value</span><span class="p">]</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationMethod</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">sharingsAndPlan</span><span class="o">=</span><span class="n">profileSharingsAndPlans</span><span class="p">,</span><span class="n">communityPlan</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_energyPlan</span><span class="p">,</span><span class="n">datetimeValue</span><span class="o">=</span><span class="n">datetime_value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_costs</span><span class="p">(</span><span class="n">costs</span><span class="o">=</span><span class="n">costs</span><span class="p">)</span>
+        <span class="n">datetimes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">sharings</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">add_cost_calculation_info</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationMethod</span><span class="p">,</span> <span class="n">datetimes</span><span class="o">=</span><span class="n">datetimes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">costs</span>
+
+    <span class="k">def</span> <span class="nf">_shareAndGetCostOptimized</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shares energy among profiles using an optimized method and calculates the total cost.</span>
+
+<span class="sd">        This method retrieves the summarized profiles and community PVs, then performs energy sharing</span>
+<span class="sd">        calculations for the specified date range.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start (datetime, optional): The start date for the energy sharing period. Defaults to None(infinity).</span>
+<span class="sd">            end (datetime, optional): The end date for the energy sharing period. Defaults to None(infinity).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The total cost of energy sharing for the specified period.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If duplicate profile IDs are found in the energy data for a given datetime.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">totalCost</span><span class="o">=</span><span class="mi">0</span>
+        <span class="n">profilesDf</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">get_summarized_simulated_profiles</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">communityPvs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span><span class="o">.</span><span class="n">get_community_pvs</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">)</span>
+        <span class="n">groupedByDateTime</span> <span class="o">=</span> <span class="n">profilesDf</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">datetime_value</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groupedByDateTime</span><span class="p">:</span>
+            <span class="n">duplicated_profile_ids</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;profile_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">duplicated_profile_ids</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Duplicate profile_id found in energy simulated with datetime </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            
+            <span class="n">profile_ids</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;profile_id&#39;</span><span class="p">)</span>
+            <span class="n">profile_names</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;profile_name&#39;</span><span class="p">]</span>
+            <span class="n">pv</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;pv&#39;</span><span class="p">]</span>
+            <span class="n">load</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">]</span>
+            <span class="n">profileDataList</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileEnergyDataAux</span><span class="p">]</span><span class="o">=</span><span class="p">[]</span>
+            <span class="k">for</span> <span class="n">profile_id</span><span class="p">,</span> <span class="n">profile_name</span><span class="p">,</span> <span class="n">pv_value</span><span class="p">,</span> <span class="n">load_value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">profile_ids</span><span class="p">,</span> <span class="n">profile_names</span><span class="p">,</span> <span class="n">pv</span><span class="p">,</span> <span class="n">load</span><span class="p">):</span>
+                <span class="n">profileShare</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">profile_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">profileData</span> <span class="o">=</span> <span class="n">ProfileEnergyDataAux</span><span class="p">(</span>
+                    <span class="nb">id</span><span class="o">=</span><span class="n">profile_id</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="n">profile_name</span><span class="p">,</span>
+                    <span class="n">production</span><span class="o">=</span><span class="n">pv_value</span><span class="p">,</span>
+                    <span class="n">load</span><span class="o">=</span><span class="n">load_value</span><span class="p">,</span>
+                    <span class="n">share</span><span class="o">=</span><span class="n">profileShare</span>
+                <span class="p">)</span>
+                <span class="n">profileDataList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">profileData</span><span class="p">)</span>
+            <span class="n">communityPvRows</span> <span class="o">=</span> <span class="n">communityPvs</span><span class="p">[</span><span class="n">communityPvs</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">get_level_values</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">datetime_value</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">communityPvRows</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">communityPv</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There&#39;s no community pv instance for </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">communityPvRows</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;There&#39;s more than one community pv instance for </span><span class="si">{</span><span class="n">datetime_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">communityPv</span> <span class="o">=</span> <span class="n">communityPvRows</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;pv&quot;</span><span class="p">]</span>
+            <span class="n">sharingsList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharingMethod</span><span class="o">.</span><span class="n">share</span><span class="p">(</span><span class="n">profiles</span><span class="o">=</span><span class="n">profileDataList</span><span class="p">,</span><span class="n">sharePersonalPvs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharePersonalPvs</span><span class="p">,</span><span class="n">communityPv</span><span class="o">=</span><span class="n">communityPv</span><span class="p">)</span>
+            <span class="n">profileSharingsAndPlans</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">,</span><span class="n">BaseEnergyPlan</span><span class="p">]]</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span>
+                    <span class="n">profileSharingsAux</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span><span class="p">[</span><span class="n">profileSharingsAux</span><span class="o">.</span><span class="n">id</span><span class="p">]</span><span class="o">.</span><span class="n">get_energy_plan</span><span class="p">()</span> 
+                    <span class="k">if</span> <span class="n">profileSharingsAux</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_profiles</span> 
+                    <span class="k">else</span> <span class="n">SomEnergiaIndexadaDomestic</span><span class="p">(</span><span class="n">contractedPower</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">iva</span><span class="o">=</span><span class="mi">21</span><span class="p">)</span> <span class="c1">#en cas que el perfil no existeixi a self._profiles (mai hauria de pasar, pero per donar un plan default)</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">profileSharingsAux</span> <span class="ow">in</span> <span class="n">sharingsList</span>
+            <span class="p">]</span>
+            <span class="n">profilesCostList</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationMethod</span><span class="o">.</span><span class="n">calculate</span><span class="p">(</span><span class="n">sharingsAndPlan</span><span class="o">=</span><span class="n">profileSharingsAndPlans</span><span class="p">,</span><span class="n">communityPlan</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_energyPlan</span><span class="p">,</span><span class="n">datetimeValue</span><span class="o">=</span><span class="n">datetime_value</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">profileCost</span> <span class="ow">in</span> <span class="n">profilesCostList</span><span class="p">:</span>
+                <span class="n">totalCost</span><span class="o">+=</span><span class="n">profileCost</span><span class="o">.</span><span class="n">gridImportCost</span><span class="o">+</span><span class="n">profileCost</span><span class="o">.</span><span class="n">microgridCost</span><span class="o">-</span><span class="n">profileCost</span><span class="o">.</span><span class="n">gridExportRevenue</span><span class="o">-</span><span class="n">profileCost</span><span class="o">.</span><span class="n">microgridRevenue</span><span class="o">-</span><span class="n">profileCost</span><span class="o">.</span><span class="n">personalExcedentsRevenue</span>
+        <span class="k">return</span> <span class="n">totalCost</span>
+
+
+
+<div class="viewcode-block" id="Community.optimize_shares_best_community_cost">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.optimize_shares_best_community_cost">[docs]</a>
+    <span class="k">def</span> <span class="nf">optimize_shares_best_community_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">saveSharesOptimized</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Optimizes the energy sharing weights to minimize the total community cost over a specified period.</span>
+
+<span class="sd">        This method uses a particle swarm optimization approach to find the best weights for energy sharing among profiles.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            start (datetime, optional): The start date for the optimization period. Defaults to None(infinity).</span>
+<span class="sd">            end (datetime, optional): The end date for the optimization period. Defaults to None(infinity).</span>
+<span class="sd">            saveSharesOptimized (bool, optional): If True, saves the optimized sharing weights for the current community. Defaults to False.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[int, float]: A dictionary mapping profile IDs to their optimized sharing weights.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If the number of profiles does not match the number of weights.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">weights</span><span class="p">):</span>
+            <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+
+            <span class="n">sum_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1">#petita constant per evitar dividir per 0</span>
+            <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-10</span>
+            <span class="n">sum_weights</span> <span class="o">+=</span> <span class="n">epsilon</span>
+            <span class="n">normalized_weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="n">sum_weights</span>
+
+
+
+            <span class="n">community_cost</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">normalized_weights</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">normalized_weights</span><span class="p">):</span>
+                <span class="n">profileIds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">profileIds</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Diferent numero de perfils que de pesos&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">=</span><span class="p">{</span><span class="n">profileId</span><span class="p">:</span> <span class="n">share</span> <span class="k">for</span> <span class="n">profileId</span><span class="p">,</span><span class="n">share</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">profileIds</span><span class="p">,</span><span class="n">row</span><span class="p">)}</span>
+                <span class="n">rowCost</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_shareAndGetCostOptimized</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">rowCost</span><span class="p">)</span>
+                <span class="n">community_cost</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">=</span><span class="n">rowCost</span>
+                
+            <span class="c1">#cost total</span>
+            <span class="n">total_cost</span> <span class="o">=</span> <span class="n">community_cost</span>
+
+            <span class="k">return</span> <span class="n">total_cost</span>
+
+        <span class="n">profilesShareBeforeOptimitzation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span>     
+        <span class="n">numberOfProfiles</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="p">)</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">numberOfProfiles</span><span class="p">)</span>
+        <span class="n">x_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">numberOfProfiles</span><span class="p">)</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">)</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;c1&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;c2&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">}</span>
+
+        <span class="n">optimizer</span> <span class="o">=</span> <span class="n">GlobalBestPSO</span><span class="p">(</span><span class="n">n_particles</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="n">numberOfProfiles</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">)</span>
+        <span class="n">cost</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">iters</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="n">sum_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-10</span>
+        <span class="n">sum_weights</span> <span class="o">+=</span> <span class="n">epsilon</span>
+        <span class="n">normalized_weights</span> <span class="o">=</span> <span class="n">weights</span> <span class="o">/</span> <span class="n">sum_weights</span>
+        <span class="n">profileIds</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">shares</span><span class="o">=</span><span class="p">{</span><span class="n">profileId</span><span class="p">:</span> <span class="n">share</span> <span class="k">for</span> <span class="n">profileId</span><span class="p">,</span><span class="n">share</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">profileIds</span><span class="p">,</span><span class="n">normalized_weights</span><span class="p">)}</span>
+
+        <span class="k">if</span> <span class="n">saveSharesOptimized</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">=</span><span class="n">shares</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shareSimulatedEnergies</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_profilesShare</span><span class="o">=</span><span class="n">profilesShareBeforeOptimitzation</span>
+        
+        <span class="k">return</span> <span class="n">shares</span></div>
+
+
+
+    
+<div class="viewcode-block" id="Community.set_sharing_method">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.set_sharing_method">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_sharing_method</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">sharingMethod</span><span class="p">:</span><span class="n">SharingMethod</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the sharing method used for distributing energy among profiles in the community.</span>
+
+<span class="sd">        This method updates the internal sharing method used for calculating how energy is shared </span>
+<span class="sd">        among profiles.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sharingMethod (SharingMethod): An instance of the SharingMethod class that defines the </span>
+<span class="sd">            strategy for sharing energy among profiles.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sharingMethod</span><span class="o">=</span><span class="n">sharingMethod</span></div>
+
+
+<div class="viewcode-block" id="Community.set_share_personal_pvs">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.set_share_personal_pvs">[docs]</a>
+    <span class="k">def</span> <span class="nf">set_share_personal_pvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">b</span><span class="p">:</span><span class="nb">bool</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets whether to include personal production in the energy sharing calculations.</span>
+
+<span class="sd">        This method updates a flag that indicates whether personal PV production should be taken </span>
+<span class="sd">        into account when calculating energy sharing among profiles in the community.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            b (bool): If True, personal production will be included in the calculations; if False, it will not.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sharePersonalPvs</span><span class="o">=</span><span class="n">b</span></div>
+
+            
+<div class="viewcode-block" id="Community.get_simulated_community">
+<a class="viewcode-back" href="../../Community.html#Community.community.Community.get_simulated_community">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_simulated_community</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">SimulatedCommunity</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the simulated community object.</span>
+
+<span class="sd">        This method returns the instance of the simulated community, which contains data about </span>
+<span class="sd">        profiles, energy sharing, and costs within the community historics.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            SimulatedCommunity: An instance of the SimulatedCommunity class representing the </span>
+<span class="sd">            historics of the simulated community.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunity</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

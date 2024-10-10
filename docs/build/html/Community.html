@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Community.Costs package" href="Community.Costs.html" />
+    <link rel="prev" title="Simulador" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Community package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html">Community.Costs package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html">Community.Sharing package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-Community.community">Community.community module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Community.community.Community"><code class="docutils literal notranslate"><span class="pre">Community</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.get_simulated_community"><code class="docutils literal notranslate"><span class="pre">Community.get_simulated_community()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.optimize_shares_best_community_cost"><code class="docutils literal notranslate"><span class="pre">Community.optimize_shares_best_community_cost()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.recalculate_cost"><code class="docutils literal notranslate"><span class="pre">Community.recalculate_cost()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.set_share_personal_pvs"><code class="docutils literal notranslate"><span class="pre">Community.set_share_personal_pvs()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.set_sharing_method"><code class="docutils literal notranslate"><span class="pre">Community.set_sharing_method()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.shareSimulatedEnergies"><code class="docutils literal notranslate"><span class="pre">Community.shareSimulatedEnergies()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#Community.community.Community.simulate"><code class="docutils literal notranslate"><span class="pre">Community.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.html">Profiles package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+      <li class="breadcrumb-item active">Community package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Community.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="community-package">
+<h1>Community package<a class="headerlink" href="#community-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Community.Costs.html">Community.Costs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Community.Costs.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Costs.html#module-Community.Costs.alwaysUseBestPlan">Community.Costs.alwaysUseBestPlan module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Costs.html#Community.Costs.alwaysUseBestPlan.AlwaysUseBestPlan"><code class="docutils literal notranslate"><span class="pre">AlwaysUseBestPlan</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html#Community.Costs.alwaysUseBestPlan.AlwaysUseBestPlan.calculate"><code class="docutils literal notranslate"><span class="pre">AlwaysUseBestPlan.calculate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Costs.html#module-Community.Costs.alwaysUseCommunityPlan">Community.Costs.alwaysUseCommunityPlan module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Costs.html#Community.Costs.alwaysUseCommunityPlan.AlwaysUseCommunityPlan"><code class="docutils literal notranslate"><span class="pre">AlwaysUseCommunityPlan</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html#Community.Costs.alwaysUseCommunityPlan.AlwaysUseCommunityPlan.calculate"><code class="docutils literal notranslate"><span class="pre">AlwaysUseCommunityPlan.calculate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Costs.html#module-Community.Costs.alwaysUsePersonalPlan">Community.Costs.alwaysUsePersonalPlan module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Costs.html#Community.Costs.alwaysUsePersonalPlan.AlwaysUsePersonalPlan"><code class="docutils literal notranslate"><span class="pre">AlwaysUsePersonalPlan</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html#Community.Costs.alwaysUsePersonalPlan.AlwaysUsePersonalPlan.calculate"><code class="docutils literal notranslate"><span class="pre">AlwaysUsePersonalPlan.calculate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Costs.html#module-Community.Costs.costCalculationBaseMethod">Community.Costs.costCalculationBaseMethod module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Costs.html#Community.Costs.costCalculationBaseMethod.CostCalculationBaseMethod"><code class="docutils literal notranslate"><span class="pre">CostCalculationBaseMethod</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html#Community.Costs.costCalculationBaseMethod.CostCalculationBaseMethod.calculate"><code class="docutils literal notranslate"><span class="pre">CostCalculationBaseMethod.calculate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html#Community.Costs.costCalculationBaseMethod.CostCalculationBaseMethod.get_name"><code class="docutils literal notranslate"><span class="pre">CostCalculationBaseMethod.get_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Community.Sharing.html">Community.Sharing package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Community.Sharing.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Sharing.html#module-Community.Sharing.quota">Community.Sharing.quota module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.quota.Quota"><code class="docutils literal notranslate"><span class="pre">Quota</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.quota.Quota.share"><code class="docutils literal notranslate"><span class="pre">Quota.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Sharing.html#module-Community.Sharing.quotaConsumptionSharing">Community.Sharing.quotaConsumptionSharing module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing"><code class="docutils literal notranslate"><span class="pre">QuotaConsumptionSharing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing.share"><code class="docutils literal notranslate"><span class="pre">QuotaConsumptionSharing.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Sharing.html#module-Community.Sharing.sequentialSharing">Community.Sharing.sequentialSharing module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sequentialSharing.SequentialSharing"><code class="docutils literal notranslate"><span class="pre">SequentialSharing</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sequentialSharing.SequentialSharing.share"><code class="docutils literal notranslate"><span class="pre">SequentialSharing.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Sharing.html#module-Community.Sharing.sharingMethod">Community.Sharing.sharingMethod module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sharingMethod.SharingMethod"><code class="docutils literal notranslate"><span class="pre">SharingMethod</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sharingMethod.SharingMethod.get_name"><code class="docutils literal notranslate"><span class="pre">SharingMethod.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sharingMethod.SharingMethod.share"><code class="docutils literal notranslate"><span class="pre">SharingMethod.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Community.Sharing.html#module-Community.Sharing.virtualNetBilling">Community.Sharing.virtualNetBilling module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.virtualNetBilling.VirtualNetBilling"><code class="docutils literal notranslate"><span class="pre">VirtualNetBilling</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.virtualNetBilling.VirtualNetBilling.share"><code class="docutils literal notranslate"><span class="pre">VirtualNetBilling.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Community.community">
+<span id="community-community-module"></span><h2>Community.community module<a class="headerlink" href="#module-Community.community" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Community.community.Community">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Community.community.</span></span><span class="sig-name descname"><span class="pre">Community</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">profiles:</span> <span class="pre">~typing.List[~typing.Tuple[~Profiles.profile.Profile,</span> <span class="pre">float]],</span> <span class="pre">communityAssets:</span> <span class="pre">~typing.List[~Profiles.Factors.baseFactor.BaseFactor],</span> <span class="pre">energyPlan:</span> <span class="pre">~EnergyPrice.EnergyPlans.baseEnergyPlan.BaseEnergyPlan,</span> <span class="pre">costCalculationMethod:</span> <span class="pre">~Community.Costs.costCalculationBaseMethod.CostCalculationBaseMethod,</span> <span class="pre">sharePersonalPvs:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">False,</span> <span class="pre">sharingMethod:</span> <span class="pre">~Community.Sharing.sharingMethod.SharingMethod</span> <span class="pre">=</span> <span class="pre">&lt;Community.Sharing.sequentialSharing.SequentialSharing</span> <span class="pre">object&gt;,</span> <span class="pre">wholesaleMarketCountry:</span> <span class="pre">~utils.enums.MarketCountry</span> <span class="pre">=</span> <span class="pre">MarketCountry.Spain</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Community/community.html#Community"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents a community that consists of multiple profiles, energy production assets, and sharing methods.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_profiles (dict): A dictionary mapping profile IDs to Profile instances.</p>
+<p>_profilesShare (dict): A dictionary mapping profile IDs to their respective sharing percentages.</p>
+<p>_communityAssets (List[BaseFactor]): A list of community assets that can produce energy.</p>
+<p>_sharePersonalPvs (bool): Indicates if personal production should be shared with the community .</p>
+<p>_energyPlan (BaseEnergyPlan): The energy plan applied to the community.</p>
+<p>_costCalculationMethod (CostCalculationBaseMethod): The method used for cost calculation (specifys if the cost calculation should be using each profile plan, the community plan or the best option).</p>
+<p>_sharingMethod (SharingMethod): The method used for sharing energy within the community.</p>
+<p>_wholesaleMarketCountry (MarketCountry): The country in which the wholesale market operates.</p>
+<p>_pv (np.ndarray): The total photovoltaic energy produced in the community during the current day simulation.</p>
+<p>_detailedPv (Dict[BaseFactor, np.ndarray]): Detailed energy production from community assets during the  current day simulation.</p>
+<p>_simulatedCommunity (SimulatedCommunity): The simulated community containing simulation results of all the simulated days.</p>
+<p>_configLastSimulation (SimulationConfig): Configuration of the last simulation run.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>simulate(simulationConfig: SimulationConfig) -&gt; None:</dt><dd><p>Runs a day simulation based on the provided configuration.</p>
+</dd>
+<dt>shareSimulatedEnergies(start: datetime=None, end: datetime=None) -&gt; None:</dt><dd><p>Shares simulated energy among profiles based on the defined sharing method.</p>
+</dd>
+<dt>recalculate_cost(start: datetime=None, end: datetime=None) -&gt; None:</dt><dd><p>Recalculates costs for energy sharing within a specific time frame.</p>
+</dd>
+<dt>optimize_shares_best_community_cost(start: datetime=None, end: datetime=None, saveSharesOptimized=False) -&gt; Dict[int, float]:</dt><dd><p>Optimizes each profile shares of community to minimize community costs.</p>
+</dd>
+<dt>set_sharing_method(sharingMethod: SharingMethod) -&gt; None:</dt><dd><p>Sets the method used for sharing energy among profiles.</p>
+</dd>
+<dt>set_share_personal_pvs(b: bool) -&gt; None:</dt><dd><p>Sets the flag indicating whether to share personal PV production.</p>
+</dd>
+<dt>get_simulated_community() -&gt; SimulatedCommunity:</dt><dd><p>Returns the simulated community object.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.get_simulated_community">
+<span class="sig-name descname"><span class="pre">get_simulated_community</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity" title="Simulation.simulatedCommunity.SimulatedCommunity"><span class="pre">SimulatedCommunity</span></a></span></span><a class="reference internal" href="_modules/Community/community.html#Community.get_simulated_community"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.get_simulated_community" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the simulated community object.</p>
+<p>This method returns the instance of the simulated community, which contains data about 
+profiles, energy sharing, and costs within the community historics.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>SimulatedCommunity: An instance of the SimulatedCommunity class representing the 
+historics of the simulated community.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.optimize_shares_best_community_cost">
+<span class="sig-name descname"><span class="pre">optimize_shares_best_community_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saveSharesOptimized</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Community/community.html#Community.optimize_shares_best_community_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.optimize_shares_best_community_cost" title="Link to this definition"></a></dt>
+<dd><p>Optimizes the energy sharing weights to minimize the total community cost over a specified period.</p>
+<p>This method uses a particle swarm optimization approach to find the best weights for energy sharing among profiles.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>start (datetime, optional): The start date for the optimization period. Defaults to None(infinity).
+end (datetime, optional): The end date for the optimization period. Defaults to None(infinity).
+saveSharesOptimized (bool, optional): If True, saves the optimized sharing weights for the current community. Defaults to False.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Dict[int, float]: A dictionary mapping profile IDs to their optimized sharing weights.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If the number of profiles does not match the number of weights.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.recalculate_cost">
+<span class="sig-name descname"><span class="pre">recalculate_cost</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Community/community.html#Community.recalculate_cost"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.recalculate_cost" title="Link to this definition"></a></dt>
+<dd><p>Recalculates the cost of energy sharing within the community based on the specified date range.</p>
+<p>This method uses energy sharing data from the simulated community and processes it to 
+compute the costs associated with energy imports and exports for each profile in the community.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>start (datetime, optional): The start date for the calculation period. Defaults to None(infinity).
+end (datetime, optional): The end date for the calculation period. Defaults to None(infinity).</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If duplicate profile IDs are found in the energy sharing data for a given datetime.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.set_share_personal_pvs">
+<span class="sig-name descname"><span class="pre">set_share_personal_pvs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Community/community.html#Community.set_share_personal_pvs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.set_share_personal_pvs" title="Link to this definition"></a></dt>
+<dd><p>Sets whether to include personal production in the energy sharing calculations.</p>
+<p>This method updates a flag that indicates whether personal PV production should be taken 
+into account when calculating energy sharing among profiles in the community.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>b (bool): If True, personal production will be included in the calculations; if False, it will not.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.set_sharing_method">
+<span class="sig-name descname"><span class="pre">set_sharing_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sharingMethod</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Community.Sharing.html#Community.Sharing.sharingMethod.SharingMethod" title="Community.Sharing.sharingMethod.SharingMethod"><span class="pre">SharingMethod</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Community/community.html#Community.set_sharing_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.set_sharing_method" title="Link to this definition"></a></dt>
+<dd><p>Sets the sharing method used for distributing energy among profiles in the community.</p>
+<p>This method updates the internal sharing method used for calculating how energy is shared 
+among profiles.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>sharingMethod (SharingMethod): An instance of the SharingMethod class that defines the 
+strategy for sharing energy among profiles.</p>
+</dd>
+<dt>Returns:</dt><dd><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.shareSimulatedEnergies">
+<span class="sig-name descname"><span class="pre">shareSimulatedEnergies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">datetime</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Community/community.html#Community.shareSimulatedEnergies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.shareSimulatedEnergies" title="Link to this definition"></a></dt>
+<dd><p>Shares the simulated energy among profiles for the specified time range.</p>
+<p>This method uses energy profiles and community pv data from the simulated community and processes it to 
+compute the detailed shared energy each individual obtains, then updates _simulatedCommunity.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>start (datetime, optional): Start time for sharing. Defaults to None (infinity).
+end (datetime, optional): End time for sharing. Defaults to None (infinity).</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If duplicate profile IDs are found during sharing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.community.Community.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/Community/community.html#Community.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.community.Community.simulate" title="Link to this definition"></a></dt>
+<dd><p>Runs a day simulation for the community based on the given simulation configuration.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): Configuration settings for the simulation run.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If any error occurs during simulation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="Simulador" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Community.Costs.html" class="btn btn-neutral float-right" title="Community.Costs package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

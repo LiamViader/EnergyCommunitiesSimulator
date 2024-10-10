@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulation.simulatedCommunity &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Simulation.simulatedCommunity</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Simulation.simulatedCommunity</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span><span class="n">date</span><span class="p">,</span><span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">Community.Sharing.sharingMethod</span> <span class="kn">import</span> <span class="n">SharingMethod</span>
+<span class="kn">from</span> <span class="nn">Profiles.profile</span> <span class="kn">import</span> <span class="n">Profile</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.baseFactor</span> <span class="kn">import</span> <span class="n">BaseFactor</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">utils.enums</span> <span class="kn">import</span> <span class="n">FactorType</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileSharingsDataAux</span> <span class="kn">import</span> <span class="n">ProfileSharingsDataAux</span>
+<span class="kn">from</span> <span class="nn">Profiles.utils.profileCostDataAux</span> <span class="kn">import</span> <span class="n">ProfileCostDataAux</span>
+<span class="kn">from</span> <span class="nn">Community.Costs.costCalculationBaseMethod</span> <span class="kn">import</span> <span class="n">CostCalculationBaseMethod</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="SimulatedCommunity">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity">[docs]</a>
+<span class="k">class</span> <span class="nc">SimulatedCommunity</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents a simulated community for managing and analyzing energy consumption and production.</span>
+
+<span class="sd">    This class stores detailed and summarized information about simulated profiles,</span>
+<span class="sd">    community assets, external factors, energy sharing, and costs. All over time</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _detailedSimulatedProfiles (pd.DataFrame): DataFrame containing the detailed simulated profiles.</span>
+
+<span class="sd">        _summarizedSimulatedProfiles (pd.DataFrame): DataFrame containing the summarized simulated profiles.</span>
+
+<span class="sd">        _simulatedCommunityAssets (pd.DataFrame): DataFrame containing the detailed profiles of the community assets.</span>
+
+<span class="sd">        _communityPv (pd.DataFrame): DataFrame containing community production data.</span>
+
+<span class="sd">        _externalFactors (pd.DataFrame): DataFrame containing environmental factors data.</span>
+
+<span class="sd">        _sharingInfo (pd.DataFrame): DataFrame containing information about sharing methods used.</span>
+
+<span class="sd">        _energySharings (pd.DataFrame): DataFrame containing energy sharing details.</span>
+
+<span class="sd">        _costs (pd.DataFrame): DataFrame containing cost-related data for profiles.</span>
+<span class="sd">        </span>
+<span class="sd">        _costCalculationInfo (pd.DataFrame): DataFrame containing information on cost calculation methods.</span>
+<span class="sd">    Methods:</span>
+<span class="sd">        add_simulated_community_pv(totalPv: np.ndarray, detailedPv: Dict[BaseFactor, np.ndarray], currentDate: date, override: bool = True) -&gt; None:</span>
+<span class="sd">            Adds simulated photovoltaic (PV) data for the community.</span>
+
+<span class="sd">        add_simulated_external_factors(simulationConfig: SimulationConfig, currentDate: date, override: bool = True) -&gt; None:</span>
+<span class="sd">            Adds external factors affecting energy production for the community.</span>
+
+<span class="sd">        add_sharing_info(datetimes: List[datetime], sharingMethod: SharingMethod, sharedPersonalPvs: bool) -&gt; None:</span>
+<span class="sd">            Adds sharing information used for energy sharing within the community.</span>
+
+<span class="sd">        add_energy_sharings(energySharings: Dict[datetime, List[ProfileSharingsDataAux]]) -&gt; None:</span>
+<span class="sd">            Adds energy sharing information for multiple profiles on different datetimes.</span>
+
+<span class="sd">        add_costs(costs: Dict[datetime, List[ProfileCostDataAux]]) -&gt; None:</span>
+<span class="sd">            Adds cost information for multiple profiles on different datetimes.</span>
+
+<span class="sd">        add_cost_calculation_info(datetimes: List[datetime], method: CostCalculationBaseMethod) -&gt; None:</span>
+<span class="sd">            Adds cost calculation method information for a list of datetimes.</span>
+
+<span class="sd">        get_summarized_simulated_profiles(start: datetime = None, end: datetime = None) -&gt; pd.DataFrame:</span>
+<span class="sd">            Retrieves summarized simulated profiles for a specified date range.</span>
+
+<span class="sd">        get_community_pvs(start: datetime = None, end: datetime = None) -&gt; pd.DataFrame:</span>
+<span class="sd">            Retrieves community PV data for a specified date range.</span>
+
+<span class="sd">        get_energy_sharings(start: datetime = None, end: datetime = None) -&gt; pd.DataFrame:</span>
+<span class="sd">            Retrieves energy sharing data for a specified date range.</span>
+
+<span class="sd">        get_total_community_cost(start: datetime = None, end: datetime = None) -&gt; float:</span>
+<span class="sd">            Calculates the total community cost for a specified date range.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes a new SimulatedCommunity instance with empty DataFrames for each attribute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;profile_name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;asset_id&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;asset_name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;asset_type&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;profile_id&#39;</span><span class="p">,</span> <span class="s1">&#39;asset_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;profile_name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;load&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;pv&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunityAssets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;asset_id&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;asset_name&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;asset_type&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunityAssets</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;asset_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;pv&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_externalFactors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;irradiation&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;wind&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_externalFactors</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sharingInfo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;shared_personal_pvs&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sharingInfo</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;community_shares&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_import&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;microgrid_import&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_export&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;microgrid_export&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;personal_pv_excedent&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;total_pv_able_to_share&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span> <span class="c1">#en cas que nomes es comparteixi assets de la comunitat, això es pv del asset de la comunitat * community shares (el percentatge que té), si tb comparteix els seus assets serà lo anterior + el pv seu</span>
+
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span><span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_costs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_import_price&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_import_cost&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_import_plan&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_export_price&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_export_revenue&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;grid_export_plan&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;microgrid_price&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;microgrid_cost&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;microgrid_revenue&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;personal_excedents_price&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;personal_excedents_revenue&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float32&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;personal_excedents_plan&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span><span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationInfo</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">([]),</span>
+            <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationInfo</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        
+
+<div class="viewcode-block" id="SimulatedCommunity.add_profiles_simulation_day">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_profiles_simulation_day">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_profiles_simulation_day</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">profiles</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Profile</span><span class="p">],</span><span class="n">currentDate</span><span class="p">:</span><span class="n">date</span><span class="p">,</span><span class="n">override</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds simulation data for a list of profiles for a specific day.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            profiles (List[Profile]): A list of Profile objects containing load and production data of that day.</span>
+<span class="sd">            currentDate (date): The date for which the profiles are simulated.</span>
+<span class="sd">            override (bool): Whether to override existing data. If True, keeps the last entry for duplicates. if False, it will only keep the existing data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows_to_add</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">:</span>
+            <span class="n">detailedProfile</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">get_detailed_load</span><span class="p">()</span>
+            <span class="n">profileId</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+            <span class="n">profileName</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">asset</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="n">detailedProfile</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">indices</span><span class="o">=</span><span class="n">energy</span><span class="o">.</span><span class="n">size</span>
+                <span class="n">minutesPerIndex</span><span class="o">=</span><span class="mi">1440</span><span class="o">/</span><span class="n">indices</span>
+                <span class="n">assetId</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+                <span class="n">assetName</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+                <span class="n">assetType</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">get_factor_type</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+                <span class="k">if</span> <span class="n">assetType</span><span class="o">==</span><span class="n">FactorType</span><span class="o">.</span><span class="n">Producer</span><span class="p">:</span> <span class="n">coef</span><span class="o">=-</span><span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span> <span class="n">coef</span><span class="o">=</span><span class="mi">1</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+                    <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">currentDate</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">i</span> <span class="o">*</span> <span class="n">minutesPerIndex</span><span class="p">)</span>
+                    <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+                        <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">profileId</span><span class="p">,</span>
+                        <span class="s1">&#39;profile_name&#39;</span><span class="p">:</span> <span class="n">profileName</span><span class="p">,</span>
+                        <span class="s1">&#39;asset_id&#39;</span><span class="p">:</span> <span class="n">assetId</span><span class="p">,</span>
+                        <span class="s1">&#39;asset_name&#39;</span><span class="p">:</span> <span class="n">assetName</span><span class="p">,</span>
+                        <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">coef</span><span class="p">,</span>
+                        <span class="s1">&#39;asset_type&#39;</span><span class="p">:</span> <span class="n">assetType</span>
+                    <span class="p">}</span>
+                    <span class="n">rows_to_add</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows_to_add</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;profile_id&#39;</span><span class="p">,</span> <span class="s1">&#39;asset_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+        <span class="c1">#combined</span>
+        <span class="n">rows_to_add</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">profile</span> <span class="ow">in</span> <span class="n">profiles</span><span class="p">:</span>
+            <span class="n">load</span><span class="p">,</span><span class="n">pv</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">get_load_pv</span><span class="p">()</span>
+            <span class="n">profileId</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+            <span class="n">profileName</span><span class="o">=</span><span class="n">profile</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+            <span class="n">indices</span><span class="o">=</span><span class="n">load</span><span class="o">.</span><span class="n">size</span>
+            <span class="n">minutesPerIndex</span><span class="o">=</span><span class="mi">1440</span><span class="o">/</span><span class="n">indices</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">currentDate</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">i</span> <span class="o">*</span> <span class="n">minutesPerIndex</span><span class="p">)</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+                    <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">profileId</span><span class="p">,</span>
+                    <span class="s1">&#39;profile_name&#39;</span><span class="p">:</span> <span class="n">profileName</span><span class="p">,</span>
+                    <span class="s1">&#39;load&#39;</span><span class="p">:</span> <span class="n">load</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                    <span class="s1">&#39;pv&#39;</span><span class="p">:</span> <span class="n">pv</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="p">}</span>
+                <span class="n">rows_to_add</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+            <span class="n">new_data2</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows_to_add</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data2</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">new_data2</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data2</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+                <span class="n">new_data2</span><span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data2</span><span class="p">[</span><span class="s1">&#39;load&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+                <span class="n">new_data2</span><span class="p">[</span><span class="s1">&#39;pv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data2</span><span class="p">[</span><span class="s1">&#39;pv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+                <span class="n">new_data2</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                
+
+        <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats basat en datetime, profileid i assetid</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data2</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_data2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="p">,</span><span class="n">new_data2</span><span class="p">])</span>
+                <span class="n">combined_data2</span> <span class="o">=</span> <span class="n">combined_data2</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data2</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span> <span class="o">=</span> <span class="n">combined_data2</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats basat en datetime, profileid i assetid</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data2</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_data2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="p">,</span><span class="n">new_data2</span><span class="p">])</span>
+                <span class="n">combined_data2</span> <span class="o">=</span> <span class="n">combined_data2</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data2</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span> <span class="o">=</span> <span class="n">combined_data2</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SimulatedCommunity.add_simulated_community_pv">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_community_pv">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_simulated_community_pv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">totalPv</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">detailedPv</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">BaseFactor</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">],</span><span class="n">currentDate</span><span class="p">:</span><span class="n">date</span><span class="p">,</span><span class="n">override</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds simulated community production data for a specific day.</span>
+<span class="sd">        </span>
+<span class="sd">        This method adds both detailed production data for each asset and total community production data for the given date.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            totalPv (np.ndarray): A NumPy array containing the total PV energy output for the community, indexed by time based on granularity</span>
+<span class="sd">            detailedPv (Dict[BaseFactor, np.ndarray]): A dictionary mapping BaseFactor objects to their corresponding production energy outputs.</span>
+<span class="sd">            currentDate (date): The date for which the production data is being added.</span>
+<span class="sd">            override (bool): If True, the method will overwrite any existing data for the same datetime; if False, it will only keep the existing data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">detailed_rows_to_add</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">asset</span><span class="p">,</span> <span class="n">energy</span> <span class="ow">in</span> <span class="n">detailedPv</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">indices</span><span class="o">=</span><span class="n">energy</span><span class="o">.</span><span class="n">size</span>
+            <span class="n">minutesPerIndex</span><span class="o">=</span><span class="mi">1440</span><span class="o">/</span><span class="n">indices</span>
+            <span class="n">assetId</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">get_id</span><span class="p">()</span>
+            <span class="n">assetName</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+            <span class="n">assetType</span><span class="o">=</span><span class="n">asset</span><span class="o">.</span><span class="n">get_factor_type</span><span class="p">()</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">if</span> <span class="n">assetType</span><span class="o">==</span><span class="n">FactorType</span><span class="o">.</span><span class="n">Producer</span><span class="p">:</span> <span class="n">coef</span><span class="o">=-</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">coef</span><span class="o">=</span><span class="mi">1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+                <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">currentDate</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">i</span> <span class="o">*</span> <span class="n">minutesPerIndex</span><span class="p">)</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+                    <span class="s1">&#39;asset_id&#39;</span><span class="p">:</span> <span class="n">assetId</span><span class="p">,</span>
+                    <span class="s1">&#39;asset_name&#39;</span><span class="p">:</span> <span class="n">assetName</span><span class="p">,</span>
+                    <span class="s1">&#39;energy&#39;</span><span class="p">:</span> <span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">coef</span><span class="p">,</span>
+                    <span class="s1">&#39;asset_type&#39;</span><span class="p">:</span> <span class="n">assetType</span>
+                <span class="p">}</span>
+                <span class="n">detailed_rows_to_add</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="n">new_detailed_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">detailed_rows_to_add</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_detailed_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_detailed_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_detailed_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_detailed_data</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_detailed_data</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_detailed_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;asset_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">pv_rows_to_add</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">indices</span><span class="o">=</span><span class="n">totalPv</span><span class="o">.</span><span class="n">size</span>
+        <span class="n">minutesPerIndex</span><span class="o">=</span><span class="mi">1440</span><span class="o">/</span><span class="n">indices</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">currentDate</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">i</span> <span class="o">*</span> <span class="n">minutesPerIndex</span><span class="p">)</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+                <span class="s1">&#39;pv&#39;</span><span class="p">:</span> <span class="n">totalPv</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="p">}</span>
+            <span class="n">pv_rows_to_add</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        
+        <span class="n">new_pv_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pv_rows_to_add</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_pv_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_pv_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_pv_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_pv_data</span><span class="p">[</span><span class="s1">&#39;pv&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_pv_data</span><span class="p">[</span><span class="s1">&#39;pv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_pv_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_detailed_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_detailed_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span><span class="p">,</span> <span class="n">new_detailed_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats antics basat en datetime, assetid</span>
+                <span class="n">combined_detailed_data</span> <span class="o">=</span> <span class="n">combined_detailed_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_detailed_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunityAssets</span> <span class="o">=</span> <span class="n">combined_detailed_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_pv_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_pv_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="p">,</span> <span class="n">new_pv_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats antics basat en datetime, assetid</span>
+                <span class="n">combined_pv_data</span> <span class="o">=</span> <span class="n">combined_pv_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_pv_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span> <span class="o">=</span> <span class="n">combined_pv_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+            
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_detailed_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_detailed_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_detailedSimulatedProfiles</span><span class="p">,</span> <span class="n">new_detailed_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats nous basat en datetime, assetid</span>
+                <span class="n">combined_detailed_data</span> <span class="o">=</span> <span class="n">combined_detailed_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_detailed_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_simulatedCommunityAssets</span> <span class="o">=</span> <span class="n">combined_detailed_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_pv_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_pv_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="p">,</span> <span class="n">new_pv_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats nous basat en datetime, assetid</span>
+                <span class="n">combined_pv_data</span> <span class="o">=</span> <span class="n">combined_pv_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_pv_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span> <span class="o">=</span> <span class="n">combined_pv_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SimulatedCommunity.add_simulated_external_factors">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_simulated_external_factors">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_simulated_external_factors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">,</span><span class="n">currentDate</span><span class="p">:</span><span class="n">date</span><span class="p">,</span><span class="n">override</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds simulated external factors such as irradiation, wind, and temperature for a specific day.</span>
+<span class="sd">        </span>
+<span class="sd">        This method uses a SimulationConfig object to obtain the external factors for each time index of the day.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            simulationConfig (SimulationConfig): An object containing the configuration for the simulation, including irradiation, wind, and temperature data.</span>
+<span class="sd">            currentDate (date): The date for which the external factors are being added.</span>
+<span class="sd">            override (bool): If True, the method will overwrite any existing data for the same datetime; if False, it will keep the existing data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rows_to_add</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">irradiation</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_irradiation</span><span class="p">()</span>
+        <span class="n">wind</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_wind</span><span class="p">()</span>
+        <span class="n">temperature</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">get_temperature</span><span class="p">()</span>
+        <span class="n">indices</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()</span>
+        <span class="n">minutesPerIndex</span><span class="o">=</span><span class="mi">1440</span><span class="o">/</span><span class="n">indices</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">currentDate</span><span class="p">)</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">minutes</span><span class="o">=</span><span class="n">i</span> <span class="o">*</span> <span class="n">minutesPerIndex</span><span class="p">)</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">timestamp</span><span class="p">,</span>
+                <span class="s1">&#39;irradiation&#39;</span><span class="p">:</span> <span class="n">irradiation</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="s1">&#39;temperature&#39;</span><span class="p">:</span> <span class="n">temperature</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="s1">&#39;wind&#39;</span><span class="p">:</span> <span class="n">wind</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+            <span class="p">}</span>
+            <span class="n">rows_to_add</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows_to_add</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;temperature&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;irradiation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;irradiation&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;wind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;wind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">override</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_externalFactors</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats basat en datetime, profileid i assetid</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_externalFactors</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_externalFactors</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+                <span class="c1">#elimino duplicats basat en datetime, profileid i assetid</span>
+                <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_externalFactors</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SimulatedCommunity.add_sharing_info">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_sharing_info">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_sharing_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">datetimes</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">],</span><span class="n">sharingMethod</span><span class="p">:</span><span class="n">SharingMethod</span><span class="p">,</span><span class="n">sharedPersonalPvs</span><span class="p">:</span><span class="nb">bool</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span> 
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds sharing information for a list of datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        This method records the sharing method used and whether personal PVs are shared for each datetime in the provided list.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            datetimes (List[datetime]): A list of datetime objects indicating the times for which sharing information is recorded.</span>
+<span class="sd">            sharingMethod (SharingMethod): An object representing the sharing method used during the simulation.</span>
+<span class="sd">            sharedPersonalPvs (bool): Indicates whether personal PVs are shared in the community.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rowsToAdd</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">sharingMethodStr</span><span class="o">=</span><span class="n">sharingMethod</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">dateTime</span> <span class="ow">in</span> <span class="n">datetimes</span><span class="p">:</span>
+            <span class="n">row</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">dateTime</span><span class="p">,</span>
+                <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="n">sharingMethodStr</span><span class="p">,</span>
+                <span class="s1">&#39;shared_personal_pvs&#39;</span><span class="p">:</span> <span class="n">sharedPersonalPvs</span>
+            <span class="p">}</span>
+            <span class="n">rowsToAdd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rowsToAdd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;shared_personal_pvs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;shared_personal_pvs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;bool&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_sharingInfo</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sharingInfo</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="SimulatedCommunity.add_energy_sharings">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_energy_sharings">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_energy_sharings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">energySharings</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileSharingsDataAux</span><span class="p">]])</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds energy sharing information for multiple profiles on different datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        This method processes a dictionary of energy sharing data and appends it to the existing records in the class.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            energySharings (Dict[datetime, List[ProfileSharingsDataAux]]): A dictionary where each key is a datetime and each value is a list of ProfileSharingsDataAux objects containing sharing data for each profile.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+
+<span class="sd">        Notes:</span>
+<span class="sd">            - The method constructs a DataFrame from the provided data and concatenates it with the existing energy sharing data, ensuring that duplicates are removed based on datetime and profile ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rowsToAdd</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">datetime_value</span><span class="p">,</span> <span class="n">energySharingsProfiles</span> <span class="ow">in</span> <span class="n">energySharings</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">profileSharings</span> <span class="ow">in</span> <span class="n">energySharingsProfiles</span><span class="p">:</span>
+                <span class="n">row</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">datetime_value</span><span class="p">,</span>
+                    <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="s1">&#39;community_shares&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">communityShares</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_import&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">gridImport</span><span class="p">,</span>
+                    <span class="s1">&#39;microgrid_import&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridImport</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_export&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">gridExport</span><span class="p">,</span>
+                    <span class="s1">&#39;microgrid_export&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">microgridExport</span><span class="p">,</span>
+                    <span class="s1">&#39;personal_pv_excedent&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">personalPvExcedent</span><span class="p">,</span>
+                    <span class="s1">&#39;total_pv_able_to_share&#39;</span><span class="p">:</span> <span class="n">profileSharings</span><span class="o">.</span><span class="n">totalPvAbleToShare</span>
+                <span class="p">}</span>
+                <span class="n">rowsToAdd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rowsToAdd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;profile_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;profile_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;community_shares&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;community_shares&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_import&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_import&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_export&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_export&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_pv_excedent&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_pv_excedent&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;total_pv_able_to_share&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;total_pv_able_to_share&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="SimulatedCommunity.add_costs">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_costs">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_costs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">costs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">datetime</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="n">ProfileCostDataAux</span><span class="p">]])</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds cost information for multiple profiles on different datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        This method processes a dictionary of cost data and appends it to the existing records in the class.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            costs (Dict[datetime, List[ProfileCostDataAux]]): A dictionary where each key is a datetime and each value is a list of ProfileCostDataAux objects containing cost data for each profile.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        </span>
+<span class="sd">        Notes:</span>
+<span class="sd">            - The method constructs a DataFrame from the provided data and concatenates it with the existing cost data, ensuring that duplicates are removed based on datetime and profile ID.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rowsToAdd</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">datetime_value</span><span class="p">,</span> <span class="n">costsList</span> <span class="ow">in</span> <span class="n">costs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">profileCost</span> <span class="ow">in</span> <span class="n">costsList</span><span class="p">:</span>
+                <span class="n">row</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">datetime_value</span><span class="p">,</span>
+                    <span class="s1">&#39;profile_id&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_import_price&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">gridImportPrice</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_import_cost&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">gridImportCost</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_import_plan&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">gridImportPlan</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_export_price&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">gridExportPrice</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_export_revenue&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">gridExportRevenue</span><span class="p">,</span>
+                    <span class="s1">&#39;grid_export_plan&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">gridExportPlan</span><span class="p">,</span>
+                    <span class="s1">&#39;microgrid_price&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">microgridPrice</span><span class="p">,</span>
+                    <span class="s1">&#39;microgrid_cost&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">microgridCost</span><span class="p">,</span>
+                    <span class="s1">&#39;microgrid_revenue&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">microgridRevenue</span><span class="p">,</span>
+                    <span class="s1">&#39;personal_excedents_price&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">personalExcedentsPrice</span><span class="p">,</span>
+                    <span class="s1">&#39;personal_excedents_revenue&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">personalExcedentsRevenue</span><span class="p">,</span>
+                    <span class="s1">&#39;personal_excedents_plan&#39;</span><span class="p">:</span> <span class="n">profileCost</span><span class="o">.</span><span class="n">personalExcedentsPlan</span><span class="p">,</span>
+                <span class="p">}</span>
+                <span class="n">rowsToAdd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rowsToAdd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;profile_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;profile_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import_price&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import_cost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import_cost&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import_plan&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_import_plan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export_price&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export_revenue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export_revenue&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export_plan&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;grid_export_plan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_price&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_cost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_cost&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_revenue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;microgrid_revenue&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_excedents_price&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_excedents_price&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_excedents_revenue&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_excedents_revenue&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;float32&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_excedents_plan&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;personal_excedents_plan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="s1">&#39;profile_id&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_costs</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SimulatedCommunity.add_cost_calculation_info">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.add_cost_calculation_info">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_cost_calculation_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">datetimes</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">datetime</span><span class="p">],</span><span class="n">method</span><span class="p">:</span><span class="n">CostCalculationBaseMethod</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds cost calculation method information for a list of datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        This method records the cost calculation method used for the specified datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            datetimes (List[datetime]): A list of datetime objects indicating the times for which the cost calculation method is recorded.</span>
+<span class="sd">            method (CostCalculationBaseMethod): An object representing the cost calculation method used during the simulation.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            None</span>
+<span class="sd">        </span>
+<span class="sd">        Notes:</span>
+<span class="sd">            - The method constructs a DataFrame for the cost calculation information and concatenates it with the existing data in the class, ensuring that duplicates are removed based on datetime.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rowsToAdd</span><span class="o">=</span><span class="p">[]</span>
+        <span class="n">methodStr</span><span class="o">=</span><span class="n">method</span><span class="o">.</span><span class="n">get_name</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">dateTime</span> <span class="ow">in</span> <span class="n">datetimes</span><span class="p">:</span>
+            <span class="n">row</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;datetime&#39;</span><span class="p">:</span> <span class="n">dateTime</span><span class="p">,</span>
+                <span class="s1">&#39;method&#39;</span><span class="p">:</span> <span class="n">methodStr</span><span class="p">,</span>
+            <span class="p">}</span>
+            <span class="n">rowsToAdd</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rowsToAdd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_data</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+            <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_data</span><span class="p">[</span><span class="s1">&#39;method&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;datetime&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationInfo</span><span class="p">,</span> <span class="n">new_data</span><span class="p">])</span>
+            <span class="n">combined_data</span> <span class="o">=</span> <span class="n">combined_data</span><span class="p">[</span><span class="o">~</span><span class="n">combined_data</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">duplicated</span><span class="p">(</span><span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_costCalculationInfo</span> <span class="o">=</span> <span class="n">combined_data</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SimulatedCommunity.get_summarized_simulated_profiles">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.get_summarized_simulated_profiles">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_summarized_simulated_profiles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span><span class="c1">#includes end includes start. if None then infinity. Retorna el df Filtrat i ordenat si sort=true</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves summarized simulated profiles for a specified date range.</span>
+<span class="sd">        </span>
+<span class="sd">        This method returns a DataFrame containing summarized profiles filtered by the given start and end datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.</span>
+<span class="sd">            end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: A DataFrame containing the filtered and sorted summarized simulated profiles.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_summarizedSimulatedProfiles</span><span class="o">.</span><span class="n">loc</span><span class="p">[:]</span>
+    
+        
+        <span class="k">return</span> <span class="n">filtered_df</span></div>
+
+    
+<div class="viewcode-block" id="SimulatedCommunity.get_community_pvs">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.get_community_pvs">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_community_pvs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves community PV data for a specified date range.</span>
+<span class="sd">        </span>
+<span class="sd">        This method returns a DataFrame containing community production records filtered by the given start and end datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.</span>
+<span class="sd">            end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: A DataFrame containing the filtered and sorted community production records.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_communityPv</span><span class="o">.</span><span class="n">loc</span><span class="p">[:]</span>
+        
+
+        <span class="k">return</span> <span class="n">filtered_df</span></div>
+
+    
+<div class="viewcode-block" id="SimulatedCommunity.get_energy_sharings">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.get_energy_sharings">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_energy_sharings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves energy sharing data for a specified date range.</span>
+<span class="sd">        </span>
+<span class="sd">        This method returns a DataFrame containing energy sharing records filtered by the given start and end datetimes.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.</span>
+<span class="sd">            end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: A DataFrame containing the filtered and sorted energy sharing records.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_energySharings</span><span class="o">.</span><span class="n">loc</span><span class="p">[:]</span>
+        
+
+        <span class="k">return</span> <span class="n">filtered_df</span></div>
+
+    
+<div class="viewcode-block" id="SimulatedCommunity.get_total_community_cost">
+<a class="viewcode-back" href="../../Simulation.html#Simulation.simulatedCommunity.SimulatedCommunity.get_total_community_cost">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_total_community_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">start</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">end</span><span class="p">:</span><span class="n">datetime</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calculates the total community cost for a specified date range.</span>
+<span class="sd">        </span>
+<span class="sd">        This method computes the total costs for the community by summing grid import and microgrid costs, and subtracting revenues from grid export, microgrid exports, and personal exceedents for the specified date range.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            start (datetime, optional): The start datetime for filtering. If None, no lower bound is applied.</span>
+<span class="sd">            end (datetime, optional): The end datetime for filtering. If None, no upper bound is applied.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The total community cost for the specified date range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">end</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="n">end</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">start</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered_df</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:]</span>
+        
+        <span class="n">columnsToSum</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;grid_import_cost&#39;</span><span class="p">,</span> <span class="s1">&#39;microgrid_cost&#39;</span><span class="p">]</span>
+        <span class="n">columnsToSubstract</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;grid_export_revenue&#39;</span><span class="p">,</span> <span class="s1">&#39;microgrid_revenue&#39;</span><span class="p">,</span><span class="s1">&#39;personal_excedents_revenue&#39;</span><span class="p">]</span>
+        <span class="n">rowResults</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="p">[</span><span class="n">columnsToSum</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_costs</span><span class="p">[</span><span class="n">columnsToSubstract</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">totalResult</span> <span class="o">=</span> <span class="n">rowResults</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">totalResult</span></div>
+</div>
+
+        
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

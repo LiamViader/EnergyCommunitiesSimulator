@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community.Sharing package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="EnergyPrice package" href="EnergyPrice.html" />
+    <link rel="prev" title="Community.Costs package" href="Community.Costs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="Community.html">Community package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Community.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Community.Costs.html">Community.Costs package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Community.Sharing package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Community.Sharing.quota">Community.Sharing.quota module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Community.Sharing.quota.Quota"><code class="docutils literal notranslate"><span class="pre">Quota</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Community.Sharing.quota.Quota.share"><code class="docutils literal notranslate"><span class="pre">Quota.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Community.Sharing.quotaConsumptionSharing">Community.Sharing.quotaConsumptionSharing module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing"><code class="docutils literal notranslate"><span class="pre">QuotaConsumptionSharing</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing.share"><code class="docutils literal notranslate"><span class="pre">QuotaConsumptionSharing.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Community.Sharing.sequentialSharing">Community.Sharing.sequentialSharing module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Community.Sharing.sequentialSharing.SequentialSharing"><code class="docutils literal notranslate"><span class="pre">SequentialSharing</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Community.Sharing.sequentialSharing.SequentialSharing.share"><code class="docutils literal notranslate"><span class="pre">SequentialSharing.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Community.Sharing.sharingMethod">Community.Sharing.sharingMethod module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod"><code class="docutils literal notranslate"><span class="pre">SharingMethod</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod.get_name"><code class="docutils literal notranslate"><span class="pre">SharingMethod.get_name()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod.share"><code class="docutils literal notranslate"><span class="pre">SharingMethod.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Community.Sharing.virtualNetBilling">Community.Sharing.virtualNetBilling module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Community.Sharing.virtualNetBilling.VirtualNetBilling"><code class="docutils literal notranslate"><span class="pre">VirtualNetBilling</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Community.Sharing.virtualNetBilling.VirtualNetBilling.share"><code class="docutils literal notranslate"><span class="pre">VirtualNetBilling.share()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Community.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Community.html#module-Community.community">Community.community module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.html">Profiles package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Community.html">Community package</a></li>
+      <li class="breadcrumb-item active">Community.Sharing package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Community.Sharing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="community-sharing-package">
+<h1>Community.Sharing package<a class="headerlink" href="#community-sharing-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Community.Sharing.quota">
+<span id="community-sharing-quota-module"></span><h2>Community.Sharing.quota module<a class="headerlink" href="#module-Community.Sharing.quota" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Community.Sharing.quota.Quota">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Community.Sharing.quota.</span></span><span class="sig-name descname"><span class="pre">Quota</span></span><a class="reference internal" href="_modules/Community/Sharing/quota.html#Quota"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.quota.Quota" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod" title="Community.Sharing.sharingMethod.SharingMethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharingMethod</span></code></a></p>
+<p>Implementation of the Quota energy sharing method.</p>
+<p>This method facilitates the sharing of energy among profiles based on fixed quotas assigned to each profile.
+It calculates how much energy each profile can import or export based on their individual production, load, and community shares.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>name (str): The name of the sharing method, set to “Quota”.</p>
+</dd>
+<dt>Methods:</dt><dd><p>share: Shares energy among profiles based on the Quota method.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.Sharing.quota.Quota.share">
+<span class="sig-name descname"><span class="pre">share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux" title="Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux"><span class="pre">ProfileEnergyDataAux</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharePersonalPvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communityPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux" title="Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><span class="pre">ProfileSharingsDataAux</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Community/Sharing/quota.html#Quota.share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.quota.Quota.share" title="Link to this definition"></a></dt>
+<dd><p>Shares energy among profiles based on the Quota method.</p>
+<p>It allocates a portion of community PV to each profile based on their share, 
+and calculates any residual load that needs to be imported or can be exported to the grid.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.
+sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations. This method does not support personal PV sharing.
+communityPv (float): The total energy produced by community PV resources.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid import/export values.</p>
+</dd>
+<dt>Notes:</dt><dd><p>This method can’t share personal pvs, because there is not any microtrading</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Community.Sharing.quotaConsumptionSharing">
+<span id="community-sharing-quotaconsumptionsharing-module"></span><h2>Community.Sharing.quotaConsumptionSharing module<a class="headerlink" href="#module-Community.Sharing.quotaConsumptionSharing" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Community.Sharing.quotaConsumptionSharing.</span></span><span class="sig-name descname"><span class="pre">QuotaConsumptionSharing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">reassignBasedOnCommunityShares</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Community/Sharing/quotaConsumptionSharing.html#QuotaConsumptionSharing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod" title="Community.Sharing.sharingMethod.SharingMethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharingMethod</span></code></a></p>
+<p>Implementation of the Quota/Consumption Sharing energy sharing method.</p>
+<p>This method first allocates energy to profiles based on quotas and then reassigns excess energy 
+to cover deficits among profiles. The method allows for two different approaches to redistribute 
+excess energy: based on community shares or based on the proportion of each household’s residual load.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>name (str): The name of the sharing method, set to “Quota/Consumption Sharing”.</p>
+<p>reassignBasedOnCommunityShares (bool): Determines the method for reallocating excess energy.</p>
+</dd>
+<dt>Methods:</dt><dd><p>share: Shares energy among profiles based on the Quota/Consumption Sharing method.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing.share">
+<span class="sig-name descname"><span class="pre">share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux" title="Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux"><span class="pre">ProfileEnergyDataAux</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharePersonalPvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communityPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux" title="Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><span class="pre">ProfileSharingsDataAux</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Community/Sharing/quotaConsumptionSharing.html#QuotaConsumptionSharing.share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.quotaConsumptionSharing.QuotaConsumptionSharing.share" title="Link to this definition"></a></dt>
+<dd><p>Shares energy among profiles based on the Quota/Consumption Sharing method.</p>
+<p>The method first allocates energy using the Quota sharing method, then redistributes excess energy 
+to cover any deficits in consumption.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.
+sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations. 
+communityPv (float): The total energy produced by community PV resources.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid import/export values.</p>
+</dd>
+<dt>Notes:</dt><dd><p>This method can’t share personal pvs, because there is not microtrading</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Community.Sharing.sequentialSharing">
+<span id="community-sharing-sequentialsharing-module"></span><h2>Community.Sharing.sequentialSharing module<a class="headerlink" href="#module-Community.Sharing.sequentialSharing" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Community.Sharing.sequentialSharing.SequentialSharing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Community.Sharing.sequentialSharing.</span></span><span class="sig-name descname"><span class="pre">SequentialSharing</span></span><a class="reference internal" href="_modules/Community/Sharing/sequentialSharing.html#SequentialSharing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.sequentialSharing.SequentialSharing" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod" title="Community.Sharing.sharingMethod.SharingMethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharingMethod</span></code></a></p>
+<p>Implementation of the Sequential Sharing energy sharing method.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>name (str): The name of the sharing method, set to “Sequential Sharing”.</p>
+</dd>
+<dt>Methods:</dt><dd><p>share: Shares energy among profiles based on the Sequential Sharing method.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.Sharing.sequentialSharing.SequentialSharing.share">
+<span class="sig-name descname"><span class="pre">share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux" title="Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux"><span class="pre">ProfileEnergyDataAux</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharePersonalPvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communityPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux" title="Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><span class="pre">ProfileSharingsDataAux</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Community/Sharing/sequentialSharing.html#SequentialSharing.share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.sequentialSharing.SequentialSharing.share" title="Link to this definition"></a></dt>
+<dd><p>Shares energy among profiles based on the Sequential Sharing method.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.
+sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations.
+communityPv (float): The total energy produced by community PV resources.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid and microgrid import/export values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Community.Sharing.sharingMethod">
+<span id="community-sharing-sharingmethod-module"></span><h2>Community.Sharing.sharingMethod module<a class="headerlink" href="#module-Community.Sharing.sharingMethod" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Community.Sharing.sharingMethod.SharingMethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Community.Sharing.sharingMethod.</span></span><span class="sig-name descname"><span class="pre">SharingMethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Community/Sharing/sharingMethod.html#SharingMethod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.sharingMethod.SharingMethod" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for implementing energy sharing methods within a community.</p>
+<p>This class serves as a blueprint for various methods that can be used to share
+energy profiles among users or systems in a community. It defines the necessary
+structure and interface that all sharing methods must adhere to.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>_name (str): The name of the sharing method.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>share(profiles: List[ProfileEnergyDataAux], sharePersonalPvs: bool, communityPv: float) -&gt; List[ProfileSharingsDataAux]:</dt><dd><p>Abstract method for sharing energy profiles based on the specified criteria.</p>
+</dd>
+<dt>get_name() -&gt; str:</dt><dd><p>Returns the name of the sharing method.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.Sharing.sharingMethod.SharingMethod.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/Community/Sharing/sharingMethod.html#SharingMethod.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.sharingMethod.SharingMethod.get_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the name of the sharing method.</p>
+<p>This method allows users to identify which sharing method is being used.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the sharing method.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.Sharing.sharingMethod.SharingMethod.share">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux" title="Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux"><span class="pre">ProfileEnergyDataAux</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharePersonalPvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communityPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux" title="Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><span class="pre">ProfileSharingsDataAux</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Community/Sharing/sharingMethod.html#SharingMethod.share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.sharingMethod.SharingMethod.share" title="Link to this definition"></a></dt>
+<dd><p>Abstract method to implement the logic for sharing energy profiles within a community.</p>
+<p>This method must be implemented by subclasses to define how energy profiles are shared
+based on the specified criteria, including whether to share personal production
+system outputs and how much community production is available for distribution.</p>
+<dl>
+<dt>Args:</dt><dd><dl class="simple">
+<dt>profiles (List[ProfileEnergyDataAux]): A list of energy profiles representing the consumption</dt><dd><p>and production patterns of different community members.</p>
+</dd>
+<dt>sharePersonalPvs (bool): Indicates whether the outputs from personal production systems should be included</dt><dd><p>in the sharing process.</p>
+</dd>
+</dl>
+<p>communityPv (float): The total amount of community production energy available for sharing among users.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[ProfileSharingsDataAux]: A users and their respective allocateds energys that have been allocated based on the 
+sharing method’s logic, reflecting the new distribution of energy among community members.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Community.Sharing.virtualNetBilling">
+<span id="community-sharing-virtualnetbilling-module"></span><h2>Community.Sharing.virtualNetBilling module<a class="headerlink" href="#module-Community.Sharing.virtualNetBilling" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Community.Sharing.virtualNetBilling.VirtualNetBilling">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Community.Sharing.virtualNetBilling.</span></span><span class="sig-name descname"><span class="pre">VirtualNetBilling</span></span><a class="reference internal" href="_modules/Community/Sharing/virtualNetBilling.html#VirtualNetBilling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.virtualNetBilling.VirtualNetBilling" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#Community.Sharing.sharingMethod.SharingMethod" title="Community.Sharing.sharingMethod.SharingMethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharingMethod</span></code></a></p>
+<p>Implementation of the Virtual Net Billing energy sharing method.</p>
+<p>This method calculates the energy sharing among profiles based on a virtual net billing system.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>name (str): The name of the sharing method, set to “Virtual Net Billing”.</p>
+</dd>
+<dt>Methods:</dt><dd><p>share: Shares energy among profiles based on the Virtual Net Billing method.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Community.Sharing.virtualNetBilling.VirtualNetBilling.share">
+<span class="sig-name descname"><span class="pre">share</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux" title="Profiles.utils.profileEnergyDataAux.ProfileEnergyDataAux"><span class="pre">ProfileEnergyDataAux</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sharePersonalPvs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">communityPv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="Profiles.utils.html#Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux" title="Profiles.utils.profileSharingsDataAux.ProfileSharingsDataAux"><span class="pre">ProfileSharingsDataAux</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/Community/Sharing/virtualNetBilling.html#VirtualNetBilling.share"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Community.Sharing.virtualNetBilling.VirtualNetBilling.share" title="Link to this definition"></a></dt>
+<dd><p>Shares energy among profiles based on the Virtual Net Billing method.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production and community share information.
+sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations.
+communityPv (float): The total energy produced by community PV resources.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid and microgrid import/export values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Community.Costs.html" class="btn btn-neutral float-left" title="Community.Costs package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="EnergyPrice.html" class="btn btn-neutral float-right" title="EnergyPrice package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

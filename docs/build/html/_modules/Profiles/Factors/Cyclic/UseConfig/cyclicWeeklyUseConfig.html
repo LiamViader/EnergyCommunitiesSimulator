@@ -1,0 +1,238 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span><span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">utils.minuteInterval</span> <span class="kn">import</span> <span class="n">MinuteInterval</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.Cyclic.cyclicModel</span> <span class="kn">import</span> <span class="n">CyclicModel</span>
+<span class="kn">from</span> <span class="nn">Simulation.simulationConfiguration</span> <span class="kn">import</span> <span class="n">SimulationConfig</span>
+<span class="kn">from</span> <span class="nn">Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig</span> <span class="kn">import</span> <span class="n">CyclicBaseUseConfig</span>
+
+
+<div class="viewcode-block" id="CyclicWeeklyUseConfig">
+<a class="viewcode-back" href="../../../../../Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig.CyclicWeeklyUseConfig">[docs]</a>
+<span class="k">class</span> <span class="nc">CyclicWeeklyUseConfig</span><span class="p">(</span><span class="n">CyclicBaseUseConfig</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A configuration class that simulates the weekly usage pattern of a cyclic energy-consuming model.</span>
+
+<span class="sd">    This class is designed to simulate how often a cyclic device (e.g., a washing machine or dishwasher) is used </span>
+<span class="sd">    on a weekly basis, based on defined time intervals for each potential usage period, and the amount of times the cyclic device is used per week.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _timesWeekly (int): The number of times the device is used per week.</span>
+<span class="sd">        </span>
+<span class="sd">        _intervals (np.ndarray): An array of `MinuteInterval` objects representing the possible usage periods.</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        get_random_interval() -&gt; MinuteInterval:</span>
+<span class="sd">            Returns a random interval from the list of available intervals.</span>
+<span class="sd">        use(cyclicModel: CyclicModel, simulationConfig: SimulationConfig) -&gt; Tuple[np.ndarray, np.ndarray]:</span>
+<span class="sd">            Simulates the energy usage of the cyclic model based on weekly configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">timesWeekly</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span><span class="n">intervals</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">MinuteInterval</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the CyclicWeeklyUseConfig instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            timesWeekly (int): The number of times the device is used per week.</span>
+<span class="sd">            intervals (List[MinuteInterval]): A list of `MinuteInterval` objects representing the potential usage periods.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timesWeekly</span><span class="o">=</span><span class="n">timesWeekly</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="CyclicWeeklyUseConfig.get_random_interval">
+<a class="viewcode-back" href="../../../../../Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig.CyclicWeeklyUseConfig.get_random_interval">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_random_interval</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">MinuteInterval</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a random interval from the list of available intervals.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            MinuteInterval: A randomly selected time interval.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span><span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span></div>
+
+    
+<div class="viewcode-block" id="CyclicWeeklyUseConfig.use">
+<a class="viewcode-back" href="../../../../../Profiles.Factors.Cyclic.UseConfig.html#Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig.CyclicWeeklyUseConfig.use">[docs]</a>
+    <span class="k">def</span> <span class="nf">use</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cyclicModel</span><span class="p">:</span><span class="n">CyclicModel</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Tuple</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Simulates the energy usage of the cyclic model based on the weekly usage pattern.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            cyclicModel (CyclicModel): The cyclic model representing the device being simulated.</span>
+<span class="sd">            simulationConfig (SimulationConfig): Configuration settings for the simulation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[np.ndarray, np.ndarray]: A tuple containing two arrays:</span>
+<span class="sd">                - The first array represents the energy usage for the current day.</span>
+<span class="sd">                - The second array contains any overflow energy that spills into the next day.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">load</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">())</span>
+        <span class="n">overflow</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="n">daylyAverage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_timesWeekly</span><span class="o">/</span><span class="mi">7</span>
+        <span class="c1">#es podria utilitzar distribucio poisson, pero penso que és més adequat que si la mitja és major que 1 la posi una vegada com a minim, ja que en el cas de posar el rentaplats si algu el posa 7/7 dies és més probable que el posi cada dia, que que el posi un dia 2 cops, un altre 1, un altre 0...</span>
+        <span class="n">intervals</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">while</span> <span class="n">daylyAverage</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
+                <span class="n">randomIndexInterval</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">selectedInterval</span><span class="o">=</span><span class="n">intervals</span><span class="p">[</span><span class="n">randomIndexInterval</span><span class="p">]</span>
+                <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span><span class="n">randomIndexInterval</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selectedInterval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_interval</span><span class="p">()</span>
+            <span class="n">selectedStartWashingInMinutes</span><span class="o">=</span><span class="n">selectedInterval</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+            <span class="n">overflow</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_distribute_cycle_load</span><span class="p">(</span><span class="n">load</span><span class="p">,</span><span class="n">overflow</span><span class="p">,</span><span class="n">selectedStartWashingInMinutes</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">,</span><span class="n">cyclicModel</span><span class="p">)</span>
+            <span class="n">daylyAverage</span><span class="o">-=</span><span class="mi">1</span>
+        <span class="n">rand_float</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">rand_float</span><span class="o">&lt;</span><span class="n">daylyAverage</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
+                <span class="n">randomIndexInterval</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">selectedInterval</span><span class="o">=</span><span class="n">intervals</span><span class="p">[</span><span class="n">randomIndexInterval</span><span class="p">]</span>
+                <span class="n">intervals</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">intervals</span><span class="p">,</span><span class="n">randomIndexInterval</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selectedInterval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_random_interval</span><span class="p">()</span>
+            <span class="n">selectedStartWashingInMinutes</span><span class="o">=</span><span class="n">selectedInterval</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+            <span class="n">overflow</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_distribute_cycle_load</span><span class="p">(</span><span class="n">load</span><span class="p">,</span><span class="n">overflow</span><span class="p">,</span><span class="n">selectedStartWashingInMinutes</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">,</span><span class="n">cyclicModel</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">load</span><span class="p">,</span> <span class="n">overflow</span></div>
+
+
+
+    <span class="k">def</span> <span class="nf">_distribute_cycle_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">load</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">overflow</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span><span class="n">selectedStartWashingInMinutes</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span><span class="n">simulationConfig</span><span class="p">:</span><span class="n">SimulationConfig</span><span class="p">,</span><span class="n">cyclicModel</span><span class="p">:</span><span class="n">CyclicModel</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Distributes the energy load of a usage cycle across the simulation day.</span>
+
+<span class="sd">        This method ensures that the energy consumption of a cycle is correctly applied within the current day. </span>
+<span class="sd">        If the cycle extends beyond the current day (i.e., overflows), the excess energy is stored in the `overflow` array.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            load (np.ndarray): The array where energy consumption for the current day is stored.</span>
+<span class="sd">            overflow (np.ndarray): The array where any excess (overflow) energy is stored for the next day.</span>
+<span class="sd">            selectedStartWashingInMinutes (float): The starting time of the usage cycle in minutes.</span>
+<span class="sd">            simulationConfig (SimulationConfig): The simulation configuration that provides details like time granularity.</span>
+<span class="sd">            cyclicModel (CyclicModel): The cyclic model whose energy usage is being simulated.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            np.ndarray: Updated overflow array with any excess energy that exceeds the current day&#39;s time frame.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timeRemaining</span><span class="o">=</span><span class="n">cyclicModel</span><span class="o">.</span><span class="n">get_cycle_minutes</span><span class="p">()</span>
+        <span class="k">while</span><span class="p">(</span><span class="n">timeRemaining</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">):</span>
+            <span class="n">timeElapsed</span><span class="o">=</span><span class="n">cyclicModel</span><span class="o">.</span><span class="n">get_cycle_minutes</span><span class="p">()</span><span class="o">-</span><span class="n">timeRemaining</span>
+            <span class="n">currentTimestampMinutes</span><span class="o">=</span><span class="n">selectedStartWashingInMinutes</span><span class="o">+</span><span class="n">timeElapsed</span>
+            <span class="n">indicesPerMinute</span><span class="o">=</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()</span><span class="o">/</span><span class="mi">1440</span>
+            <span class="n">currentIndex</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">currentTimestampMinutes</span><span class="o">*</span><span class="n">indicesPerMinute</span><span class="p">)</span>
+            <span class="n">nextIndex</span><span class="o">=</span><span class="n">currentIndex</span><span class="o">+</span><span class="mi">1</span>
+            <span class="n">nextIndexTimestampMinutes</span><span class="o">=</span><span class="n">nextIndex</span><span class="o">/</span><span class="n">indicesPerMinute</span>
+            <span class="n">hoursElapsedThisIteration</span><span class="o">=</span><span class="nb">min</span><span class="p">(((</span><span class="n">nextIndexTimestampMinutes</span><span class="o">-</span><span class="n">currentTimestampMinutes</span><span class="p">)</span><span class="o">/</span><span class="mi">60</span><span class="p">),</span><span class="n">timeRemaining</span><span class="o">/</span><span class="mi">60</span><span class="p">)</span>
+            <span class="n">indexLoad</span><span class="o">=</span><span class="n">cyclicModel</span><span class="o">.</span><span class="n">get_cycle_power</span><span class="p">()</span><span class="o">*</span><span class="n">hoursElapsedThisIteration</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">currentIndex</span><span class="o">&lt;</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()):</span><span class="c1">#si hi cap al dia actual</span>
+                <span class="n">load</span><span class="p">[</span><span class="n">currentIndex</span><span class="p">]</span><span class="o">+=</span><span class="n">indexLoad</span>
+            <span class="k">else</span><span class="p">:</span><span class="c1">#sino al overflow</span>
+                <span class="n">transformedCurrentIndex</span><span class="o">=</span><span class="n">currentIndex</span><span class="o">-</span><span class="n">simulationConfig</span><span class="o">.</span><span class="n">num_indices</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">transformedCurrentIndex</span><span class="o">&lt;</span><span class="nb">len</span><span class="p">(</span><span class="n">overflow</span><span class="p">):</span>
+                    <span class="n">overflow</span><span class="p">[</span><span class="n">transformedCurrentIndex</span><span class="p">]</span><span class="o">+=</span><span class="n">indexLoad</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_overflow</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">transformedCurrentIndex</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">overflow</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+                    <span class="n">new_overflow</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">overflow</span><span class="p">)]</span> <span class="o">=</span> <span class="n">overflow</span>
+                    <span class="n">overflow</span><span class="o">=</span><span class="n">new_overflow</span>
+                    <span class="n">overflow</span><span class="p">[</span><span class="n">transformedCurrentIndex</span><span class="p">]</span><span class="o">+=</span><span class="n">indexLoad</span>
+            <span class="n">timeRemaining</span><span class="o">=</span><span class="n">timeRemaining</span><span class="o">-</span><span class="n">hoursElapsedThisIteration</span><span class="o">*</span><span class="mi">60</span>
+        <span class="k">return</span> <span class="n">overflow</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

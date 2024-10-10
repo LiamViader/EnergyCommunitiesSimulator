@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Factors.Climatitzation package" href="Profiles.Factors.Climatitzation.html" />
+    <link rel="prev" title="Profiles.Battery package" href="Profiles.Battery.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Profiles.html">Profiles package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Profiles.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Profiles.Factors package</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Cyclic.html">Profiles.Factors.Cyclic package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.ElectricCar.html">Profiles.Factors.ElectricCar package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Lightning.html">Profiles.Factors.Lightning package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="#module-Profiles.Factors.baseFactor">Profiles.Factors.baseFactor module</a><ul>
+<li class="toctree-l6"><a class="reference internal" href="#Profiles.Factors.baseFactor.BaseFactor"><code class="docutils literal notranslate"><span class="pre">BaseFactor</span></code></a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Factors.baseFactor.BaseFactor.get_factor_type"><code class="docutils literal notranslate"><span class="pre">BaseFactor.get_factor_type()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Factors.baseFactor.BaseFactor.get_id"><code class="docutils literal notranslate"><span class="pre">BaseFactor.get_id()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Factors.baseFactor.BaseFactor.get_name"><code class="docutils literal notranslate"><span class="pre">BaseFactor.get_name()</span></code></a></li>
+<li class="toctree-l7"><a class="reference internal" href="#Profiles.Factors.baseFactor.BaseFactor.simulate"><code class="docutils literal notranslate"><span class="pre">BaseFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.profile">Profiles.profile module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.html">Profiles package</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.Factors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-factors-package">
+<h1>Profiles.Factors package<a class="headerlink" href="#profiles-factors-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Climatitzation.Components.html">Profiles.Factors.Climatitzation.Components package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.Components.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.Components.html#module-Profiles.Factors.Climatitzation.Components.climatitzationComponent">Profiles.Factors.Climatitzation.Components.climatitzationComponent module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.Components.html#module-Profiles.Factors.Climatitzation.Components.cooling">Profiles.Factors.Climatitzation.Components.cooling module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.Components.html#module-Profiles.Factors.Climatitzation.Components.heating">Profiles.Factors.Climatitzation.Components.heating module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.climatitzationFactor">Profiles.Factors.Climatitzation.climatitzationFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.climatitzationFactor.ClimatitzationFactor"><code class="docutils literal notranslate"><span class="pre">ClimatitzationFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.climatitzationFactor.ClimatitzationFactor.simulate"><code class="docutils literal notranslate"><span class="pre">ClimatitzationFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.temperature">Profiles.Factors.Climatitzation.temperature module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature"><code class="docutils literal notranslate"><span class="pre">Temperature</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.change_date"><code class="docutils literal notranslate"><span class="pre">Temperature.change_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.get_temperature"><code class="docutils literal notranslate"><span class="pre">Temperature.get_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.simulate_temperature"><code class="docutils literal notranslate"><span class="pre">Temperature.simulate_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.temperature.Temperature.termic_response"><code class="docutils literal notranslate"><span class="pre">Temperature.termic_response()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#module-Profiles.Factors.Climatitzation.thermostat">Profiles.Factors.Climatitzation.thermostat module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat"><code class="docutils literal notranslate"><span class="pre">Thermostat</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat.get_current_temperature"><code class="docutils literal notranslate"><span class="pre">Thermostat.get_current_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat.get_ideal_temperature"><code class="docutils literal notranslate"><span class="pre">Thermostat.get_ideal_temperature()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Climatitzation.html#Profiles.Factors.Climatitzation.thermostat.Thermostat.set_current_temperature"><code class="docutils literal notranslate"><span class="pre">Thermostat.set_current_temperature()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Continuos.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Continuos.html#module-Profiles.Factors.Continuos.continuosCyclicFactor">Profiles.Factors.Continuos.continuosCyclicFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicFactor.ContinuosCyclicFactor"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicFactor.ContinuosCyclicFactor.simulate"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Continuos.html#module-Profiles.Factors.Continuos.continuosCyclicModel">Profiles.Factors.Continuos.continuosCyclicModel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_active_power"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicModel.get_active_power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_cycle_duration"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicModel.get_cycle_duration()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_idle_power"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicModel.get_idle_power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_name"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicModel.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_time_between_next_cycle"><code class="docutils literal notranslate"><span class="pre">ContinuosCyclicModel.get_time_between_next_cycle()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Continuos.html#module-Profiles.Factors.Continuos.continuosFactor">Profiles.Factors.Continuos.continuosFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosFactor.ContinuosFactor"><code class="docutils literal notranslate"><span class="pre">ContinuosFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosFactor.ContinuosFactor.simulate"><code class="docutils literal notranslate"><span class="pre">ContinuosFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.Cyclic.html">Profiles.Factors.Cyclic package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html">Profiles.Factors.Cyclic.UseConfig package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#module-Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig">Profiles.Factors.Cyclic.UseConfig.cyclicBaseUseConfig module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#module-Profiles.Factors.Cyclic.UseConfig.cyclicDaylyUseConfig">Profiles.Factors.Cyclic.UseConfig.cyclicDaylyUseConfig module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.UseConfig.html#module-Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig">Profiles.Factors.Cyclic.UseConfig.cyclicWeeklyUseConfig module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.html#module-Profiles.Factors.Cyclic.cyclicFactor">Profiles.Factors.Cyclic.cyclicFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor"><code class="docutils literal notranslate"><span class="pre">CyclicFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.changeUseConfig"><code class="docutils literal notranslate"><span class="pre">CyclicFactor.changeUseConfig()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicFactor.CyclicFactor.simulate"><code class="docutils literal notranslate"><span class="pre">CyclicFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Cyclic.html#module-Profiles.Factors.Cyclic.cyclicModel">Profiles.Factors.Cyclic.cyclicModel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel"><code class="docutils literal notranslate"><span class="pre">CyclicModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_minutes"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_cycle_minutes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_cycle_power"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_cycle_power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_name"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Cyclic.html#Profiles.Factors.Cyclic.cyclicModel.CyclicModel.get_stand_by_power"><code class="docutils literal notranslate"><span class="pre">CyclicModel.get_stand_by_power()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.ElectricCar.html">Profiles.Factors.ElectricCar package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html">Profiles.Factors.ElectricCar.UseConfig package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#module-Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig">Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#module-Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig">Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#module-Profiles.Factors.ElectricCar.electricCarFactor">Profiles.Factors.ElectricCar.electricCarFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor"><code class="docutils literal notranslate"><span class="pre">ElectricCarFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor.simulate"><code class="docutils literal notranslate"><span class="pre">ElectricCarFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#module-Profiles.Factors.ElectricCar.electricCarModel">Profiles.Factors.ElectricCar.electricCarModel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_battery_capacity"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_battery_capacity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_efficiency"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_charge_efficiency()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_power"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_charge_power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_consumption_per_km"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_consumption_per_km()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.html#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_name"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.Lightning.html">Profiles.Factors.Lightning package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Lightning.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Lightning.html#module-Profiles.Factors.Lightning.lightningFactor">Profiles.Factors.Lightning.lightningFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Lightning.html#Profiles.Factors.Lightning.lightningFactor.LightningFactor"><code class="docutils literal notranslate"><span class="pre">LightningFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#Profiles.Factors.Lightning.lightningFactor.LightningFactor.simulate"><code class="docutils literal notranslate"><span class="pre">LightningFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.Lightning.html#module-Profiles.Factors.Lightning.lightningModel">Profiles.Factors.Lightning.lightningModel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.Lightning.html#Profiles.Factors.Lightning.lightningModel.LightningModel"><code class="docutils literal notranslate"><span class="pre">LightningModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#Profiles.Factors.Lightning.lightningModel.LightningModel.get_max_power"><code class="docutils literal notranslate"><span class="pre">LightningModel.get_max_power()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#Profiles.Factors.Lightning.lightningModel.LightningModel.get_name"><code class="docutils literal notranslate"><span class="pre">LightningModel.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.Lightning.html#Profiles.Factors.Lightning.lightningModel.LightningModel.get_power_per_light"><code class="docutils literal notranslate"><span class="pre">LightningModel.get_power_per_light()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#module-Profiles.Factors.SolarPanel.solarIrradiation">Profiles.Factors.SolarPanel.solarIrradiation module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation"><code class="docutils literal notranslate"><span class="pre">SolarIrradiation</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation.change_date"><code class="docutils literal notranslate"><span class="pre">SolarIrradiation.change_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation.get_irradiation"><code class="docutils literal notranslate"><span class="pre">SolarIrradiation.get_irradiation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarIrradiation.SolarIrradiation.simulate_irradiation"><code class="docutils literal notranslate"><span class="pre">SolarIrradiation.simulate_irradiation()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#module-Profiles.Factors.SolarPanel.solarPV">Profiles.Factors.SolarPanel.solarPV module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarPV.SolarPV"><code class="docutils literal notranslate"><span class="pre">SolarPV</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarPV.SolarPV.simulate"><code class="docutils literal notranslate"><span class="pre">SolarPV.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#module-Profiles.Factors.SolarPanel.solarPanel">Profiles.Factors.SolarPanel.solarPanel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarPanel.SolarPanel"><code class="docutils literal notranslate"><span class="pre">SolarPanel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.SolarPanel.html#Profiles.Factors.SolarPanel.solarPanel.SolarPanel.simulate"><code class="docutils literal notranslate"><span class="pre">SolarPanel.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#module-Profiles.Factors.WindTurbine.wind">Profiles.Factors.WindTurbine.wind module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.wind.Wind"><code class="docutils literal notranslate"><span class="pre">Wind</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.wind.Wind.change_date"><code class="docutils literal notranslate"><span class="pre">Wind.change_date()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.wind.Wind.get_season"><code class="docutils literal notranslate"><span class="pre">Wind.get_season()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.wind.Wind.get_wind"><code class="docutils literal notranslate"><span class="pre">Wind.get_wind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.wind.Wind.simulate_wind"><code class="docutils literal notranslate"><span class="pre">Wind.simulate_wind()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#module-Profiles.Factors.WindTurbine.windTurbineFactor">Profiles.Factors.WindTurbine.windTurbineFactor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.windTurbineFactor.WindTurbineFactor"><code class="docutils literal notranslate"><span class="pre">WindTurbineFactor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.windTurbineFactor.WindTurbineFactor.simulate"><code class="docutils literal notranslate"><span class="pre">WindTurbineFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#module-Profiles.Factors.WindTurbine.windTurbineModel">Profiles.Factors.WindTurbine.windTurbineModel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.windTurbineModel.WindTurbineModel"><code class="docutils literal notranslate"><span class="pre">WindTurbineModel</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.windTurbineModel.WindTurbineModel.get_name"><code class="docutils literal notranslate"><span class="pre">WindTurbineModel.get_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.WindTurbine.html#Profiles.Factors.WindTurbine.windTurbineModel.WindTurbineModel.get_power"><code class="docutils literal notranslate"><span class="pre">WindTurbineModel.get_power()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.Factors.baseFactor">
+<span id="profiles-factors-basefactor-module"></span><h2>Profiles.Factors.baseFactor module<a class="headerlink" href="#module-Profiles.Factors.baseFactor" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.baseFactor.BaseFactor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.baseFactor.</span></span><span class="sig-name descname"><span class="pre">BaseFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">factorType</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="utils.html#utils.enums.FactorType" title="utils.enums.FactorType"><span class="pre">FactorType</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/baseFactor.html#BaseFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.baseFactor.BaseFactor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Abstract base class for defining factors that can simulate energy consumption or production.</p>
+<p>This class serves as a blueprint for specific factor implementations, including 
+their attributes and methods. Each factor has a unique identifier, a name, 
+and a type indicating whether it is a consumer, producer, or another category.
+Each derived specific factor must implement the method simulate()</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_idCounter (int): Static counter to generate unique IDs for each factor.</p>
+<p>_id (int): Unique identifier for the factor instance.</p>
+<p>_name (str): Name of the factor.</p>
+<p>_factorType (FactorType): Type of the factor, indicating its role (e.g., FactorType.Consumer, FactorType.Producer,…).</p>
+</dd>
+<dt>Methods:</dt><dd><p>simulate(simulationConfig: SimulationConfig) -&gt; np.ndarray: Abstract method to simulate energy over a day.
+get_name() -&gt; str: Returns the name of the factor.
+get_factor_type() -&gt; FactorType: Returns the type of the factor.
+get_id() -&gt; int: Returns the unique identifier of the factor.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.baseFactor.BaseFactor.get_factor_type">
+<span class="sig-name descname"><span class="pre">get_factor_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="utils.html#utils.enums.FactorType" title="utils.enums.FactorType"><span class="pre">FactorType</span></a></span></span><a class="reference internal" href="_modules/Profiles/Factors/baseFactor.html#BaseFactor.get_factor_type"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.baseFactor.BaseFactor.get_factor_type" title="Link to this definition"></a></dt>
+<dd><p>Gets the type of the factor.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>FactorType: The type of the factor (e.g., consumer, producer).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.baseFactor.BaseFactor.get_id">
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/baseFactor.html#BaseFactor.get_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.baseFactor.BaseFactor.get_id" title="Link to this definition"></a></dt>
+<dd><p>Gets the unique identifier of the factor.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>int: The unique identifier of the factor instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.baseFactor.BaseFactor.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/baseFactor.html#BaseFactor.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.baseFactor.BaseFactor.get_name" title="Link to this definition"></a></dt>
+<dd><p>Gets the name of the factor.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the factor.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.baseFactor.BaseFactor.simulate">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/baseFactor.html#BaseFactor.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.baseFactor.BaseFactor.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulates the energy consumption or production over a day.</p>
+<p>This method must be implemented by subclasses. It returns an array representing 
+the energy consumed or produced over time during a day, measured in kWh.
+Each index of the array represents energy consumed or produced on the time elapsed based on granularity.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): Configuration settings for the simulation.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.ndarray: An array where the first series represents the energy over time 
+(in kWh) Each index of the array represents energy consumed or produced on the time elapsed based on granularity. The full array represents a day</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.Battery.html" class="btn btn-neutral float-left" title="Profiles.Battery package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Factors.Climatitzation.html" class="btn btn-neutral float-right" title="Profiles.Factors.Climatitzation package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

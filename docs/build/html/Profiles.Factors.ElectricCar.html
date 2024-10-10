@@ -1,0 +1,324 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.ElectricCar package &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Profiles.Factors.ElectricCar.UseConfig package" href="Profiles.Factors.ElectricCar.UseConfig.html" />
+    <link rel="prev" title="Profiles.Factors.Cyclic.UseConfig package" href="Profiles.Factors.Cyclic.UseConfig.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Simulador</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Community.html">Community package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="EnergyPrice.html">EnergyPrice package</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="Profiles.html">Profiles package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="Profiles.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Battery.html">Profiles.Battery package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="Profiles.Factors.html">Profiles.Factors package</a><ul class="current">
+<li class="toctree-l5 current"><a class="reference internal" href="Profiles.Factors.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Climatitzation.html">Profiles.Factors.Climatitzation package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Continuos.html">Profiles.Factors.Continuos package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Cyclic.html">Profiles.Factors.Cyclic package</a></li>
+<li class="toctree-l6 current"><a class="current reference internal" href="#">Profiles.Factors.ElectricCar package</a><ul>
+<li class="toctree-l7"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html">Profiles.Factors.ElectricCar.UseConfig package</a></li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l7"><a class="reference internal" href="#module-Profiles.Factors.ElectricCar.electricCarFactor">Profiles.Factors.ElectricCar.electricCarFactor module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor"><code class="docutils literal notranslate"><span class="pre">ElectricCarFactor</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor.simulate"><code class="docutils literal notranslate"><span class="pre">ElectricCarFactor.simulate()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l7"><a class="reference internal" href="#module-Profiles.Factors.ElectricCar.electricCarModel">Profiles.Factors.ElectricCar.electricCarModel module</a><ul>
+<li class="toctree-l8"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel</span></code></a><ul>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_battery_capacity"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_battery_capacity()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_efficiency"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_charge_efficiency()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_power"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_charge_power()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_consumption_per_km"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_consumption_per_km()</span></code></a></li>
+<li class="toctree-l9"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_name"><code class="docutils literal notranslate"><span class="pre">ElectricCarModel.get_name()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.Lightning.html">Profiles.Factors.Lightning package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.SolarPanel.html">Profiles.Factors.SolarPanel package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="Profiles.Factors.WindTurbine.html">Profiles.Factors.WindTurbine package</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#submodules">Submodules</a></li>
+<li class="toctree-l5"><a class="reference internal" href="Profiles.Factors.html#module-Profiles.Factors.baseFactor">Profiles.Factors.baseFactor module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.utils.html">Profiles.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.examples">Profiles.examples module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.html#module-Profiles.profile">Profiles.profile module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Simulation.html">Simulation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mainCommunityExample.html">mainCommunityExample module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">Simulador</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.html">Profiles package</a></li>
+          <li class="breadcrumb-item"><a href="Profiles.Factors.html">Profiles.Factors package</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.ElectricCar package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Profiles.Factors.ElectricCar.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="profiles-factors-electriccar-package">
+<h1>Profiles.Factors.ElectricCar package<a class="headerlink" href="#profiles-factors-electriccar-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html">Profiles.Factors.ElectricCar.UseConfig package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#module-Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig">Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig.CarBaseUseConfig"><code class="docutils literal notranslate"><span class="pre">CarBaseUseConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig.CarBaseUseConfig.get_charge_usage"><code class="docutils literal notranslate"><span class="pre">CarBaseUseConfig.get_charge_usage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig.CarBaseUseConfig.get_usage_at_day"><code class="docutils literal notranslate"><span class="pre">CarBaseUseConfig.get_usage_at_day()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#module-Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig">Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig.CarOnNeedUseConfig"><code class="docutils literal notranslate"><span class="pre">CarOnNeedUseConfig</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#Profiles.Factors.ElectricCar.UseConfig.carOnNeedUseConfig.CarOnNeedUseConfig.get_charge_usage"><code class="docutils literal notranslate"><span class="pre">CarOnNeedUseConfig.get_charge_usage()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-Profiles.Factors.ElectricCar.electricCarFactor">
+<span id="profiles-factors-electriccar-electriccarfactor-module"></span><h2>Profiles.Factors.ElectricCar.electricCarFactor module<a class="headerlink" href="#module-Profiles.Factors.ElectricCar.electricCarFactor" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.ElectricCar.electricCarFactor.</span></span><span class="sig-name descname"><span class="pre">ElectricCarFactor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel" title="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel"><span class="pre">ElectricCarModel</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">useConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Profiles.Factors.ElectricCar.UseConfig.html#Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig.CarBaseUseConfig" title="Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig.CarBaseUseConfig"><span class="pre">CarBaseUseConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">startChargeLevel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarFactor.html#ElectricCarFactor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="Profiles.Factors.html#Profiles.Factors.baseFactor.BaseFactor" title="Profiles.Factors.baseFactor.BaseFactor"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseFactor</span></code></a></p>
+<p>A simulation factor that models the charging and discharging behavior of an electric car.</p>
+<p>This class simulates the energy usage of an electric car based on its model, usage patterns, and charging behavior.
+It accounts the recharging process based on usage configuration.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_model (ElectricCarModel): The model of the electric car being simulated.</p>
+<p>_useConfig (CarBaseUseConfig): Configuration detailing the car’s usage and charging behavior.</p>
+<p>_currentBatteryLevel (float): The current battery level of the car in kWh.</p>
+<p>_overflow (np.ndarray): Tracks the overflow of energy usage when charging spills over into the next day.</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>simulate(simulationConfig):</dt><dd><p>Simulates the energy usage of the electric car and the charging consumption during the simulation day.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor.simulate">
+<span class="sig-name descname"><span class="pre">simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">simulationConfig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="Simulation.html#Simulation.simulationConfiguration.SimulationConfig" title="Simulation.simulationConfiguration.SimulationConfig"><span class="pre">SimulationConfig</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarFactor.html#ElectricCarFactor.simulate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarFactor.ElectricCarFactor.simulate" title="Link to this definition"></a></dt>
+<dd><p>Simulates the energy usage of the electric car recharging over the simulation period.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>simulationConfig (SimulationConfig): Configuration of the current simulation.</p>
+</dd>
+<dt>Returns:</dt><dd><p>np.ndarray: Array representing the energy consumption during each simulation time step of the day.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-Profiles.Factors.ElectricCar.electricCarModel">
+<span id="profiles-factors-electriccar-electriccarmodel-module"></span><h2>Profiles.Factors.ElectricCar.electricCarModel module<a class="headerlink" href="#module-Profiles.Factors.ElectricCar.electricCarModel" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Profiles.Factors.ElectricCar.electricCarModel.</span></span><span class="sig-name descname"><span class="pre">ElectricCarModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chargePower</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">consumptionPerKm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batteryCapacity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chargeEfficiency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarModel.html#ElectricCarModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A model representing the characteristics and energy consumption of an electric car.</p>
+<p>This class encapsulates the properties of an electric vehicle in terms of its energy consumption per kilometer,
+charging power, battery capacity, and charging efficiency. It provides methods to retrieve these values.</p>
+<dl>
+<dt>Attributes:</dt><dd><p>_name (str): The name of the electric car model.</p>
+<p>_consumptionPerKm (float): Average energy consumption per kilometer in kilowatt-hours (kWh/km).</p>
+<p>_chargePower (float): Charging power in kilowatts (kW).</p>
+<p>_batteryCapacity (float): Battery capacity in kilowatt-hours (kWh).</p>
+<p>_chargeEfficiency (float): Charging efficiency as a decimal (0 to 1).</p>
+</dd>
+<dt>Methods:</dt><dd><dl class="simple">
+<dt>get_charge_power() -&gt; float:</dt><dd><p>Returns the charging power of the electric car.</p>
+</dd>
+<dt>get_battery_capacity() -&gt; float:</dt><dd><p>Returns the battery capacity of the electric car.</p>
+</dd>
+<dt>get_charge_efficiency() -&gt; float:</dt><dd><p>Returns the charging efficiency of the electric car.</p>
+</dd>
+<dt>get_name() -&gt; str:</dt><dd><p>Returns the name of the electric car model.</p>
+</dd>
+<dt>get_consumption_per_km() -&gt; float:</dt><dd><p>Returns the energy consumption per kilometer of the electric car (in kWh/km).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_battery_capacity">
+<span class="sig-name descname"><span class="pre">get_battery_capacity</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarModel.html#ElectricCarModel.get_battery_capacity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_battery_capacity" title="Link to this definition"></a></dt>
+<dd><p>Returns the battery capacity of the electric car.</p>
+<p>The battery capacity defines how much energy the battery can store, measured in kilowatt-hours (kWh).</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: Battery capacity in kWh.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_efficiency">
+<span class="sig-name descname"><span class="pre">get_charge_efficiency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarModel.html#ElectricCarModel.get_charge_efficiency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_efficiency" title="Link to this definition"></a></dt>
+<dd><p>Returns the charging efficiency of the electric car.</p>
+<p>Charging efficiency is the percentage of energy that is effectively stored in the battery during charging,
+with the rest lost as heat or other inefficiencies.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: Charging efficiency as a decimal (0 to 1).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_power">
+<span class="sig-name descname"><span class="pre">get_charge_power</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarModel.html#ElectricCarModel.get_charge_power"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_charge_power" title="Link to this definition"></a></dt>
+<dd><p>Returns the charging power of the electric car.</p>
+<p>The charging power defines how fast the car can be charged, measured in kilowatts (kW).</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: Charging power in kW.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_consumption_per_km">
+<span class="sig-name descname"><span class="pre">get_consumption_per_km</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarModel.html#ElectricCarModel.get_consumption_per_km"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_consumption_per_km" title="Link to this definition"></a></dt>
+<dd><p>Returns the energy consumption per kilometer of the electric car.</p>
+<p>This value represents the average energy consumption needed to drive 1 kilometer, measured in kilowatt-hours.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: Energy consumption per kilometer (kWh/km).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_name">
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/Profiles/Factors/ElectricCar/electricCarModel.html#ElectricCarModel.get_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#Profiles.Factors.ElectricCar.electricCarModel.ElectricCarModel.get_name" title="Link to this definition"></a></dt>
+<dd><p>Returns the name of the electric car model.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>str: The name of the electric car.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="Profiles.Factors.Cyclic.UseConfig.html" class="btn btn-neutral float-left" title="Profiles.Factors.Cyclic.UseConfig package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Profiles.Factors.ElectricCar.UseConfig.html" class="btn btn-neutral float-right" title="Profiles.Factors.ElectricCar.UseConfig package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

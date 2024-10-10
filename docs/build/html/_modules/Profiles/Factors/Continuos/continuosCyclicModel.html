@@ -1,0 +1,224 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiles.Factors.Continuos.continuosCyclicModel &mdash; Simulador  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Simulador
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">Simulador</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">Simulador</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">Profiles.Factors.Continuos.continuosCyclicModel</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for Profiles.Factors.Continuos.continuosCyclicModel</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">utils.RandomNumbers.baseNumberDistribution</span> <span class="kn">import</span> <span class="n">BaseNumberDistribution</span>
+
+<div class="viewcode-block" id="ContinuosCyclicModel">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel">[docs]</a>
+<span class="k">class</span> <span class="nc">ContinuosCyclicModel</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A model representing a continuous cyclic process or device that alternates between active and idle states.</span>
+
+<span class="sd">    This class encapsulates the behavior of devices or systems that operate in cycles, with defined power consumption</span>
+<span class="sd">    during both active and idle phases. The model also defines the duration of these phases and the time between cycles.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        _name (str): The name of the cyclic model, representing the device or process.</span>
+
+<span class="sd">        _idlePower (BaseNumberDistribution): The power consumption (in kW) when the device is idle.</span>
+
+<span class="sd">        _activePower (BaseNumberDistribution): The power consumption (in kW) when the device is active.</span>
+
+<span class="sd">        _timeBetweenCycles (BaseNumberDistribution): The time (in hours) between the end of one cycle and the start of the next.</span>
+<span class="sd">        </span>
+<span class="sd">        _cycleDuration (BaseNumberDistribution): The duration of the active cycle (in hours).</span>
+
+<span class="sd">    Methods:</span>
+<span class="sd">        get_active_power() -&gt; float:</span>
+<span class="sd">            Returns the power consumption during the active phase.</span>
+<span class="sd">        get_idle_power() -&gt; float:</span>
+<span class="sd">            Returns the power consumption during the idle phase.</span>
+<span class="sd">        get_name() -&gt; str:</span>
+<span class="sd">            Returns the name of the cyclic model.</span>
+<span class="sd">        get_time_between_next_cycle() -&gt; float:</span>
+<span class="sd">            Returns the time between the current and next cycle (in hours).</span>
+<span class="sd">        get_cycle_duration() -&gt; float:</span>
+<span class="sd">            Returns the duration of the active cycle (in hours).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">idlePower</span><span class="p">:</span> <span class="n">BaseNumberDistribution</span><span class="p">,</span> <span class="n">activePower</span><span class="p">:</span> <span class="n">BaseNumberDistribution</span><span class="p">,</span> <span class="n">timeBetweenCycles</span><span class="p">:</span><span class="n">BaseNumberDistribution</span><span class="p">,</span> <span class="n">cycleDuration</span><span class="p">:</span><span class="n">BaseNumberDistribution</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the ContinuosCyclicModel with the given parameters.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): The name of the cyclic process or device.</span>
+<span class="sd">            idlePower (BaseNumberDistribution): The power consumption during idle times (in kW).</span>
+<span class="sd">            activePower (BaseNumberDistribution): The power consumption during active times (in kW).</span>
+<span class="sd">            timeBetweenCycles (BaseNumberDistribution): The time between cycles (in hours).</span>
+<span class="sd">            cycleDuration (BaseNumberDistribution): The duration of each active cycle (in hours).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span><span class="o">=</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_idlePower</span> <span class="o">=</span> <span class="n">idlePower</span> <span class="c1">#potencia quan no està en el cicle actiu en kw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_activePower</span> <span class="o">=</span> <span class="n">activePower</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeBetweenCycles</span> <span class="o">=</span> <span class="n">timeBetweenCycles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cycleDuration</span> <span class="o">=</span> <span class="n">cycleDuration</span>
+
+
+
+<div class="viewcode-block" id="ContinuosCyclicModel.get_active_power">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_active_power">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_active_power</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the power consumption during the active phase of the cycle.</span>
+
+<span class="sd">        The power is generated randomly based on the defined distribution for active power.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The power consumption during the active phase (in kW).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_activePower</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ContinuosCyclicModel.get_idle_power">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_idle_power">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_idle_power</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the power consumption during the idle phase of the cycle.</span>
+
+<span class="sd">        The power is generated randomly based on the defined distribution for idle power.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The power consumption during the idle phase (in kW).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_idlePower</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ContinuosCyclicModel.get_name">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_name">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the name of the cyclic model.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The name of the model.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span></div>
+
+    
+<div class="viewcode-block" id="ContinuosCyclicModel.get_time_between_next_cycle">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_time_between_next_cycle">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_time_between_next_cycle</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the time (in hours) between the current cycle and the next cycle.</span>
+
+<span class="sd">        The time is generated randomly based on the defined distribution for the time between cycles.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The time between the current and next cycle (in hours).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeBetweenCycles</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span></div>
+
+    
+<div class="viewcode-block" id="ContinuosCyclicModel.get_cycle_duration">
+<a class="viewcode-back" href="../../../../Profiles.Factors.Continuos.html#Profiles.Factors.Continuos.continuosCyclicModel.ContinuosCyclicModel.get_cycle_duration">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_cycle_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">-&gt;</span><span class="nb">float</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the duration (in hours) of the active cycle.</span>
+
+<span class="sd">        The duration is generated randomly based on the defined distribution for the cycle duration.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            float: The duration of the active cycle (in hours).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cycleDuration</span><span class="o">.</span><span class="n">generate_random</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Author.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
