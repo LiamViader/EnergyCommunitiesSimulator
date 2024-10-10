@@ -8,12 +8,50 @@ from typing import List, Dict, Tuple
 import numpy as np
 
 class QuotaConsumptionSharing(SharingMethod):
+    """
+    Implementation of the Quota/Consumption Sharing energy sharing method.
+
+    This method first allocates energy to profiles based on quotas and then reassigns excess energy 
+    to cover deficits among profiles. The method allows for two different approaches to redistribute 
+    excess energy: based on community shares or based on the proportion of each household's residual load.
+
+    Attributes:
+        name (str): The name of the sharing method, set to "Quota/Consumption Sharing".
+        
+        reassignBasedOnCommunityShares (bool): Determines the method for reallocating excess energy.
+    
+    Methods:
+        share: Shares energy among profiles based on the Quota/Consumption Sharing method.
+    """
     def __init__(self,reassignBasedOnCommunityShares:bool=True) -> None:
+        """
+        Initializes a QuotaConsumptionSharing instance.
+
+        Args:
+            reassignBasedOnCommunityShares (bool): Flag to determine how to reassign excess energy.
+        """
         super().__init__("Quota/Consumption Sharing")
         self.reassignBasedOnCommunityShares=reassignBasedOnCommunityShares
 
 
-    def share(self,profiles:List[ProfileEnergyDataAux],sharePersonalPvs:bool,communityPv:float)->List[ProfileSharingsDataAux]: #this method can't share personal pvs, because there is not microtrading
+    def share(self,profiles:List[ProfileEnergyDataAux],sharePersonalPvs:bool,communityPv:float)->List[ProfileSharingsDataAux]:
+        """
+        Shares energy among profiles based on the Quota/Consumption Sharing method.
+
+        The method first allocates energy using the Quota sharing method, then redistributes excess energy 
+        to cover any deficits in consumption.
+
+        Args:
+            profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.
+            sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations. 
+            communityPv (float): The total energy produced by community PV resources.
+
+        Returns:
+            List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid import/export values.
+        
+        Notes:
+            This method can't share personal pvs, because there is not microtrading
+        """
         profilesSharingsList=Quota().share(profiles=profiles,sharePersonalPvs=sharePersonalPvs,communityPv=communityPv) #first step is to do quota sharing
         #now reassign the excedents to cover deficits
         #the paper is not clear about how to redistribute the excedents. if there's more demand than excedents, then how does this method decide which HH gets more or less energy? Same case if there's more excedents than demand, how does the method decide who which HH trades sells more or less energy.
@@ -25,6 +63,15 @@ class QuotaConsumptionSharing(SharingMethod):
 
 
     def _reassign_based_on_shares(self,profilesSharingsList:List[ProfileSharingsDataAux])->List[ProfileSharingsDataAux]:
+        """
+        Reassigns excess energy based on community shares.
+
+        Args:
+            profilesSharingsList (List[ProfileSharingsDataAux]): A list of profile sharing data to redistribute excess energy.
+
+        Returns:
+            List[ProfileSharingsDataAux]: The updated list of sharing data with reallocated energy values.
+        """
         totalExport=0
         totalExportingShares=0
         totalImportingShares=0
@@ -58,6 +105,15 @@ class QuotaConsumptionSharing(SharingMethod):
         return profilesSharingsList
     
     def _reassign_based_on_proportion(self,profilesSharingsList:List[ProfileSharingsDataAux])->List[ProfileSharingsDataAux]:
+        """
+        Reassigns excess energy based on the proportion of each household's residual load.
+
+        Args:
+            profilesSharingsList (List[ProfileSharingsDataAux]): A list of profile sharing data to redistribute excess energy.
+
+        Returns:
+            List[ProfileSharingsDataAux]: The updated list of sharing data with reallocated energy values.
+        """
         #I think reassigning this way is the same than using Virtual Net Billing
         totalExport=0
         totalImport=0

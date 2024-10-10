@@ -16,8 +16,11 @@ class BaseFactor(ABC):
 
     Attributes:
         _idCounter (int): Static counter to generate unique IDs for each factor.
+
         _id (int): Unique identifier for the factor instance.
+
         _name (str): Name of the factor.
+        
         _factorType (FactorType): Type of the factor, indicating its role (e.g., FactorType.Consumer, FactorType.Producer,...).
 
     Methods:

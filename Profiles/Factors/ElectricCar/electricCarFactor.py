@@ -7,7 +7,34 @@ import numpy as np
 import pandas as pd
 
 class ElectricCarFactor(BaseFactor):
+    """
+    A simulation factor that models the charging and discharging behavior of an electric car.
+
+    This class simulates the energy usage of an electric car based on its model, usage patterns, and charging behavior.
+    It accounts the recharging process based on usage configuration.
+
+    Attributes:
+        _model (ElectricCarModel): The model of the electric car being simulated.
+
+        _useConfig (CarBaseUseConfig): Configuration detailing the car's usage and charging behavior.
+
+        _currentBatteryLevel (float): The current battery level of the car in kWh.
+        
+        _overflow (np.ndarray): Tracks the overflow of energy usage when charging spills over into the next day.
+
+    Methods:
+        simulate(simulationConfig):
+            Simulates the energy usage of the electric car and the charging consumption during the simulation day.
+    """
     def __init__(self, model: ElectricCarModel, useConfig: CarBaseUseConfig,startChargeLevel:float=None):
+        """
+        Initializes the ElectricCarFactor with a specific car model, usage configuration, and an optional starting charge level.
+
+        Args:
+            model (ElectricCarModel): The electric car model.
+            useConfig (CarBaseUseConfig): The usage configuration for the car's energy consumption and charging.
+            startChargeLevel (float, optional): Initial battery level in kWh. Defaults to a full charge.
+        """
         super().__init__(model.get_name(), FactorType.Consumer)
         self._model = model
         self._useConfig = useConfig
@@ -18,6 +45,15 @@ class ElectricCarFactor(BaseFactor):
         self._overflow=None
 
     def simulate(self, simulationConfig: SimulationConfig) -> np.ndarray:
+        """
+        Simulates the energy usage of the electric car recharging over the simulation period.
+
+        Args:
+            simulationConfig (SimulationConfig): Configuration of the current simulation.
+
+        Returns:
+            np.ndarray: Array representing the energy consumption during each simulation time step of the day.
+        """
         load=np.zeros(simulationConfig.num_indices())
         lastOverflowCharge=0
         if self._overflow is not None:
@@ -39,6 +75,15 @@ class ElectricCarFactor(BaseFactor):
 
 
     def _distribute_cycle_load(self,load:np.ndarray,start:float,duration:float,simulationConfig:SimulationConfig):
+        """
+        Distributes the charging load over the simulation time steps, adjusting for overflow if necessary.
+
+        Args:
+            load (np.ndarray): The array representing energy comsumption in each time step.
+            start (float): The start time of the charging cycle (in hours).
+            duration (float): The duration of the charging cycle (in hours).
+            simulationConfig (SimulationConfig): The simulation configuration with time indices.
+        """
         #faig que si el start son entre les 00 i la 05, es refereix al següent dia realment
         if start<=5.0:
             start+=24

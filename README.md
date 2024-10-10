@@ -52,6 +52,19 @@ Ensure you have the following installed:
     ```
 
 
+### Reading the docs
+
+docs are ubicated at /docs/build/html/index.html
+
+### ReGenerating docs
+
+use 
+```bash
+    cd docs
+    .\make.bat html
+```
+
+
 ### Running the Project
 <!-- TODO -->
 ```bash

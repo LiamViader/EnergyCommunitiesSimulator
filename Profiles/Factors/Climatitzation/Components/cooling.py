@@ -3,13 +3,62 @@ from Profiles.Factors.Climatitzation.Components.climatitzationComponent import C
 from Profiles.Factors.Climatitzation.thermostat import Thermostat
 
 class Cooling(ClimatitzationComponent):
+    """
+    Represents a cooling climatization component that adjusts the temperature of a space.
+
+    This class extends the ClimatitzationComponent and provides an implementation 
+    for the climatization process using cooling power. It calculates the energy 
+    required to cool a volume of air based on the difference between the current 
+    temperature and the ideal temperature.
+
+    Attributes:
+        _maxPower (float): Maximum power of the cooling system in kilowatts (kW).
+
+        _minPower (float): Minimum power of the cooling system in kilowatts (kW).
+
+        _efficiency (float): Efficiency of the cooling system.
+        
+        _volume (float): Volume of the space being cooled in cubic meters (m³).
+
+    Methods:
+        climatize(thermostat: Thermostat, idealTemperature: float, timeElapsed: float) -> Tuple[float, float]:
+            Climatizes the space towards the ideal temperature over a specified time.
+    """
     def __init__(self, maxPower: float, minPower:float, efficiency: float, volume: float):
-        self._maxPower= maxPower #max power of cooling in kw
+        """
+        Initializes the Cooling component with specified power, efficiency, and volume.
+
+        Args:
+            maxPower (float): Maximum power of the cooling system in kilowatts (kW).
+            minPower (float): Minimum power of the cooling system in kilowatts (kW).
+            efficiency (float): Efficiency of the cooling system.
+            volume (float): Volume of the space to be cooled in cubic meters (m³).
+        """
+        self._maxPower= maxPower
         self._minPower= minPower
-        self._efficiency = efficiency  #heating efficiency
-        self._volume = volume  #volume that has to cool
+        self._efficiency = efficiency  
+        self._volume = volume  
     
     def climatize(self, thermostat:Thermostat,idealTemperature:float,timeElapsed:float) -> Tuple[float, float]:#timeElapsed en hores
+        """
+        Climatizes the space towards the ideal temperature over a specified time period.
+
+        This method calculates the energy load required to adjust the temperature 
+        towards the ideal level during the specified time elapsed.
+
+        Args:
+            thermostat (Thermostat): 
+                The thermostat controlling the climatization process.
+            idealTemperature (float): 
+                The desired temperature to reach.
+            timeElapsed (float): 
+                The time duration over which to climatize, in hours.
+
+        Returns:
+            Tuple[float, float]: 
+                A tuple where the first element is the energy load (in kWh) required 
+                for cooling, and the second element is the new temperature (in degrees Celsius).
+        """
         if idealTemperature is not None:
             tempDiff = idealTemperature - thermostat.get_current_temperature()
             if tempDiff < 0:

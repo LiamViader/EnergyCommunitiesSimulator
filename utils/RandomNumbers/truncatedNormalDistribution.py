@@ -12,7 +12,9 @@ class TruncatedNormalDistribution(BaseNumberDistribution):
 
     Attributes:
         _min (float): The minimum value for truncation.
+
         _max (float): The maximum value for truncation.
+        
         _normalDistribution (NormalDistribution): An instance of NormalDistribution used to generate normal random numbers.
 
     Methods:

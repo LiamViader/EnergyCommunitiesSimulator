@@ -16,6 +16,7 @@ class CyclicWeeklyUseConfig(CyclicBaseUseConfig):
 
     Attributes:
         _timesWeekly (int): The number of times the device is used per week.
+        
         _intervals (np.ndarray): An array of `MinuteInterval` objects representing the possible usage periods.
 
     Methods:

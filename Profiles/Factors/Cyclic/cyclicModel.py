@@ -10,9 +10,13 @@ class CyclicModel():
 
     Attributes:
         _name (str): Name of the cyclic model.
+
         _cyclePower (BaseNumberDistribution): Distribution that defines the average power consumed during the cycle.
+
         _cycleTime (BaseNumberDistribution): Distribution that defines the duration of each cycle (in hours).
+
         _standByPower (BaseNumberDistribution): Distribution that defines the power consumed during standby mode.
+        
         _standByTime (float): The average amount of time (in hours) that the model spends in standby mode per day.
 
     Methods:

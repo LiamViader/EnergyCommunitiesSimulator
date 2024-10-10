@@ -5,13 +5,62 @@ from Profiles.Factors.ElectricCar.UseConfig.carBaseUseConfig import CarBaseUseCo
 from Profiles.Factors.ElectricCar.electricCarModel import ElectricCarModel
 
 class CarOnNeedUseConfig(CarBaseUseConfig):
+    """
+    Defines the charging behavior of an electric car based on its battery level,
+    a battery threshold when the user starts charging, and predefined time intervals of charging. 
+    This class models the behaviour of a user that fully charges the vehicle when the battery level 
+    drops below a threshold. The time when the user starts charging its predefined by the chargeIntervals
+
+    Attributes:
+        dailyUsage (Tuple[BaseNumberDistribution, BaseNumberDistribution, BaseNumberDistribution,
+                    BaseNumberDistribution, BaseNumberDistribution, BaseNumberDistribution,
+                    BaseNumberDistribution]): 
+        Distribution of kilometers driven each day.
+
+        chargeIntervals (Tuple[MinuteInterval, MinuteInterval, MinuteInterval, MinuteInterval,
+                        MinuteInterval, MinuteInterval, MinuteInterval]): 
+        Charging intervals for each day of the week. Represents the time interval when the
+        car user usually starts the charging of the EV.
+
+        batteryThreshold (float): Threshold battery level (0-1) below which the car starts charging.
+    Methods:
+        get_charge_usage(chargeLevel: float, weekDay: int) -> Tuple[float, float]:
+            Returns the start time and duration of charging in hours.
+            The chargeLevel should have been reduced previously according to the kilometers driven that day.
+    """
     def __init__(self, dailyUsage: Tuple[BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution,BaseNumberDistribution], chargeIntervals: Tuple[MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval,MinuteInterval], batteryThreshold: float):
+        """
+        Initializes the CarOnNeedUseConfig with daily usage, charging intervals, and a battery threshold.
+
+        Args:
+            dailyUsage (Tuple[BaseNumberDistribution, BaseNumberDistribution, BaseNumberDistribution,
+                               BaseNumberDistribution, BaseNumberDistribution, BaseNumberDistribution,
+                               BaseNumberDistribution]):
+                Distributions of kilometers driven each day of the week.
+            chargeIntervals (Tuple[MinuteInterval, MinuteInterval, MinuteInterval, MinuteInterval,
+                                   MinuteInterval, MinuteInterval, MinuteInterval]):
+                Charging intervals for each day of the week.
+            batteryThreshold (float):
+                Threshold battery level (0-1) below which the car starts charging.
+        """
         super().__init__(dailyUsage)
-        self._chargeIntervals = chargeIntervals  #per cada dia de la setmana, intervals al que sol comencar a carregar aquell dia
-        self._batteryThreshold = batteryThreshold  #Nivell de bateria passat el qual carrega (0-1) p.e 0.8
+        self._chargeIntervals = chargeIntervals 
+        self._batteryThreshold = batteryThreshold  
 
 
-    def get_charge_usage(self,chargeLevel:float,weekDay:int,model:ElectricCarModel)->Tuple[float,float]: #retorna a quina hora comença a carregar i durant quanta estona en hores. chargeLevel ja ha estat descarregat segons els km fets, aqui no es calcula aixo
+    def get_charge_usage(self,chargeLevel:float,weekDay:int,model:ElectricCarModel)->Tuple[float,float]:
+        """
+        Returns the start time and duration of charging in hours.
+        The chargeLevel should have been reduced previously according to the kilometers driven that day.
+
+        Args:
+            chargeLevel (float): Current battery level of the car.
+            weekDay (int): Current day of the week (0-6).
+            model (ElectricCarModel): The electric car model being used.
+
+        Returns:
+            Tuple[float, float]: Start time and duration of charging.
+        """
         if chargeLevel>=(model.get_battery_capacity()*self._batteryThreshold): #no carregar
             return 0,0
         else:

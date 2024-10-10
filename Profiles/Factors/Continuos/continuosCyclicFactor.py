@@ -16,10 +16,12 @@ class ContinuosCyclicFactor(BaseFactor):
     that extend beyond the current simulation day is carried over to the next simulation day.
 
     Attributes:
-        _model (ContinuosCyclicModel): The model that defines the cyclic behavior of the factor (e.g., power usage,
-                                       cycle duration, idle times).
+        _model (ContinuosCyclicModel): The model that defines the cyclic behavior of the factor (e.g., power usage, cycle duration, idle times).
+
         _overflowTime (float): Tracks any remaining time from the last cycle that spills into the next simulation day.
+
         _overflowPower (float): Tracks the power used during the overflow time.
+        
         _idle (bool): Indicates whether the factor is in an idle state (True) or an active state (False).
 
     Methods:

@@ -7,19 +7,78 @@ import calendar
 
 #https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-indexada/#tarifa30TD
 class SomEnergiaIndexadaIndustria(BaseEnergyPlan):
-    def __init__(self,contractedPowerPeriods:Tuple[float,float,float,float,float,float]=(50,50,50,50,50,50)) -> None: #sempre ha de: potencia periode n-1<=potencia periode n
+    """
+    Represents the 'Som Energia Tarifa Indexada Per Industries i Empreses (3.0TD)' energy plan.
+    https://www.somenergia.coop/ca/tarifes-delectricitat-que-oferim/tarifa-indexada/#tarifa30TD
+
+    This energy plan is designed for industrial and business clients, with energy prices indexed 
+    to the wholesale market. It considers multiple contracted power periods and calculates both 
+    the selling and buying prices of energy for a given time. It also calculates the flat monthly 
+    power cost for the contracted power.
+
+    Attributes:
+        _iva (float): The VAT percentage (default 21%).
+
+        _contractedPowerPeriods (Tuple[float, float, float, float, float, float]): The contracted 
+        power in kW for six different periods (each period must have an equal or increasing value 
+        compared to the previous one).
+
+        _impostElectric (float): The electricity tax percentage (default 5.11%).
+
+        _boSocial (float): A fixed cost per day for social services in energy billing (default 0.038 €/day).
+
+        _lloguerComptador (float): The monthly cost of renting the energy meter (default 0.81 €/month).
+
+    Methods:
+        selling_price(instant: datetime) -> float:
+            Returns the wholesale market price at the given instant.
+
+        buying_price(instant: datetime) -> float:
+            Returns the indexed energy price at the given time, adjusted for wholesale market price, taxes, 
+            losses, and other fixed components.
+
+        flat_price_month(instant: Optional[datetime]) -> float:
+            Returns the flat monthly price considering the contracted power, taxes, and other fixed costs.
+    """
+    def __init__(self,contractedPowerPeriods:Tuple[float,float,float,float,float,float]=(50,50,50,50,50,50)) -> None:
+        """
+        Initializes the SomEnergiaIndexadaIndustria energy plan with default or provided contracted power periods.
+
+        Args:
+            contractedPowerPeriods (Tuple[float, float, float, float, float, float]): The contracted power 
+            for six different periods, each period should have equal or greater power than the previous one.
+        """
         super().__init__('Som Energia Tarifa Indexada Per Industries i Empreses (3.0TD)')
-        self._iva=21#en tant per cent
-        self._contractedPowerPeriods=contractedPowerPeriods #kw
-        self._impostElectric= 5.11 #en tant per cent
-        self._boSocial=0.0384546136986301 #euros/dia
-        self._lloguerComptador=0.81 #euros/mes
+        self._iva=21
+        self._contractedPowerPeriods=contractedPowerPeriods 
+        self._impostElectric= 5.11
+        self._boSocial=0.0384546136986301
+        self._lloguerComptador=0.81 
 
 
-    def selling_price(self,instant:datetime)->float: #returns €/kwh
+    def selling_price(self,instant:datetime)->float: 
+        """
+        Returns the selling price of energy at the given time, based on the wholesale market price.
+
+        Args:
+            instant (datetime): The specific time for which the selling price is needed.
+
+        Returns:
+            float: The selling price in €/kWh, based on the wholesale market price.
+        """
         return WholesaleMarket.get_instance().price_at_instant(instant)
 
-    def buying_price(self,instant:datetime)->float: #returns €/kwh
+    def buying_price(self,instant:datetime)->float:
+        """
+        Calculates the buying price of energy based on the wholesale market price and several fixed components 
+        related to system costs, losses, and regulatory charges. The price is adjusted for taxes and iva.
+
+        Args:
+            instant (datetime): The specific time for which the buying price is calculated.
+
+        Returns:
+            float: The buying price in €/kWh after applying taxes, losses, and fixed charges.
+        """
         # Obté el preu horari del mercat (PHM) per a l'hora actual
         phm = WholesaleMarket.get_instance().price_at_instant(instant)
         
@@ -44,7 +103,18 @@ class SomEnergiaIndexadaIndustria(BaseEnergyPlan):
         preuDespresIva=preuDespresImpostos+preuDespresImpostos*(self._iva/100)
         return preuDespresIva
 
-    def flat_price_month(self,instant:Optional[datetime])->float: #returns €
+    def flat_price_month(self,instant:Optional[datetime])->float:
+        """
+        Calculates the flat monthly price for the contracted power, considering the power contracted 
+        for each of the six periods. It also includes taxes, social bonus, and meter rental cost.
+
+        Args:
+            instant (Optional[datetime]): The specific time at which the flat price is calculated. 
+                If not provided, a default of 30 days is assumed for the month.
+
+        Returns:
+            float: The flat price in euros for the month, including taxes and VAT.
+        """
         if instant is not None:
             _, totalDays = calendar.monthrange(instant.year, instant.month)
         else:

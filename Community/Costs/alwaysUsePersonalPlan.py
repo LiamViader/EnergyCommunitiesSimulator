@@ -10,10 +10,42 @@ from datetime import datetime
 import math
 
 class AlwaysUsePersonalPlan(CostCalculationBaseMethod):
+    """
+    Cost calculation method where each profile always uses its own personal energy plan for grid import/export 
+    and personal excedents. The microgrid prices are computed based on a mix of the minimum import price 
+    and maximum export price across all profiles.
+
+    Methods:
+        __init__():
+            Initializes the cost calculation method with a predefined name.
+
+        calculate(sharingsAndPlan: List[Tuple[ProfileSharingsDataAux, BaseEnergyPlan]], 
+                  communityPlan: BaseEnergyPlan, datetimeValue: datetime) -> List[ProfileCostDataAux]:
+            Calculates the energy costs and revenues for each profile based on their individual energy plan.
+    """
     def __init__(self) -> None:
+        """
+        Initializes the AlwaysUsePersonalPlan cost calculation method with a predefined name.
+        """
         super().__init__("Always using the personal plan")
 
     def calculate(self,sharingsAndPlan:List[Tuple[ProfileSharingsDataAux,BaseEnergyPlan]],communityPlan:BaseEnergyPlan,datetimeValue:datetime)->List[ProfileCostDataAux]:
+        """
+        Calculates the energy costs and revenues for each profile, assuming they always use their personal energy plan 
+        for grid import/export and personal excedents. Also calculates the cost/revenue associated with microgrid usage based on a mix of the minimum import price 
+        and maximum export price across all profiles.
+
+        Args:
+            sharingsAndPlan (List[Tuple[ProfileSharingsDataAux, BaseEnergyPlan]]): A list of tuples where each tuple 
+                contains profile sharing data and the associated energy plan for that profile.
+            communityPlan (BaseEnergyPlan): The community energy plan (not used in this method).
+            datetimeValue (datetime): The specific datetime for which the prices should be retrieved.
+
+        Returns:
+            List[ProfileCostDataAux]: A list of ProfileCostDataAux objects, each representing the costs and revenues 
+                for a particular profile.
+        """
+
         costsList:List[ProfileCostDataAux]=[]
         minImportPrice=math.inf
         maxExportPrice=0

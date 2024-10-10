@@ -12,6 +12,7 @@ class NormalDistribution(BaseNumberDistribution):
 
     Attributes:
         _std (float): The standard deviation of the normal distribution.
+        
         _mu (float): The mean (average) value of the normal distribution.
     
     Methods:

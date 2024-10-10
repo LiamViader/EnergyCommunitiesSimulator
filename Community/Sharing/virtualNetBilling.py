@@ -7,10 +7,36 @@ from typing import List, Dict, Tuple
 import numpy as np
 
 class VirtualNetBilling(SharingMethod):
+    """
+    Implementation of the Virtual Net Billing energy sharing method.
+
+    This method calculates the energy sharing among profiles based on a virtual net billing system.
+
+    Attributes:
+        name (str): The name of the sharing method, set to "Virtual Net Billing".
+
+    Methods:
+        share: Shares energy among profiles based on the Virtual Net Billing method.
+    """
     def __init__(self) -> None:
+        """
+        Initializes a VirtualNetBilling instance.
+        """
+
         super().__init__("Virtual Net Billing")
 
     def share(self,profiles:List[ProfileEnergyDataAux],sharePersonalPvs:bool,communityPv:float)->List[ProfileSharingsDataAux]:
+        """
+        Shares energy among profiles based on the Virtual Net Billing method.
+
+        Args:
+            profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production and community share information.
+            sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations.
+            communityPv (float): The total energy produced by community PV resources.
+
+        Returns:
+            List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid and microgrid import/export values.
+        """
         totalToImport=0
         totalToExport=0
         for profileEnergy in profiles:

@@ -29,16 +29,27 @@ class Community():
 
     Attributes:
         _profiles (dict): A dictionary mapping profile IDs to Profile instances.
+
         _profilesShare (dict): A dictionary mapping profile IDs to their respective sharing percentages.
+
         _communityAssets (List[BaseFactor]): A list of community assets that can produce energy.
+
         _sharePersonalPvs (bool): Indicates if personal production should be shared with the community .
+
         _energyPlan (BaseEnergyPlan): The energy plan applied to the community.
+
         _costCalculationMethod (CostCalculationBaseMethod): The method used for cost calculation (specifys if the cost calculation should be using each profile plan, the community plan or the best option).
+
         _sharingMethod (SharingMethod): The method used for sharing energy within the community.
+
         _wholesaleMarketCountry (MarketCountry): The country in which the wholesale market operates.
+
         _pv (np.ndarray): The total photovoltaic energy produced in the community during the current day simulation.
+
         _detailedPv (Dict[BaseFactor, np.ndarray]): Detailed energy production from community assets during the  current day simulation.
+
         _simulatedCommunity (SimulatedCommunity): The simulated community containing simulation results of all the simulated days.
+        
         _configLastSimulation (SimulationConfig): Configuration of the last simulation run.
 
     Methods:
@@ -75,7 +86,7 @@ class Community():
         Initializes the Community instance.
 
         Args:
-            profiles (List[Tuple[Profile, float]]): A list of tuples containing Profile instances and their corresponding sharing percentages.
+            profiles (List[Tuple[Profile, float]]): A list of tuples containing Profile instances and their corresponding sharing percentages in decimals (0-1).
             communityAssets (List[BaseFactor]): A list of community assets that can produce energy.
             energyPlan (BaseEnergyPlan): The energy plan applied to the community.
             costCalculationMethod (CostCalculationBaseMethod): The method used for cost calculation.

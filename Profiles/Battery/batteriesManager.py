@@ -7,11 +7,45 @@ from Simulation.simulationConfiguration import SimulationConfig
 import numpy as np
 
 class BatteriesManager(BaseFactor):
+    """
+    Manages a collection of batteries to charge or discharge energy based on the input energy comsumption/production.
+
+    This class acts as a bridge between the load demand or production excedents and the battery system, allowing for
+    efficient energy storage and retrieval. It can charge batteries when there is excess energy
+    and discharge them when energy is needed.
+
+    Attributes:
+        _batteries (List[Battery]): A list of Battery objects managed by this manager.
+
+    Methods:
+        use_on(load: np.ndarray, config: SimulationConfig) -> np.ndarray:
+            Applies the input load to the batteries and returns the load profile based on battery usage.
+
+        simulate(simulationConfig: SimulationConfig) -> np.ndarray:
+            Placeholder method to fulfill the abstract base class requirement.
+    """
     def __init__(self,batteries:List[Battery]):
+        """
+        Initializes the BatteriesManager with a list of Battery objects.
+
+        Args:
+            batteries (List[Battery]): A list of Battery instances to be managed.
+        """
         super().__init__("batteries", FactorType.Battery)
         self._batteries=batteries
 
-    def use_on(self,load:np.ndarray,config:SimulationConfig)->np.ndarray: #rep una carrega on consum es positiu i produccio negatiu, i retorna un perfil de carrega de les bateries si son usades sobre la carrega d'entrada
+    def use_on(self,load:np.ndarray,config:SimulationConfig)->np.ndarray:
+        """
+        Applies the input load profile to the batteries, managing charge and discharge cycles.
+
+        Args:
+            load (np.ndarray): An array representing the load profile where positive values indicate consumption
+                              and negative values indicate production.
+            config (SimulationConfig): The simulation configuration.
+
+        Returns:
+            np.ndarray: An array representing the load profile of the batteries during the simulated day.
+        """
         minutersPerIndex=1440/config.num_indices()
 
         def batteriesLoad(value):

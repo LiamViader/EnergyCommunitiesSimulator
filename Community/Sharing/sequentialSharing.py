@@ -8,10 +8,33 @@ import numpy as np
 import math
 
 class SequentialSharing(SharingMethod):
+    """
+    Implementation of the Sequential Sharing energy sharing method.
+
+    Attributes:
+        name (str): The name of the sharing method, set to "Sequential Sharing".
+    
+    Methods:
+        share: Shares energy among profiles based on the Sequential Sharing method.
+    """
     def __init__(self) -> None:
+        """
+        Initializes a SequentialSharing instance.
+        """
         super().__init__("Sequential Sharing")
 
     def share(self,profiles:List[ProfileEnergyDataAux],sharePersonalPvs:bool,communityPv:float)->List[ProfileSharingsDataAux]: #profiles quedarà modificat al sortir de la funcio aixi q no usarlos. Sino cambiar una mica l'implementació i ja, pero ho fare més endavant.
+        """
+        Shares energy among profiles based on the Sequential Sharing method.
+
+        Args:
+            profiles (List[ProfileEnergyDataAux]): A list of profile energy data that includes load, production, and community share information.
+            sharePersonalPvs (bool): Indicates whether to consider personal production in the calculations.
+            communityPv (float): The total energy produced by community PV resources.
+
+        Returns:
+            List[ProfileSharingsDataAux]: A list of sharing data for each profile, including grid and microgrid import/export values.
+        """
         sharings:List[ProfileSharingsDataAux]=[]
         minWeight=1e-10 # perque ningu tingui un pes de 0, ja que sino no se li comparteix res encara que sobri. És a dir si un individu A té weight de 0 i una demanda de 1kwh, llavors encara que un individu B tingui excedent de 1kwh, aquest s'exportarà al grid en comptes de vendreho a A, el qual seria més logic ja que els dos guanyarien mes
         #a més a més, un pes de 0 dóna problemes amb els calculs, si es necessita, s'ha de tractar aquest cas, directament no tinguent en compte als individus amb weight 0, no posantlos a la funcio, i obviament no afegint el seu load al calcul tampoc. És a dir exclourels totalment de la repartició
@@ -62,7 +85,7 @@ class SequentialSharing(SharingMethod):
                 else:
                     residualLoad=profile.load-profile.production
                     pieceWiseFunc[profile]=(residualLoad,weight)
-            x=self.solve_piecewise(pieceWiseFunc,pvToExport)
+            x=self._solve_piecewise(pieceWiseFunc,pvToExport)
             for profile, weight in weights.items():
                 profileSharings=ProfileSharingsDataAux(profile_id=profile.id)
                 profileSharings.communityShares=profile.share
@@ -85,7 +108,7 @@ class SequentialSharing(SharingMethod):
                 else:
                     residualPv=profile.production-profile.load
                     pieceWiseFunc[profile]=(residualPv,weight)
-            x=self.solve_piecewise(pieceWiseFunc,loadToImport)
+            x=self._solve_piecewise(pieceWiseFunc,loadToImport)
             for profile, weight in weights.items():
                 profileSharings=ProfileSharingsDataAux(profile_id=profile.id)
                 profileSharings.communityShares=profile.share
@@ -99,7 +122,17 @@ class SequentialSharing(SharingMethod):
                 sharings.append(profileSharings)
         return sharings
 
-    def solve_piecewise(self,piecewiseFunc:Dict[ProfileEnergyDataAux,Tuple[float,float]],y:float)->float:
+    def _solve_piecewise(self,piecewiseFunc:Dict[ProfileEnergyDataAux,Tuple[float,float]],y:float)->float:
+        """
+        Solves a piecewise linear equation. (e.g y=min(a,bx) + min(c,dx)...)
+
+        Args:
+            piecewiseFunc (Dict[ProfileEnergyDataAux, Tuple[float, float]]): A dictionary containing a tuple mapping tuple[a,b] to min(a,bx) for the equation
+            y (float): The total demand or supply that needs to be satisfied.
+
+        Returns:
+            float: The value of x that satisfies the piecewise function for the given y.
+        """
         func=list(piecewiseFunc.values())
         #determinar punts critics
         critical_points = set()

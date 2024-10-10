@@ -6,7 +6,9 @@ class Granularity(Enum):
 
     Attributes:
         Hour (str): Represents a time interval of one hour.
+
         Minute (str): Represents a time interval of one minute.
+
         FifteenMinutes (str): Represents a time interval of fifteen minutes.
     """
     Hour = 'hour'
@@ -19,8 +21,11 @@ class FactorType(Enum):
 
     Attributes:
         Consumer (int): Represents a consumer factor.
+
         Producer (int): Represents a producer factor.
+
         Prosumer (int): Represents a prosumer factor (both consumer and producer).
+
         Battery (int): Represents a battery factor.
     """
     Consumer=1
@@ -34,10 +39,15 @@ class LightType(Enum):
 
     Attributes:
         Led (int): Represents LED lighting.
+
         Cfl (int): Represents Compact Fluorescent Lamp lighting.
+
         Incandescent (int): Represents incandescent lighting.
+
         Halogen (int): Represents halogen lighting.
+
         FluorescentTube (int): Represents fluorescent tube lighting.
+
         Neon (int): Represents neon lighting.
     """
     Led=1
@@ -53,6 +63,7 @@ class MarketCountry(Enum):
 
     Attributes:
         Spain (int): Represents Spain.
+        
         Portugal (int): Represents Portugal.
     """
     Spain=1

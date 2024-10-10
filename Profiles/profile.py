@@ -20,12 +20,19 @@ class Profile:
 
     Attributes:
         _idCounter (int): A class variable to generate unique IDs for each profile.
+
         _id (int): The unique identifier for the profile instance.
+
         _name (str): The name of the profile.
+
         _energyPlan (BaseEnergyPlan): The energy plan associated with this profile.
+
         _loadFactors (List[BaseFactor]): A list of factors that produce or consume energy used in the simulation.
+
         _batteries (BatteriesManager): The battery manager for the profile.
+
         _detailedLoad (Dict[BaseFactor, np.ndarray]): A dictionary mapping factors to their simulated energy arrays.
+        
         _configLastSimulation (Optional[SimulationConfig]): The last simulation configuration used for the profile.
 
     Methods:

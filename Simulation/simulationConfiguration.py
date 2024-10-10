@@ -18,11 +18,17 @@ class SimulationConfig:
 
     Attributes:
         _currentDate (date): The current date for the simulation.
+
         _granularity (Granularity): The time granularity for the simulation (e.g., Granularity.Hour, Granularity.Minute, ..).
+
         _geolocation (Geolocation): The geographical location for the simulation.
+
         _indices (int): The number of time indices a day array has based on the granularity.
+
         _solarIrradiation (SolarIrradiation): An instance that provides solar irradiation data.
+
         _temperature (Temperature): An instance that provides temperature data.
+        
         _wind (Wind): An instance that provides wind data.
 
     Methods:

@@ -11,9 +11,13 @@ class ContinuosCyclicModel():
 
     Attributes:
         _name (str): The name of the cyclic model, representing the device or process.
+
         _idlePower (BaseNumberDistribution): The power consumption (in kW) when the device is idle.
+
         _activePower (BaseNumberDistribution): The power consumption (in kW) when the device is active.
+
         _timeBetweenCycles (BaseNumberDistribution): The time (in hours) between the end of one cycle and the start of the next.
+        
         _cycleDuration (BaseNumberDistribution): The duration of the active cycle (in hours).
 
     Methods:

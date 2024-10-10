@@ -11,6 +11,7 @@ class MinuteInterval:
 
     Attributes:
         _start (int): The starting minute of the interval (0-1439).
+        
         _end (int): The ending minute of the interval (0-1439).
 
     Methods:

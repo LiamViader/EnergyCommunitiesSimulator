@@ -11,6 +11,7 @@ class PiecewiseUniformDistribution(BaseNumberDistribution):
 
     Attributes:
         _ranges (List[Tuple[float, float]]): A list of tuples representing the ranges for the distribution.
+        
         _probabilities (List[float]): A list of probabilities associated with each range. The probabilities must sum to 1.
 
     Methods:

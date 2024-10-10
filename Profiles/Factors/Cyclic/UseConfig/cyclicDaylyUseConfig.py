@@ -15,8 +15,11 @@ class CyclicDaylyUseConfig(CyclicBaseUseConfig):
     is used during the day based on pre-defined time intervals for each day.
 
     Attributes:
-        _weekUsage (Tuple[List[MinuteInterval]]): A tuple containing lists of time intervals for each day of the week.
-            Each day (Monday-Sunday) has a list of `MinuteInterval` objects representing the potential times when the device is used.
+        _weekUsage (Tuple[List[MinuteInterval],List[MinuteInterval],List[MinuteInterval],
+                    List[MinuteInterval],List[MinuteInterval],List[MinuteInterval],
+                    List[MinuteInterval]]): 
+        A tuple containing lists of time intervals for each day of the week.
+        Each day (Monday-Sunday) has a list of `MinuteInterval` objects representing the potential times when the device is used.
     
     Methods:
         use(cyclicModel: CyclicModel, simulationConfig: SimulationConfig) -> Tuple[np.ndarray, np.ndarray]:
@@ -27,7 +30,10 @@ class CyclicDaylyUseConfig(CyclicBaseUseConfig):
         Initializes a CyclicDaylyUseConfig instance.
         
         Args:
-            weekUsage (Tuple[List[MinuteInterval]]): A tuple with seven lists, one for each day of the week.
+            weekUsage (Tuple[List[MinuteInterval],List[MinuteInterval],List[MinuteInterval],
+                        List[MinuteInterval],List[MinuteInterval],List[MinuteInterval],
+                        List[MinuteInterval]]): 
+                A tuple with seven lists, one for each day of the week.
                 Each list contains `MinuteInterval` objects that represent intervals of possible usage times for that day.
         """
         self._weekUsage=weekUsage

@@ -15,8 +15,11 @@ class Geolocation:
 
     Attributes:
         _name (str): The name of the location.
+
         _latitude (float): The latitude of the location.
+
         _longitude (float): The longitude of the location.
+        
         _timezoneInfo (ZoneInfo): The timezone information for the location.
 
     Methods:     

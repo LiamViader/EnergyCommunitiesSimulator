@@ -20,13 +20,21 @@ class SimulatedCommunity:
 
     Attributes:
         _detailedSimulatedProfiles (pd.DataFrame): DataFrame containing the detailed simulated profiles.
+
         _summarizedSimulatedProfiles (pd.DataFrame): DataFrame containing the summarized simulated profiles.
+
         _simulatedCommunityAssets (pd.DataFrame): DataFrame containing the detailed profiles of the community assets.
+
         _communityPv (pd.DataFrame): DataFrame containing community production data.
+
         _externalFactors (pd.DataFrame): DataFrame containing environmental factors data.
+
         _sharingInfo (pd.DataFrame): DataFrame containing information about sharing methods used.
+
         _energySharings (pd.DataFrame): DataFrame containing energy sharing details.
+
         _costs (pd.DataFrame): DataFrame containing cost-related data for profiles.
+        
         _costCalculationInfo (pd.DataFrame): DataFrame containing information on cost calculation methods.
     Methods:
         add_simulated_community_pv(totalPv: np.ndarray, detailedPv: Dict[BaseFactor, np.ndarray], currentDate: date, override: bool = True) -> None:

@@ -18,7 +18,9 @@ class CyclicFactor(BaseFactor):
 
     Attributes:
         _cyclicModel (CyclicModel): The model representing the characteristics of the cyclic factor.
+
         _useConfig (CyclicBaseUseConfig): Configuration for usage, such as weekly schedules and hourly ranges.
+        
         _overflow (Optional[np.ndarray]): Stores energy overflow from the current simulated day to carry over to the next day.
 
     Methods:
